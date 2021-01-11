@@ -1,24 +1,27 @@
-# examples
+# demos
 
-Run Bazel builds from the `examples` directory, e.g.
+Run Bazel builds from the `demos` directory, e.g.
 
-`$ bazel build hello/lwt`
+```
+$ cd demos
+$ bazel build minimal/hello`
+```
 
-To run executables, just replace `build` with `run`:
+To run tests, just replace `build` with `test`:
 
-`$ bazel run hello/ppx`
+`$ bazel test minimal/hello`
 
-Some of the examples also have dune files or make files.
+Some of the demos also have dune files or make files.
 
 ## deriving-slowly
 
-The `deriving-slowly` examples demonstrate simple PPX code. They are
+The `deriving-slowly` demos demonstrate simple PPX code. They are
 taken from [Deriving
 Slowly](http://rgrinberg.com/posts/deriving-slowly/).
 
 ## hello
 
-OBazl verions of examples from the Dune
+OBazl verions of demos from the Dune
 [Quickstart](https://dune.readthedocs.io/en/stable/quick-start.html).
 
 * hello - [Building a hello world program](https://dune.readthedocs.io/en/stable/quick-start.html#building-a-hello-world-program).  Bazel build command:  `$ bazel build hello/hello`
@@ -33,7 +36,7 @@ Code demonstrating file-system namespaces and OCaml module paths.
 * [flat](namespaces/flat) - demonstrates mapping from flat to hiearchical namespace.  Makefiles only.
   * `eager`
   * `lazy` - uses `-no-alias-deps` to enable lazy linking.
-* [makefiles](namespaces/makefiles) - a few simple examples exploring use of underscores in names; does not use OBazl.
+* [makefiles](namespaces/makefiles) - a few simple demos exploring use of underscores in names; does not use OBazl.
 * [ns-archive](namespaces/ns-archive) - demonstrates rule `ocaml_ns_archive`: create a namespaced module from a file system tree.
   * `macro` - uses a Bazel macro for demo purposes.
   * `rule` - uses a Bazel rule, `ocaml_ns_archive`.  Automatically

@@ -1,6 +1,6 @@
-# To build, from examples/ run: $ bazel build //hello/lwt:lwt
-# You can shorten //hello/lwt:lwt to hello/lwt
-# To run: $ bazel run hello/lwt
+# $ bazel run minimal/hello_lwt
+# or: $ bazel build minimal/hello_lwt
+# or: $ bazel build minimal/hello_lwt:_Hello_lwt
 
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
@@ -10,7 +10,10 @@ load(
 
 ocaml_executable(
     name = "hello_lwt",
-    opts = ["-thread"],  # avoid warning about possible linking problems
+    # opts = ["-no-thread"], ## -thread is added by default
+    ## without -thread:
+    ## "ocamlfind: [WARNING] Package `threads': Linking problems may arise because of the missing -thread or -vmthread switch"
+    ## followed by "Error: Required module `Condition' is unavailable"
     deps = [":_Hello_lwt"],
     visibility = ["//visibility:public"],
 )

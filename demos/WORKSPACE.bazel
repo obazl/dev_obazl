@@ -12,17 +12,17 @@ http_archive(
 git_repository(
     name = "obazl_tools_bazel",
     remote = "https://github.com/obazl/tools_bazel",
-    branch = "main",
+    branch = "dev",
 )
 git_repository(
     name = "obazl_rules_opam",
     remote = "https://github.com/obazl/rules_opam",
-    branch = "main",
+    branch = "dev",
 )
 git_repository(
     name = "obazl_rules_ocaml",
     remote = "https://github.com/obazl/rules_ocaml",
-    branch = "main",
+    branch = "dev",
 )
 
 load("@obazl_rules_opam//opam:bootstrap.bzl", opam_configure = "configure")

@@ -1,49 +1,60 @@
-# To build, from examples/ run: $ bazel build //hello/ppx:ppx
-# You can shorten //hello/ppx:ppx to hello/ppx
-# To run: $ bazel run hello/ppx
-# You can also build the other steps, separately:
-# $ bazel build hello/ppx:ppx_pipeline
-# $ bazel build hello/ppx:preproc
+# $ bazel test minimal/hello_ppx
+# You can build each target:
+# $ bazel build minimal/hello_ppx
+# $ bazel build minimal/hello_ppx:_hello
+# $ bazel build minimal/hello_ppx:_ppx.exe
+# $ bazel build minimal/hello_ppx:_Driver
+# $ bazel build minimal/hello_ppx:gendriver
 
-# Bazel will print a message telling you where to find the output of
-# each build, so you can compare the original source to the preprocessed
-# source (in this case: bazel-bin/hello/ppx/_pp_/hello_ppx.ml).
+# To inspect the result of ppx processing:
+# first, run `source tools/aliases`. this defines an alias `bl` you can use to browse the log.
+# uncomment the `ppx_print` line below to set output format to text
+# then run `bazel clean`, then `bazel build minimal/hello_ppx:_Hello --subcommands=print
+# then run `bl` to inspect the command log. search for PpxTransformAction;
+# you will see the command, something like:
+# bazel-out/darwin-fastbuild/bin/minimal/hello_ppx/_Hello_ppx.sh -dump-ast -o ../bazel-out/darwin-fastbuild/bin/minimal/hello_ppx/_obazl_/hello.ml -impl minimal/hello_ppx/hello.ml
+# the transformed output is the `-o` parameter (without the leading '../').
+# see the full ppx command, add '-verbose' to the `opts` attribute of the `ocaml_module` rule.
 
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
-    "ocaml_executable",
     "ocaml_module",
+    "ocaml_test",
     "ppx_executable",
     "ppx_module"
 )
 
-ocaml_executable(
+###########
+ocaml_test(
     name = "hello_ppx",
-    main = ":_Hello_ppx",
-    opts = [
-        "-linkpkg",
-        "-thread",  # avoid warning about possible linking problems
-        # "-verbose"
-    ],
-    # deps = ["@opam//pkg:core"],
-    visibility = ["//visibility:public"],
+    main = "test.ml",
+    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [
+        "@opam//pkg:ounit2",
+        ":_Hello"     # the transformed and compiled test code
+    ]
 )
 
 #############
 ocaml_module(
-    name = "_Hello_ppx",
-    src  = "hello_ppx.ml",
-    # opts = ["-thread"],  # avoid warning about possible linking problems
-    ppx  = ":ppx.exe",
-    deps = ["@opam//pkg:core", "@opam//pkg:ppx_sexp_value"]
-    # default visibility is private
+    name = "_Hello",
+    src  = "hello.ml",
+    # opts = ["-verbose"],  ## to print the expanded ppx transform command, etc.
+    ppx  = ":_ppx.exe",
+    # ppx_print = "@ppx//print:text", # uncomment to get readable output
+    deps = [
+        "@opam//pkg:core",      # contains Sexp module
+    ]
 )
 
 ###############
 ppx_executable(
-    name = "ppx.exe",
-    main = ":_Driver",
-    opts = [    ],
+    name = "_ppx.exe",
+    main = ":_Driver",          # obazl will place this last in the list of deps
+    # opts = [],                # obazl will automatically add '-predicates ppx_driver'
+    deps = [
+        "@opam//pkg:ppx_sexp_value" # contains handler for `[%sexp ]` extension
+    ]
 )
 
 ###########

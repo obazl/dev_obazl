@@ -1,10 +1,10 @@
 open Core ;;                    (* for Sexp *)
 
-print_endline "Hello from hello_ppx!"
+(* print_endline "Hello from hello_ppx!" *)
 
-let () =
+let msg =
   Sexp.to_string_hum [%sexp ([3;4;5] : int list)]
-  |> print_endline
+  (* |> print_endline *)
 ;;
 
 
