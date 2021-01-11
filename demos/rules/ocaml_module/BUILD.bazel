@@ -1,0 +1,24 @@
+# to run: $ bazel test rules/ocaml_module:test
+
+load(
+    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_executable",
+    "ocaml_module",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "test.ml",
+    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [
+        "@opam//pkg:ounit2",
+        ":Hello"
+    ]
+)
+
+ocaml_module(
+    name = "Hello",
+    src  = "hello.ml",
+    visibility = ["//visibility:public"],
+)

@@ -1,0 +1,66 @@
+# To build, from examples/ run: $ bazel build //hello/ppx:ppx
+# You can shorten //hello/ppx:ppx to hello/ppx
+# To run: $ bazel run hello/ppx
+# You can also build the other steps, separately:
+# $ bazel build hello/ppx:ppx_pipeline
+# $ bazel build hello/ppx:preproc
+
+# Bazel will print a message telling you where to find the output of
+# each build, so you can compare the original source to the preprocessed
+# source (in this case: bazel-bin/hello/ppx/_pp_/hello_ppx.ml).
+
+load(
+    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_executable",
+    "ocaml_module",
+    "ppx_executable",
+    "ppx_module"
+)
+
+ocaml_executable(
+    name = "hello_ppx",
+    main = ":_Hello_ppx",
+    opts = [
+        "-linkpkg",
+        "-thread",  # avoid warning about possible linking problems
+        # "-verbose"
+    ],
+    # deps = ["@opam//pkg:core"],
+    visibility = ["//visibility:public"],
+)
+
+#############
+ocaml_module(
+    name = "_Hello_ppx",
+    src  = "hello_ppx.ml",
+    # opts = ["-thread"],  # avoid warning about possible linking problems
+    ppx  = ":ppx.exe",
+    deps = ["@opam//pkg:core", "@opam//pkg:ppx_sexp_value"]
+    # default visibility is private
+)
+
+###############
+ppx_executable(
+    name = "ppx.exe",
+    main = ":_Driver",
+    opts = [    ],
+)
+
+###########
+ppx_module(
+    name = "_Driver",
+    src = ":ppxlib_driver.ml",
+    visibility = ["//visibility:public"],
+    deps = ["@opam//pkg:ppxlib"],
+)
+
+########
+genrule(
+    name = "gendriver",
+    outs = ["ppxlib_driver.ml"],
+    cmd = "\n".join([
+        "echo \"(* GENERATED FILE - DO NOT EDIT *)\" > \"$@\"",
+        "echo \"let () = Ppxlib.Driver.standalone ()\" >> \"$@\"",
+    ]),
+)
+
