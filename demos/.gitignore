@@ -1,0 +1,8 @@
+bazel-*
+user.bazelrc
+
+**/*.cmo
+**/*.cmi
+**/*.cmx
+**/*.exe
+**/.merlin
