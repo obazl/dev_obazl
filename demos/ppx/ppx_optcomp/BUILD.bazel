@@ -1,9 +1,7 @@
-# run all tests: $ bazel test ppx/runtime_deps
+# $ bazel test ppx/ppx_optcomp
 
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
-    "ocaml_executable",
-    "ocaml_interface",
     "ocaml_module",
     "ocaml_test",
     "ppx_executable",
@@ -33,23 +31,15 @@ ocaml_module(
 ###############
 ppx_executable(
     name = "ppx_optcomp.exe",
-    adjunct_deps = [
-        "@opam//pkg:ppx_inline_test.runtime-lib",
-    ],
     main = ":Driver",
-    opts = [],
-    deps = [
-        "@opam//pkg:ppx_optcomp",
-        # "@opam//pkg:ppxlib",
-      ],
+    deps = ["@opam//pkg:ppx_optcomp"]
 )
 
 ###########
 ppx_module(
     name = "Driver",
     src = ":ppxlib_driver.ml",
-    visibility = ["//visibility:public"],
-    deps = ["@opam//pkg:ppxlib"],
+    deps = ["@opam//pkg:ppxlib"]
 )
 
 ########
