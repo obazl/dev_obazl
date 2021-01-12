@@ -1,3 +1,13 @@
+load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
+
+# load(":BUILD.bzl", "config_generator")
+
+string_flag( name = "msg", build_setting_default = "hello",
+             values = ["hello", "goodbye"])
+
+config_setting( name = "hello", flag_values = { ":msg": "hello" })
+config_setting( name = "goodbye", flag_values = { ":msg": "goodbye" })
+
 # $ bazel test ppx/ppx_optcomp
 
 load(
@@ -20,13 +30,39 @@ ocaml_test(
 )
 
 #############
+ARG = select({
+    ":hello": [":genhello"],
+    ":goodbye": [":gengoodbye"],
+})
+
 ocaml_module(
     name = "_Hello",
     src  = "hello.ml",
     ppx  = ":ppx_optcomp.exe",
-    ppx_data = ["config.mlh"],  # this is our runtime dep
-    # ppx_print = "@ppx//print:text",
+    # ppx_data = ARG,
+    ppx_data = [
+        ":genconfig"
+        # ":config.mlh"
+    ],  # this is our runtime dep
+    ppx_print = "@ppx//print:text",
 )
+
+########
+## WARNING: due to Bazel restrictions on the way 'select()' can be used, we
+## can only select the entire command string here. we cannot use it to
+## select a parameter, for example.
+
+## here {...} is for string interpolation, and $@ is the genrule outfile
+CMD = "echo \[%%define greeting {cmd}\] > \"$@\""
+
+genrule(
+    name = "genconfig",
+    outs = ["config.mlh"],
+    cmd = select({
+    ":hello":    CMD.format(cmd=1),
+    ":goodbye":    CMD.format(cmd=2),
+    })
+  )
 
 ###############
 ppx_executable(
