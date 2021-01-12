@@ -15,7 +15,8 @@ test_suite(
     name = "ocaml_test",
     tests = [
         "hello_alcotest",
-        "hello_ounit2"
+        "hello_ounit2",
+        "hello_ppx_test"
     ],
 )
 ocaml_test(
@@ -43,10 +44,10 @@ ocaml_test(
 ocaml_test(
     name = "hello_ppx_test",
     main = "runner.ml", ## contains Ppx_inline_test_lib.Runtime.exit (); obazl puts 'main' last
+    args = ["inline-test-runner", "hello"],
     deps = [
-        "@opam//pkg:ppx_inline_test.runtime-lib",
+        ":_Test_ppx_inline",     # the transformed and compiled test code
         "@opam//pkg:ppx_inline_test.runner.lib",
-        ":_Test_ppx_inline"     # the transformed and compiled test code
     ]
 )
 
@@ -54,13 +55,10 @@ ocaml_module(
     name = "_Test_ppx_inline",
     src  = "test_ppx_inline.ml",
     ppx  = ":ppx_inline_test",
-    ppx_args = [
-        "-inline-test-lib",
-        "hello",
-    ],
+    ppx_args = ["-inline-test-lib", "hello"],
     deps = [
         "@opam//pkg:core",
-        "@opam//pkg:ppx_inline_test.runtime-lib",
+        # "@opam//pkg:ppx_inline_test.runtime-lib",  ## not needed - listed as adjunct on the ppx executable
         "//rules/ocaml_module:Hello"
     ]
 )
