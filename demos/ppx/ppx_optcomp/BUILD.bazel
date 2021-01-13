@@ -1,14 +1,12 @@
-load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
+# $ bazel test ppx/ppx_optcomp
 
-# load(":BUILD.bzl", "config_generator")
+load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
 
 string_flag( name = "msg", build_setting_default = "hello",
              values = ["hello", "goodbye"])
 
 config_setting( name = "hello", flag_values = { ":msg": "hello" })
 config_setting( name = "goodbye", flag_values = { ":msg": "goodbye" })
-
-# $ bazel test ppx/ppx_optcomp
 
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",

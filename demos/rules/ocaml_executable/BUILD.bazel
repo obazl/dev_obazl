@@ -32,7 +32,7 @@ ocaml_interface(
 
 ocaml_test(
     name = "test",
-    src  = "test.ml",
+    main = "test.ml",
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
         "@opam//pkg:ounit2",
