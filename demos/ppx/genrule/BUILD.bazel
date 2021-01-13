@@ -1,4 +1,4 @@
-# $ bazel test ppx/manual
+# $ bazel test ppx/genrule
 
 ## demonstrates how to run a ppx manually using a `genrule`
 
@@ -20,7 +20,7 @@ load(
 
 ###########
 ocaml_test(
-    name = "manual",
+    name = "genrule",
     main = "test.ml",
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
