@@ -1,0 +1,87 @@
+# $ bazel test ppx/manual
+
+## demonstrates how to run a ppx manually using a `genrule`
+
+load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
+
+string_flag( name = "msg", build_setting_default = "hello",
+             values = ["hello", "goodbye"])
+
+config_setting( name = "hello", flag_values = { ":msg": "hello" })
+config_setting( name = "goodbye", flag_values = { ":msg": "goodbye" })
+
+load(
+    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_module",
+    "ocaml_test",
+    "ppx_executable",
+    "ppx_module"
+)
+
+###########
+ocaml_test(
+    name = "manual",
+    main = "test.ml",
+    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [
+        "@opam//pkg:ounit2",
+        ":_Hello"
+    ]
+)
+
+#############
+ocaml_module(
+    name = "_Hello",
+
+    ## use output of genrule that runs the ppx
+    src  = "tmp/hello.ml", # output of genrule, which will be triggered
+
+    ## convenience attribs: run the ppx as an action of this rule
+    # src  = "hello.ml",
+    # ppx  = ":_ppx.exe",
+
+    deps = ["@opam//pkg:core"]
+)
+
+## switch to get text output
+# PPX_PRINT=""  # text output
+PPX_PRINT="-dump-ast"  # binary output
+
+########
+genrule(
+    name = "transform",
+    srcs = ["hello.ml"],
+    ## due to filename->module_name rules, output must be hello.ml, not e.g. hello.pp.ml
+    outs = ["tmp/hello.ml"],
+    tools = [":_ppx.exe"],
+    ## $(location :_ppx.exe) resolves to wherever Bazel placed _ppx.exe
+    ## {print_fmt} is for string interpolation
+    cmd = "$(location :_ppx.exe) {print_fmt} $< > $@".format(print_fmt=PPX_PRINT)
+)
+
+###############
+ppx_executable(
+    name = "_ppx.exe",
+    main = ":_Driver",          # obazl will place this last in the list of deps
+    # opts = [],                # obazl will automatically add '-predicates ppx_driver'
+    deps = [
+        "@opam//pkg:ppx_sexp_value" # contains handler for `[%sexp ]` extension
+    ]
+)
+
+###########
+ppx_module(
+    name = "_Driver",
+    src = ":ppxlib_driver.ml",
+    deps = ["@opam//pkg:ppxlib"]
+)
+
+########
+genrule(
+    name = "gendriver",
+    outs = ["ppxlib_driver.ml"],
+    cmd = "\n".join([
+        "echo \"(* GENERATED FILE - DO NOT EDIT *)\" > \"$@\"",
+        "echo \"let () = Ppxlib.Driver.standalone ()\" >> \"$@\"",
+    ]),
+)

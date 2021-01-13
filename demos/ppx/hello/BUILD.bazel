@@ -1,18 +1,18 @@
-# $ bazel test minimal/hello_ppx
+# $ bazel test ppx/hello
 # You can build each target:
-# $ bazel build minimal/hello_ppx
-# $ bazel build minimal/hello_ppx:_hello
-# $ bazel build minimal/hello_ppx:_ppx.exe
-# $ bazel build minimal/hello_ppx:_Driver
-# $ bazel build minimal/hello_ppx:gendriver
+# $ bazel build ppx/hello
+# $ bazel build ppx/hello:_Hello
+# $ bazel build ppx/hello:_ppx.exe
+# $ bazel build ppx/hello:_Driver
+# $ bazel build ppx/hello:gendriver
 
 # To inspect the result of ppx processing:
 # first, run `source tools/aliases`. this defines an alias `bl` you can use to browse the log.
 # uncomment the `ppx_print` line below to set output format to text
-# then run `bazel clean`, then `bazel build minimal/hello_ppx:_Hello --subcommands=print
+# then run `bazel clean`, then `bazel build ppx/hello:_Hello --subcommands
 # then run `bl` to inspect the command log. search for PpxTransformAction;
 # you will see the command, something like:
-# bazel-out/darwin-fastbuild/bin/minimal/hello_ppx/_Hello_ppx.sh -dump-ast -o ../bazel-out/darwin-fastbuild/bin/minimal/hello_ppx/_obazl_/hello.ml -impl minimal/hello_ppx/hello.ml
+# bazel-out/darwin-fastbuild/bin/ppx/hello/_hello.sh -dump-ast -o ../bazel-out/darwin-fastbuild/bin/ppx/hello/_obazl_/hello.ml -impl ppx/hello/hello.ml
 # the transformed output is the `-o` parameter (without the leading '../').
 # see the full ppx command, add '-verbose' to the `opts` attribute of the `ocaml_module` rule.
 
@@ -26,7 +26,7 @@ load(
 
 ###########
 ocaml_test(
-    name = "hello_ppx",
+    name = "hello",
     main = "test.ml",
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
