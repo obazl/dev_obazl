@@ -7,7 +7,7 @@ def _demo_config_impl(ctx):
         output = outfile,
         template = ctx.file.template,
         substitutions = {
-            "{COLORIZE}": str( ctx.attr.colorize[BuildSettingInfo].value ),
+            "{COLORIZE}": str( ctx.attr.colorize[BuildSettingInfo].value ).lower(),
             "{RED}": str( ctx.attr.red[BuildSettingInfo].value ),
             "{GREEN}": str( ctx.attr.green[BuildSettingInfo].value ),
             "{BLUE}": str( ctx.attr.blue[BuildSettingInfo].value ),
