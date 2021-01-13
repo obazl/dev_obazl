@@ -1,0 +1,26 @@
+## this driver module is shared by multiple ppx_executable
+
+load(
+    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ppx_executable",
+    "ppx_module"
+)
+
+###########
+ppx_module(
+    name = "driver",
+    src = ":ppxlib_driver.ml",
+    visibility = ["//visibility:public"],
+    deps = ["@opam//pkg:ppxlib"],
+)
+
+########
+genrule(
+    name = "gendriver",
+    outs = ["ppxlib_driver.ml"],
+    cmd = "\n".join([
+        "echo \"(* GENERATED FILE - DO NOT EDIT *)\" > \"$@\"",
+        "echo \"let () = Ppxlib.Driver.standalone ()\" >> \"$@\"",
+    ]),
+)
+

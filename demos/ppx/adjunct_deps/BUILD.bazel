@@ -1,18 +1,19 @@
-# $ bazel test ppx/hello
+# $ bazel test ppx/adjunct_deps/hello
+
 # You can build each target:
-# $ bazel build ppx/hello
-# $ bazel build ppx/hello:_Hello
-# $ bazel build ppx/hello:_ppx.exe
-# $ bazel build ppx/hello:_Driver
-# $ bazel build ppx/hello:gendriver
+# $ bazel build ppx/adjunct_deps
+# $ bazel build ppx/adjunct_deps:_Hello
+# $ bazel build ppx/adjunct_deps:_ppx.exe
+# $ bazel build ppx/adjunct_deps:_Driver
+# $ bazel build ppx/adjunct_deps:gendriver
 
 # To inspect the result of ppx processing:
 # first, run `source tools/aliases`. this defines an alias `bl` you can use to browse the log.
 # uncomment the `ppx_print` line below to set output format to text
-# then run `bazel clean`, then `bazel build ppx/hello:_Hello --subcommands
+# then run `bazel clean`, then `bazel build ppx/adjunct_deps/hello:_Hello --subcommands
 # then run `bl` to inspect the command log. search for PpxTransformAction;
 # you will see the command, something like:
-# bazel-out/darwin-fastbuild/bin/ppx/hello/_hello.sh -dump-ast -o ../bazel-out/darwin-fastbuild/bin/ppx/hello/_obazl_/hello.ml -impl ppx/hello/hello.ml
+# bazel-out/darwin-fastbuild/bin/ppx/adjunct_deps/hello/_hello.sh -dump-ast -o ../bazel-out/darwin-fastbuild/bin/ppx/adjunct_deps/hello/_obazl_/hello.ml -impl ppx/adjunct_deps/hello/hello.ml
 # the transformed output is the `-o` parameter (without the leading '../').
 # see the full ppx command, add '-verbose' to the `opts` attribute of the `ocaml_module` rule.
 
@@ -63,7 +64,7 @@ ocaml_module(
 ###############
 ppx_executable(
     name = "_ppx.exe",
-    main = ":_Driver",          # obazl will place this last in the list of deps
+    main = "//ppx/driver",      # obazl will place this last in the list of deps
     # opts = [],                # obazl will automatically add '-predicates ppx_driver'
     deps = [
         # "@opam//pkg:ppx_deriving",
@@ -81,22 +82,3 @@ ppx_executable(
         "@opam//pkg:ppx_sexp_conv.runtime-lib"
     ]
 )
-
-###########
-ppx_module(
-    name = "_Driver",
-    src = ":ppxlib_driver.ml",
-    visibility = ["//visibility:public"],
-    deps = ["@opam//pkg:ppxlib"],
-)
-
-########
-genrule(
-    name = "gendriver",
-    outs = ["ppxlib_driver.ml"],
-    cmd = "\n".join([
-        "echo \"(* GENERATED FILE - DO NOT EDIT *)\" > \"$@\"",
-        "echo \"let () = Ppxlib.Driver.standalone ()\" >> \"$@\"",
-    ]),
-)
-
