@@ -1,8 +1,8 @@
-(* the ppx transformer injects code that depends on these two libs. we
-   can open them here, or we can use `-open` to open them on the
-   command line. *)
-open Sexplib      (* needed by ppx_sexp_conv.runtime_lib *)
-open Sexplib.Std (* needed by sexp extension op from ppx_sexp_conv *)
+(* the ppx transformer injects code that depends on these two libs.
+   common practice is to open them here in the source file, but for
+   demo purposes we use `-open` command-line options instead. *)
+(* open Sexplib *)
+(* open Sexplib.Std *)
 
 type int_pair = (int * int) [@@deriving sexp] ;;
 

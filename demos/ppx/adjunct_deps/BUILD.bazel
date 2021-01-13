@@ -1,4 +1,4 @@
-# $ bazel test ppx/adjunct_deps/hello
+# $ bazel test ppx/adjunct_deps
 
 # You can build each target:
 # $ bazel build ppx/adjunct_deps
@@ -45,18 +45,20 @@ ocaml_module(
     src  = "hello.ml",
     opts = [
         ## the ppx injects code (int_of_sexp, Sexp) that depends on these modules.
-        ## we can open them on the command line, or in hello.ml.
-        ## either way, we must also list the `sexplib` package as
+        ## usually these would be opened in the source file, but for demo purposes
+        ## we open them on the command line.
+        ## either way, we must also list the `sexplib` package that contains them as
         ## a dependency, either here in 'deps' or in the `adjunct_deps`
         ## attribute of the ppx transformer.
-        # "-open", "Sexplib",
-        # "-open", "Sexplib.Std",
+        "-open", "Sexplib",
+        "-open", "Sexplib.Std",
     ],
     ppx  = ":_ppx.exe",
     ppx_print = "@ppx//print:text", # uncomment to get readable output
     deps = [
-        # we could list both or either of these in adjunct_deps of the ppx (below)
-        "@opam//pkg:sexplib",
+        # we list both of these in adjunct_deps of the ppx (below),
+        # but we could put them here instead.
+        # "@opam//pkg:sexplib",
         # "@opam//pkg:ppx_sexp_conv.runtime-lib"
     ]
 )
@@ -71,7 +73,7 @@ ppx_executable(
         "@opam//pkg:ppx_sexp_conv",
     ],
     adjunct_deps = [
-        # "@opam//pkg:sexplib", # we could instead put this in deps
+        "@opam//pkg:sexplib", # we could instead put this in deps
                               # attrib of files to be transformed by
                               # this ppx
 
