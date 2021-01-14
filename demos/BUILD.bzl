@@ -12,10 +12,10 @@ PACKAGES = {
         "ppx_inline_test.runner",
         "ppx_inline_test.runner.lib"
     ]],
+    "ppxlib": ["", ["ppxlib.runner", "ppxlib.runner_as_ppx"]],
     "ppx_optcomp": [],
     "ppx_sexp_conv": ["", ["ppx_sexp_conv.runtime-lib"]],
     "ppx_sexp_value": [],  # needed by  //hello/hello_ppx:_Hello_ppx
-    "ppxlib": [], # needed by //hello/hello_ppx:ppx.exe
     "sexplib": [], ## needed by ppx_sexp_conv
 }
 
