@@ -6,6 +6,30 @@ Demos, tools, and tests for
 
 ## Demos
 
+### prerequisites:
+
+* opam installation
+
+* switch 4.11.1 - if you want to use a different switch, you will need
+  to edit the `OpamConfig` struct in `demos/BUILD.bzl`.
+
+* install ocamlfind
+
+* install merlin (if you use emacs)
+
+* install the packages listed in `demos/BUILD.bzl`. OBazl contains
+  code to automatically install them, but it is currently under revision.
+
+  * before you install `lwt`, install `libev` (MacOS) or `libevdev`
+    (Linux). See [lwt github](https://github.com/ocsigen/lwt) for more
+    information.
+
+    * MacOS:  `brew install libev`
+    * Linux: use your package manager to install `libev-dev` or `libev-devel`.
+
+
+### manifest
+
 * [configuration](demos/configuration) - demonstrates use of build
   flags and settings, and `--config` command line flag.
 
