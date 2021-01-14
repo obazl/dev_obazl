@@ -34,7 +34,9 @@ ocaml_test(
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
         "@opam//pkg:ounit2",
+        ## Notice we're using a module from a different package:
         "//rules/ocaml_module:Hello"
+        # ":_Hello"
     ]
 )
 
@@ -56,10 +58,24 @@ ocaml_module(
     src  = "test_ppx_inline.ml",
     ppx  = ":ppx_inline_test",
     ppx_args = ["-inline-test-lib", "hello"],
+    ppx_print = "@ppx//print:text",
     deps = [
         "@opam//pkg:core",
         # "@opam//pkg:ppx_inline_test.runtime-lib",  ## not needed - listed as adjunct on the ppx executable
-        "//rules/ocaml_module:Hello"
+        # "//rules/ocaml_module:Hello"
+        ":_Hello"
+    ]
+)
+
+ocaml_module(
+    name = "_Hello",
+    src  = "hello.ml",
+    ppx  = ":ppx_inline_test",
+    ppx_args = ["-inline-test-lib", "hello"],
+    deps = [
+        "@opam//pkg:core",
+        # "@opam//pkg:ppx_inline_test.runtime-lib",  ## not needed - listed as adjunct on the ppx executable
+        # "//rules/ocaml_module:Hello"
     ]
 )
 
