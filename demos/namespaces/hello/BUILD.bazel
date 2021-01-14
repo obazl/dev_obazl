@@ -1,4 +1,4 @@
-# $ bazel test demos/namespaces/hello
+# $ bazel test demos/namespaces/hello:test
 
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
