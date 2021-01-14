@@ -1,4 +1,4 @@
-## this driver module is shared by multiple ppx_executable
+## this runner module is shared by multiple ppx_executable
 ## note: no source files in this pkg, we generate the src file
 
 load(
@@ -9,8 +9,8 @@ load(
 
 ###########
 ppx_module(
-    name = "driver",
-    src = ":ppxlib_driver.ml",
+    name = "runner",
+    src = ":ppx_runner.ml",
     visibility = ["//visibility:public"],
     deps = ["@opam//pkg:ppxlib"],
 )
@@ -18,7 +18,7 @@ ppx_module(
 ########
 genrule(
     name = "gendriver",
-    outs = ["ppxlib_driver.ml"],
+    outs = ["ppx_runner.ml"],
     cmd = "\n".join([
         "echo \"(* GENERATED FILE - DO NOT EDIT *)\" > \"$@\"",
         "echo \"let () = Ppxlib.Driver.standalone ()\" >> \"$@\"",
