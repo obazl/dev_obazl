@@ -8,4 +8,3 @@ type int_pair = (int * int) [@@deriving sexp] ;;
 
 let x = [%sexp_of: (int * string) list] [1,"one"; 2,"two"] |> Sexp.to_string ;;
 
-

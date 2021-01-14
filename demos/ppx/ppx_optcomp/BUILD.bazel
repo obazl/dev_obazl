@@ -18,7 +18,7 @@ load(
 
 ###########
 ocaml_test(
-    name = "ppx_optcomp",
+    name = "test",
     main = "test.ml",
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
     deps = [

@@ -8,7 +8,7 @@ load(
 )
 
 ocaml_test(
-    name = "hello_module",
+    name = "test",
     main = "test.ml",
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
