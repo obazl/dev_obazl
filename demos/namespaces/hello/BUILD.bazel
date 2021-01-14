@@ -1,5 +1,4 @@
-# To build the module: $ bazel build minimal/hello_module:Hello
-# To run the test:     $ bazel test minimal/hello_module
+# $ bazel test namespaces/hello
 
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
@@ -17,7 +16,7 @@ ocaml_test(
     deps = [
         "@opam//pkg:ounit2",
         ":hello",
-        ## Without a library or archive, we must depend on the ns and each submodule:
+        ## Without a library or archive, we must depend on the ns module and each submodule:
         # ":_Hello_ns",
         # ":_Australian",
         # ":_English",
@@ -26,8 +25,9 @@ ocaml_test(
     ]
 )
 
-## Since the ns does not depend on the submodules, we use a library to
-## aggregate. We could also use an archive:
+## Since the ns module does not depend on the submodules, it is not
+## sufficient to depend on it alone. We use a library to aggregate. We
+## could also use an archive:
 # ocaml_archive(
 ocaml_library(
     name = "hello",
