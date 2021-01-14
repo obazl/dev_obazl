@@ -1,4 +1,5 @@
 ## this driver module is shared by multiple ppx_executable
+## note: no source files in this pkg, we generate the src file
 
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
