@@ -1,5 +1,7 @@
 # demos
 
+**WARNING: OBSOLETE DOC**
+
 Run Bazel builds from the `demos` directory, e.g.
 
 ```
