@@ -40,6 +40,7 @@ Demos, tools, and tests for
   * [hello_module](demos/minimal/hello_module) - a simple use of `ocaml_module`
 
 * [namespaces](demos/namespaces) - using namespaces
+  * [hello](demos/namespaces/hello) - demo of a simple namespace module with four submodules.
   * [makefiles](demos/namespaces/makefiles) - demo of raw namespaces using makefiles instead of Bazel.
 
 * [ppx](demos/ppx) - PPX support demos
