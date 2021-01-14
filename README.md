@@ -1,6 +1,8 @@
 # dev_obazl
 
-OBazl development tools and tests
+Demos, tools, and tests for
+[obazl_rules_ocaml](https://github.com/obazl/rules_opam) and
+[obazl_rules_opam](https://github.com/obazl/rules_opam).
 
 ## Demos
 
