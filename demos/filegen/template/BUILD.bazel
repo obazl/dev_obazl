@@ -1,4 +1,4 @@
-# Demonstrates generation of files from a template based on command-line arguments.
+# Demonstrates generation of a file from a template, based on command-line arguments.
 
 # Contains test and executable targets that use the generated file.
 # The test target (`:test`) uses `ounit2` to verify the content of the
@@ -21,8 +21,6 @@ load(
     "ocaml_executable",
     "ocaml_module",
     "ocaml_test",
-    "ppx_executable",
-    "ppx_module"
 )
 
 ## *_flag rules define command-line options, e.g. --//filegen/template:red=123

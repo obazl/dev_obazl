@@ -1,3 +1,5 @@
+## This example demonstrates how to use `genrule` to run a PPX transformation.
+
 # $ bazel test ppx/genrule
 
 ## demonstrates how to run a ppx manually using a `genrule`
@@ -36,7 +38,8 @@ ocaml_module(
     ## use output of genrule that runs the ppx
     src  = "tmp/hello.ml", # output of genrule, which will be triggered
 
-    ## convenience attribs: run the ppx as an action of this rule
+    ## normally you would use these convenience attribs to tell the
+    ## `ocaml_module` rule run the ppx as an action before compiling:
     # src  = "hello.ml",
     # ppx  = ":_ppx.exe",
 
