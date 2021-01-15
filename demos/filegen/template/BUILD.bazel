@@ -1,6 +1,4 @@
-# Demonstrates generation of files from based on command-line arguments.
-# Generates a module file `config.ml` from a template and a set of
-# build settings.
+# Demonstrates generation of files from a template based on command-line arguments.
 
 # Contains test and executable targets that use the generated file.
 # The test target (`:test`) uses `ounit2` to verify the content of the
