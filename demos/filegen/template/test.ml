@@ -2,8 +2,8 @@ open OUnit2 ;;
 
 let test1 test_ctxt = assert_equal ~printer:string_of_bool false (Config.colorize);;
 let test2 test_ctxt = assert_equal ~printer:string_of_int 0 (Config.red);;
-let test3 test_ctxt = assert_equal ~printer:string_of_int 0 (Config.green);;
-let test4 test_ctxt = assert_equal ~printer:string_of_int 0 (Config.blue);;
+let test3 test_ctxt = assert_equal ~printer:string_of_int 105 (Config.green);;
+let test4 test_ctxt = assert_equal ~printer:string_of_int 42 (Config.blue);;
 
 let suite =
 "suite">:::
