@@ -1,0 +1,56 @@
+## This example demonstrates the OCaml Foreign Function Interface (FFI).
+## New code should use the 'ctypes' package instead.
+
+# $ bazel run interop/ffi:hello
+# or
+# $ bazel build interop/ffi:hello
+# $ ./bazel-bin/interop/ffi/hello
+
+load(
+    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_executable",
+    "ocaml_module",
+    "ocaml_test"
+)
+
+# ocaml_test(
+#     name = "test",
+#     main = "test.ml",
+#     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+#     deps = [
+#         "@opam//pkg:ounit2",
+#         "_Main"
+#     ]
+# )
+
+## We can attach our C lib to either the module or the executable. Or an archive.
+## In this case, since our ml wrapper module covers the entire C API,
+## we attach the C library to the wrapper module.
+
+ocaml_executable(
+    name = "hello",
+    deps = [":_Main"],
+    # ffi = {
+    #     "//interop/ffi/cclibs:print_stuff": "default"
+    # }
+)
+
+ocaml_module(
+    name = "_Main",
+    src  = "main.ml",
+    deps = [
+        ## For demo purposes, we have two wrapper implementations to choose from.
+        # "//interop/ffi/cclibs:print_stuff_wrapper"
+        "_Print_stuff_wrapper"
+    ]
+)
+
+ocaml_module(
+    name = "_Print_stuff_wrapper",
+    src  = "print_stuff_wrapper.ml",
+    cc_deps = {
+        ## linkmode: "default" = static on linux, dynamic on macos
+        ## Correct linking to dylibs on MacOS is an open issue, so we force "static"
+        "//interop/ffi/cclibs:print_stuff": "static"
+    }
+)
