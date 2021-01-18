@@ -32,17 +32,17 @@ Documentation: [docs_obazl](https://obazl.github.io/docs_ocaml/ug/)
 
 ### manifest
 
-* [conditional](conditional) Conditional compilation - selection of build targets based on config parameters
+* [conditional](demos/conditional) Conditional compilation - selection of build targets based on config parameters
 
 * [configuration](demos/configuration) - demonstrates use of build
   flags and settings, and `--config` command line flag.
 
-* [filegen](filegen) File generation techniques
+* [filegen](demos/filegen) File generation techniques
 
 * [interop](demos/interop/README.md) - using C/C++ and other (Rust, Go, etc) resources
-  * [ffi](demos/ffi) - Uses standard OCaml low level [FFI](https://caml.inria.fr/pub/docs/manual-ocaml/intfc.html) to wrap simple C library
-  * [ctypes](demos/ctypes) - Uses the higher level [ctypes](https://github.com/ocamllabs/ocaml-ctypes) package. (Not yet implemented)
-  * [cstubs](demos/cstubs) - Uses the [cstubs](http://simonjbeaumont.com/posts/ocaml-ctypes) subpackage of the [ctypes] package. (Not yet implemented)
+  * [ffi](demos/interop/ffi) - Uses standard OCaml low level [FFI](https://caml.inria.fr/pub/docs/manual-ocaml/intfc.html) to wrap simple C library
+  * [ctypes](demos/interop/ctypes) - Uses the higher level [ctypes](https://github.com/ocamllabs/ocaml-ctypes) package. (Not yet implemented)
+  * [cstubs](demos/interop/cstubs) - Uses the [cstubs](http://simonjbeaumont.com/posts/ocaml-ctypes) subpackage of the [ctypes] package. (Not yet implemented)
 
 * [minimal](demos/minimal) - minimal examples
   * [hello_archive](demos/minimal/hello_archive) - a simple use of `ocaml_archive`
