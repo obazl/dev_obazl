@@ -52,7 +52,7 @@ Documentation: [docs_obazl](https://obazl.github.io/docs_ocaml/ug/)
 
 * [namespaces](demos/namespaces) - using namespaces
   * [hello](demos/namespaces/hello) - demo of a simple namespace module with four submodules.
-  * [minimal](demos/minimal/makefiles) - demo of raw namespaces using makefiles instead of Bazel.
+  * [minimal](demos/namespaces/minimal) - demo of raw namespaces using makefiles instead of Bazel.
 
 * [ppx](demos/ppx) - PPX support demos
   * [adjunct_deps](demos/ppx/adjunct_deps) - shows how to use PPX adjunct deps (a/k/a "runtime" deps)
