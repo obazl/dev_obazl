@@ -60,14 +60,15 @@ int_setting( name = "red_255", build_setting_default = 255 )
 int_setting( name = "green_127", build_setting_default = 127 )
 
 ## this target is not used, but you can build it and inspect the output.
-demo_config(
-    name = "coral",
-    template = "config.ml.template",
-    colorize = ":colorize_enabled",
-    red   = ":red_255",
-    green = ":green_127",
-    blue  = 80
-)
+## we comment it out so that 'bazel test //...:*' will work
+# demo_config(
+#     name = "coral",
+#     template = "config.ml.template",
+#     colorize = ":colorize_enabled",
+#     red   = ":red_255",
+#     green = ":green_127",
+#     blue  = 80
+# )
 
 # int_setting( name = "red_128",   build_setting_default = 128 )
 # int_setting( name = "green_128", build_setting_default = 128 )
