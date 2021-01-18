@@ -1,0 +1,78 @@
+# To build, from examples/ run: $ bazel build //hello/hello_archive:hello_archive
+# You can shorten //hello/archive:archive to hello/hello_archive
+# To run: $ bazel run hello/hello_archive
+
+load(
+    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_archive",
+    "ocaml_executable",
+    "ocaml_module",
+)
+
+ocaml_executable(
+    name = "hello_archive",
+    main = ":main",
+    deps = [":main"]
+)
+
+# ocaml_executable(
+#     name = "hello2",
+#     deps = [":main", ":archive"]
+# )
+
+# ocaml_executable(
+#     name = "hello3",
+#     deps = [":archive", ":main"]
+# )
+
+# ocaml_executable(
+#     name = "hello4",
+#     main = ":simple",
+#     deps = [":main2", ":easy"]
+# )
+
+ocaml_module(
+    name = "main",
+    src = "main.ml",
+    deps = [":archive"]
+)
+
+# ocaml_module(
+#     name = "main2",
+#     src = "main2.ml",
+# )
+
+ocaml_archive(
+    name = "archive",
+    deps = [":easy", ":simple"],
+)
+
+ocaml_module(
+    name = "easy",
+    src  = "easy.ml",
+)
+
+ocaml_module(
+    name = "simple",
+    src  = "simple.ml",
+)
+
+# ## this target compiles sources to an archive:
+# ocaml_archive(
+#     name = "archive_ml",
+#     message = "Archiving...",
+#     srcs = ["easy.ml", "simple.ml"],
+#     opts = [ "-verbose" ],
+#     visibility = ["//visibility:public"],
+# )
+
+# ## this target mixes compilation and archiving:
+# ocaml_archive(
+#     name = "archive_mix",
+#     message = "Archiving...",
+#     srcs = ["easy.ml"],
+#     opts = [ "-verbose" ],
+#     deps = [":simple"],
+#     visibility = ["//visibility:public"],
+# )
+
