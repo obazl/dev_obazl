@@ -1,0 +1,93 @@
+# $ bazel test rules/ocaml_archive:test
+# $ bazel aquery rules/ocaml_archive:test
+
+# $ bazel run rules/ocaml_archive:hello
+# $ bazel aquery rules/ocaml_archive:hello
+
+load(
+    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_archive",
+    "ocaml_executable",
+    "ocaml_module",
+    "ocaml_test"
+)
+
+ocaml_test(
+    name = "test",
+    main = "test.ml",
+    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [
+        "@opam//pkg:ounit2",
+        ":main"
+        # "//rules/ocaml_archive:_Easy",
+        # "//rules/ocaml_archive:_Simple"
+    ]
+)
+
+ocaml_executable(
+    name = "hello",
+    main = ":main",
+    deps = [":main"]
+)
+
+# ocaml_executable(
+#     name = "hello2",
+#     deps = [":main", ":archive"]
+# )
+
+# ocaml_executable(
+#     name = "hello3",
+#     deps = [":archive", ":main"]
+# )
+
+# ocaml_executable(
+#     name = "hello4",
+#     main = ":simple",
+#     deps = [":main2", ":easy"]
+# )
+
+ocaml_module(
+    name = "main",
+    src = "main.ml",
+    deps = [":archive"]
+)
+
+# ocaml_module(
+#     name = "main2",
+#     src = "main2.ml",
+# )
+
+ocaml_archive(
+    name = "archive",
+    deps = [":_Easy", ":_Simple"],
+)
+
+ocaml_module(
+    name = "_Easy",
+    src  = "easy.ml",
+)
+
+ocaml_module(
+    name = "_Simple",
+    src  = "simple.ml",
+)
+
+# ## this target compiles sources to an archive:
+# ocaml_archive(
+#     name = "archive_ml",
+#     message = "Archiving...",
+#     srcs = ["easy.ml", "simple.ml"],
+#     opts = [ "-verbose" ],
+#     visibility = ["//visibility:public"],
+# )
+
+# ## this target mixes compilation and archiving:
+# ocaml_archive(
+#     name = "archive_mix",
+#     message = "Archiving...",
+#     srcs = ["easy.ml"],
+#     opts = [ "-verbose" ],
+#     deps = [":simple"],
+#     visibility = ["//visibility:public"],
+# )
+
