@@ -1,0 +1,6 @@
+## Build programs commonly need to decide which files to build based
+## on some initial condition, such as the host platform - build
+## `windows/foo.c` when on windows, `linux/foo.c`, etc.
+
+## This demo shows how to select files for compilation based on
+## command-line flags or options.
