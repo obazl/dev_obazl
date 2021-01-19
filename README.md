@@ -82,3 +82,8 @@ Documentation: [docs_obazl](https://obazl.github.io/docs_ocaml/ug/)
   * [ocaml_interface](demos/rules/ocaml_interface)
   * [ocaml_module](demos/rules/ocaml_module)
   * [ocaml_test](demos/rules/ocaml_test) - demonstrates use of libs `ounit2`, `alcotest`, and `ppx_inline_test`
+
+## Acknowledgements
+
+Support for the development of OBazl was provided by a Mina Genesis
+Token Grant and the generous assistance of the [Mina](https://minaprotocol.com/) team.
