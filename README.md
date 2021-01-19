@@ -10,14 +10,16 @@ Documentation: [docs_obazl](https://obazl.github.io/docs_ocaml/ug/)
 
 ### prerequisites:
 
-* opam installation
+* install [OPAM](https://opam.ocaml.org/)
 
-* switch 4.11.1 - if you want to use a different switch, you will need
-  to edit the `OpamConfig` struct in `demos/BUILD.bzl`.
+* install a switch using the latest version (4.11.1) of OCaml: $ opam switch create 4.11.1`.
 
-* install ocamlfind
+  * if you want to use a different switch, you will need to edit the
+    `OpamConfig` struct in `demos/BUILD.bzl`.
 
-* install merlin (if you use emacs)
+* install ocamlfind: `$ opam install ocamlfind`
+
+* install merlin (if you use emacs): `$ opam install merlin`
 
 * install the packages listed in `demos/BUILD.bzl`. OBazl contains
   code to automatically install them, but it is currently under revision.
@@ -29,6 +31,13 @@ Documentation: [docs_obazl](https://obazl.github.io/docs_ocaml/ug/)
     * MacOS:  `brew install libev`
     * Linux: use your package manager to install `libev-dev` or `libev-devel`.
 
+* `cd demos` and build/run/test some demos. See the `BUILD.bazel` files for instructions. For example:
+
+```
+    $ bazel build minimal/hello_module:_Hello
+    $ bazel test minimal/hello_module:test
+    $ bazel run minimal/hello_executable
+```
 
 ### manifest
 
