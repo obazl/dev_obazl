@@ -12,17 +12,17 @@ Documentation: [docs_obazl](https://obazl.github.io/docs_ocaml/ug/)
 
 * install [OPAM](https://opam.ocaml.org/)
 
-* install a switch using the latest version (4.11.1) of OCaml: $ opam switch create 4.11.1`.
+* install a switch using the latest version (4.11.1) of OCaml: `$ opam switch create 4.11.1`.
 
   * if you want to use a different switch, you will need to edit the
-    `OpamConfig` struct in `demos/BUILD.bzl`.
+    `OpamConfig` struct in `demos/WORKSPACE.bzl`.
 
 * install ocamlfind: `$ opam install ocamlfind`
 
 * install merlin (if you use emacs): `$ opam install merlin`
 
-* install the packages listed in `demos/BUILD.bzl`. OBazl contains
-  code to automatically install them, but it is currently under revision.
+* install the packages listed in `demos/WORKSPACE.bzl`. (OBazl contains
+  code to do this automatically, but it is currently under revision.)
 
   * before you install `lwt`, install `libev` (MacOS) or `libevdev`
     (Linux). See [lwt github](https://github.com/ocsigen/lwt) for more
