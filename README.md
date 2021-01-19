@@ -8,6 +8,11 @@ Documentation: [docs_obazl](https://obazl.github.io/docs_ocaml/ug/)
 
 ## Demos
 
+>    Contributing: if you would like to contribute a demo, please file an
+>    issue first. Demos should illustrate one concept, using minimal code.
+>    They should not require the user to install or configure any other
+>    software, unless that is the point of the demo.
+
 ### prerequisites:
 
 * install [OPAM](https://opam.ocaml.org/)
