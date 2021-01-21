@@ -51,7 +51,7 @@ ocaml_module(
 ## select a parameter, for example.
 
 ## here {...} is for string interpolation, and $@ is the genrule outfile
-CMD = "echo \[%%define greeting {cmd}\] > \"$@\""
+CMD = "echo [%%define greeting {cmd}] > \"$@\""
 
 genrule(
     name = "genconfig",
