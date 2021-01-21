@@ -26,10 +26,14 @@ Documentation: [docs_obazl](https://obazl.github.io/docs_ocaml/ug/)
 
 * install merlin (if you use emacs): `$ opam install merlin`
 
-* install the packages listed in `demos/WORKSPACE.bzl`. (OBazl contains
-  code to do this automatically, but it is currently under revision.)
+* install the packages listed in `demos/WORKSPACE.bzl`.
 
-  * before you install `lwt`, install `libev` (MacOS) or `libevdev`
+>    You can ask OBazl to do this for you by setting a few environment variables:
+>    `$ OBAZL_OPAM_VERIFY=1 OBAZL_OPAM_PIN=1 bazel test minimal/hello_module:test`
+>    This capability is undergoing revision; it will mostly work, but you will still
+>    have to install a few packages by hand, e.g. `$ opam install core` etc.
+
+  * before you install `lwt`, you may need to install `libev` (MacOS) or `libevdev`
     (Linux). See [lwt github](https://github.com/ocsigen/lwt) for more
     information.
 
@@ -43,6 +47,8 @@ Documentation: [docs_obazl](https://obazl.github.io/docs_ocaml/ug/)
     $ bazel test minimal/hello_module:test
     $ bazel run minimal/hello_executable
 ```
+
+To run all tests:  `$ bazel test //...:*`
 
 ### manifest
 
