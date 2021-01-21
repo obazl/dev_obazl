@@ -10,4 +10,4 @@ build:teal --//configuration:red=0
 build:teal --//configuration:green=128
 build:teal --//configuration:blue=128
 
-try-import user.bazelrc
+try-import dev/user.bazelrc

@@ -1,5 +1,4 @@
 bazel-*
-user.bazelrc
 dev
 logs
 tmp

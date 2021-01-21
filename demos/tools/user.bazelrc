@@ -1,0 +1,16 @@
+## copy me to demos/dev (private developer's workspace)
+
+build --color=yes
+build --subcommands=pretty_print
+build --verbose_failures
+build --sandbox_debug
+
+# build --show_timestamps
+# build --jobs 600
+# build --keep_going
+# query --keep_going
+
+# these two get rid of ld warnings about object file being "built for newer macOS version than being linked"
+# build:macos --macos_minimum_os='10.15'
+# build --config=macos
+
