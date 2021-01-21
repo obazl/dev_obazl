@@ -15,6 +15,8 @@ Documentation: [docs_obazl](https://obazl.github.io/docs_ocaml/ug/)
 
 ### prerequisites:
 
+* platform: tested on MacOS Catalina (10.15.7) and Linux (Debian 9). Probably won't work on Windows.
+
 * install [OPAM](https://opam.ocaml.org/)
 
 * install a switch using the latest version (4.11.1) of OCaml: `$ opam switch create 4.11.1`.
