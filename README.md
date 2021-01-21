@@ -54,6 +54,9 @@ To run all tests:  `$ bazel test //...:*`
 
 ### manifest
 
+> **NOTE**: the `demos/dev` subdirectory is not a demo; it's a private
+       workspace you can use to store shell scripts, data files, etc. Everything in it is gitignored.
+
 * [conditional](demos/conditional) Conditional compilation - selection of build targets based on config parameters
 
 * [configuration](demos/configuration) - demonstrates use of build
