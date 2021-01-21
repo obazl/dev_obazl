@@ -1,5 +1,8 @@
 bazel-*
 user.bazelrc
+dev
+logs
+tmp
 
 **/*.cmo
 **/*.cmi
