@@ -1,0 +1,34 @@
+# demonstrates use of ocamllex
+
+load(
+    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_lex",
+    "ocaml_executable",
+    "ocaml_module",
+)
+
+ocaml_executable(
+    name = "main",
+    main = ":_Main"
+)
+
+ocaml_module(
+    name = "_Main",
+    src  = "main.ml",
+    opts = ["-w", "-21-26-33"],
+    deps = [
+        "@opam//pkg:core",
+        ":_Lexer"
+    ],
+)
+ocaml_module(
+    name = "_Lexer",
+    src  = "_lexer.ml",
+    deps = [
+    ],
+)
+
+ocaml_lex(
+    name = "_lexer.ml",
+    src  = "lexer.mll",
+)
