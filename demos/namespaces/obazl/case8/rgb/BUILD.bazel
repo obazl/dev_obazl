@@ -1,0 +1,38 @@
+load(
+    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_module",
+    "ocaml_ns",
+)
+
+load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_init")
+ns_init(srcs = glob(["*.ml"]))
+
+ocaml_ns(
+    name = "rgb",
+    submodules = {
+        ":_Red": "Red",
+        ":_Green": "Green",
+        ":_Blue": "Blue",
+    },
+    visibility = ["//visibility:public"]
+)
+
+ocaml_module(
+    name = "_Red",
+    src  = "red.ml",
+    deps = [":_Blue", ":_Green"],
+    ns_init = ":_ns_init",
+)
+
+ocaml_module(
+    name = "_Green",
+    src  = "green.ml",
+    deps = [":_Blue"],
+    ns_init = ":_ns_init",
+)
+
+ocaml_module(
+    name = "_Blue",
+    src  = "blue.ml",
+    ns_init = ":_ns_init",
+)

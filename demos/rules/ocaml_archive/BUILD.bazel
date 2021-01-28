@@ -49,7 +49,10 @@ ocaml_executable(
 ocaml_module(
     name = "main",
     src = "main.ml",
-    deps = [":archive"]
+    deps = [
+        "@opam//pkg:core",
+        ":archive"
+    ]
 )
 
 # ocaml_module(

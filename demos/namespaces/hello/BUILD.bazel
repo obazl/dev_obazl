@@ -9,6 +9,27 @@ load(
     "ocaml_test"
 )
 
+load( "@obazl_rules_ocaml//ocaml:macros.bzl", "ns_init")
+# This exposes target "_ns_init". The 'ocaml_module' instances for
+# submodules must reference this target in their `ns_init` attribute.
+# To change the target label, use the 'name' attribute'.
+ns_init(srcs = glob(["*.ml"]))
+
+## The ns_init macro expands to an instance of rule 'ocaml_ns_init'.
+## That rule sets the "ns prefix string", which serves as a kind of
+## pseudo-namespace. Submodule names will be formed by prefixing this
+## string to the (original, un-namespaced) module name, separated by
+## the separator string (default: '__').
+
+## The main namespace module will contain aliasing equations that map
+## module names to these prefixed module names.
+
+## By default, the ns prefix string is formed from the package name,
+## with '/' replaced by '_'. You can use the 'ns' attribute to change
+## this:
+
+# ns_init(ns = "foobar", srcs = glob(["*.ml"]))
+
 ocaml_test(
     name = "test",
     main = "test.ml",
@@ -16,63 +37,41 @@ ocaml_test(
     deps = [
         "@opam//pkg:ounit2",
         ":hello",
-        ## Without a library or archive, we must depend on the ns module and each submodule:
-        # ":_Hello_ns",
-        # ":_Australian",
-        # ":_English",
-        # ":_French",
-        # ":_Spanish"
     ]
 )
 
-## Since the ns module does not depend on the submodules, it is not
-## sufficient to depend on it alone. We use a library to aggregate. We
-## could also use an archive:
-# ocaml_archive(
-ocaml_library(
-    name = "hello",
-    deps = [
-        ":_Australian",
-        ":_English",
-        ":_French",
-        ":_Spanish",
-    ],
-)
-
 ocaml_ns(
-    name = "_Hello_ns",
-    ns = "hello",
-    ## the ns must depend on source files, not build targets:
-    submodules = [
-        "australian.ml",  # not ":_Australian"
-        "english.ml",
-        "french.ml",
-        "spanish.ml",
-    ],
+    name = "hello",
+    submodules = {
+        ":_Australian": "Australian",
+        ":_English": "English",
+        ":_French": "French",
+        ":_Spanish": "Spanish"
+    },
 )
 
-## Each submodule must depend on the ns target 'ns = ":_Hello_ns"'
+## Each submodule must depend on the ns-init target
 ocaml_module(
-    ns   = ":_Hello_ns",
     name = "_Australian",
     src  = "australian.ml",
+    ns_init = ":_ns_init",
 )
 
 ocaml_module(
-    ns   = ":_Hello_ns",
     name = "_English",
     src  = "english.ml",
+    ns_init = ":_ns_init",
 )
 
 ocaml_module(
-    ns   = ":_Hello_ns",
     name = "_French",
     src  = "french.ml",
+    ns_init = ":_ns_init",
 )
 
 ocaml_module(
-    ns   = ":_Hello_ns",
     name = "_Spanish",
     src  = "spanish.ml",
+    ns_init = ":_ns_init",
 )
 

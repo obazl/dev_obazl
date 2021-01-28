@@ -1,0 +1,55 @@
+load(
+    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_archive",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns",
+    "ocaml_test",
+)
+
+load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_init")
+ns_init(srcs = glob(["*.ml"], exclude=["subred.ml"]))
+
+ocaml_test(
+    name = "test",
+    main = "test.ml",
+    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [
+        "@opam//pkg:ounit2",
+        ":color"
+    ]
+)
+
+ocaml_ns(
+    name = "color",
+    submodules = {
+        # OBazl will put these in depencency order. E.g. Red depends on
+        # Blue and Green, and Green depends on Blue, so the order on the
+        # command line will be Blue, Green, Red, Color.
+        # To see this run '$ bazel aquery namepaces/recursive/obazl:test'
+        ":_Red": "Red",
+        ":_Green": "Green",
+        ":_Blue": "Blue",
+    },
+)
+
+ocaml_module(
+    name = "_Red",
+    src  = "red.ml",
+    ns_init = ":_ns_init",
+    visibility = ["//visibility:public"]
+)
+
+ocaml_module(
+    name = "_Green",
+    src  = "green.ml",
+    ns_init = ":_ns_init",
+    visibility = ["//visibility:public"]
+)
+
+ocaml_module(
+    name = "_Blue",
+    src  = "blue.ml",
+    ns_init = ":_ns_init",
+    visibility = ["//visibility:public"]
+)

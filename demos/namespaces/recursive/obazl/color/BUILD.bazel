@@ -1,0 +1,69 @@
+load(
+    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_archive",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns",
+)
+
+load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_init")
+# To demonstate sticky deps, we do not want to include subred.ml as a namespaced submodule.
+# defines target :_ns_init, which must be reference by the ns_init attrib of each submodule.
+ns_init(srcs = glob(["*.ml"], exclude=["subred.ml"]))
+
+ocaml_ns(
+    name = "color",
+    # main = "color.ml",
+    # footer  = "color_frag.ml",
+    submodules = {
+        # OBazl will put these in depencency order. E.g. Red depends on
+        # Blue and Green, and Green depends on Blue, so the order on the
+        # command line will be Blue, Green, Red, Color.
+        # To see this run '$ bazel aquery namepaces/recursive/obazl:test'
+        ":_Red": "Red",
+        ":_Green": "Green",
+        ":_Blue": "Blue",
+        # ":_CMY"  # include an ns module as a submodule
+    },
+    visibility = ["//visibility:public"]
+)
+
+ocaml_ns(
+    name = "kolor",
+    # include  = "kolor.ml",  # or: append?
+    ## OBazl decouples (sub)module name and file name.
+    ## Here module Byed maps to file red.ml, Grue maps to green.ml
+    submodules = {
+        ":_Red": "Byed",
+        ":_Green": "Grue",
+    },
+    visibility = ["//visibility:public"]
+)
+
+ocaml_module(
+    name = "_Red",
+    src  = "red.ml",
+    deps = [":_Blue", ":_Green", ":_Subred"],
+    ns_init = ":_ns_init",
+)
+
+# Module Red depends on Subred, but Subred is not namespaced (see 'exclude' in
+# ns-init above). It will automatically be listed as a dep for anything
+# that depends on the Red module, such as the Color module of this demo.
+ocaml_module(
+    name = "_Subred",
+    src  = "subred.ml"
+)
+
+ocaml_module(
+    name = "_Green",
+    src  = "green.ml",
+    deps = [":_Blue"],
+    ns_init = ":_ns_init",
+)
+
+ocaml_module(
+    name = "_Blue",
+    src  = "blue.ml",
+    ns_init = ":_ns_init",
+)
