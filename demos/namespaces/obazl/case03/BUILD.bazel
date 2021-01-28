@@ -48,4 +48,5 @@ ocaml_module(
     name = "_Blue",
     src  = "blue.ml",
     ns_init = ":_ns_init",
+    visibility = ["//visibility:public"]
 )

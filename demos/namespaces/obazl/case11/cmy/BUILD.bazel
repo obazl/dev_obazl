@@ -1,0 +1,37 @@
+load(
+    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_module",
+    "ocaml_ns",
+)
+
+load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_init")
+ns_init(srcs = glob(["*.ml"]))
+
+ocaml_ns(
+    name = "cmy",
+    submodules = {
+        ":_Cyan": "Cyan",
+        ":_Magenta": "Magenta",
+        ":_Yellow": "Yellow",
+    },
+    visibility = ["//visibility:public"]
+)
+
+ocaml_module(
+    name = "_Cyan",
+    src  = "cyan.ml",
+    deps = [":_Magenta"],
+    ns_init = ":_ns_init",
+)
+
+ocaml_module(
+    name = "_Magenta",
+    src  = "magenta.ml",
+    ns_init = ":_ns_init",
+)
+
+ocaml_module(
+    name = "_Yellow",
+    src  = "yellow.ml",
+    ns_init = ":_ns_init",
+)

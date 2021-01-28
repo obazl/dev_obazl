@@ -41,6 +41,7 @@ ocaml_module(
     name = "_Green",
     src  = "green.ml",
     ns_init = ":_ns_init",
+    visibility = ["//visibility:public"]
 )
 
 ocaml_module(

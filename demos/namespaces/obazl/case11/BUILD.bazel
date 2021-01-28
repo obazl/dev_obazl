@@ -1,0 +1,28 @@
+load(
+    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_archive",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "test.ml",
+    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [
+        "@opam//pkg:ounit2",
+        ":color"
+    ]
+)
+
+ocaml_ns(
+    name = "color",
+    main = "color.ml",
+    submodules = {
+        "//namespaces/obazl/case11/rgb": "RGB",
+        "//namespaces/obazl/case11/cmy": "CMY",
+    },
+    visibility = ["//visibility:public"]
+)

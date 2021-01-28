@@ -1,12 +1,11 @@
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
-    "ocaml_archive",
-    "ocaml_library",
     "ocaml_module",
     "ocaml_ns",
     "ocaml_test",
 )
 
+# In this case, we need ns_init, since our ns contains a local submodule.
 load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_init")
 ns_init(srcs = glob(["*.ml"]))
 
@@ -22,12 +21,16 @@ ocaml_test(
 
 ocaml_ns(
     name = "color",
-    main  = "color.ml",
     submodules = {
-        ## this ns contains ns submodules
-        "//namespaces/obazl/case8/rgb": "RGB",
-        "//namespaces/obazl/case8/cmy": "CMY",
-        # "//namespaces/obazl/case8/hsv": "Hsv",
-    },
-    visibility = ["//visibility:public"]
+        "//namespaces/obazl/case01:_Red": "Red",
+        "//namespaces/obazl/case02:_Green": "Green",
+        "//namespaces/obazl/case03:_Blue": "Blue",
+        ":_Grue": "Grue"
+    }
+)
+
+ocaml_module(
+    name = "_Grue",
+    src  = "grue.ml",
+    ns_init = ":_ns_init",
 )

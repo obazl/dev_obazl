@@ -1,0 +1,31 @@
+load(
+    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_archive",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns",
+    "ocaml_test",
+)
+
+# Note that in this case we do not need ns-init, since we depend on
+# modules from other packages (who have their own ns-init).
+
+ocaml_test(
+    name = "test",
+    main = "test.ml",
+    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [
+        "@opam//pkg:ounit2",
+        ":color"
+    ]
+)
+
+ocaml_ns(
+    name = "color",
+    main = "color.ml",
+    submodules = {
+        "//namespaces/obazl/case01:_Red": "Red",
+        "//namespaces/obazl/case01:_Green": "Green",
+        "//namespaces/obazl/case01:_Blue": "Blue",
+    }
+)
