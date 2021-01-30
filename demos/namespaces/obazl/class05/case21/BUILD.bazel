@@ -7,10 +7,6 @@ load(
     "ocaml_test",
 )
 
-# Note that in this case we do not need ns-init, since we depend on
-# modules from other packages (who have their own ns-init targets),
-# and this package contains no submodules.
-
 ocaml_test(
     name = "test",
     main = "test.ml",
@@ -27,8 +23,8 @@ ocaml_test(
 ocaml_ns_module(
     name = "color",
     submodules = {
-        "//namespaces/obazl/case01:_Red": "Red",
-        "//namespaces/obazl/case01:_Green": "Green",
-        "//namespaces/obazl/case01:_Blue": "Blue",
+        "//namespaces/obazl/class05/case21/rgb": "RGB",
+        "//namespaces/obazl/class05/case21/cmy": "CMY",
     },
+    visibility = ["//visibility:public"],
 )

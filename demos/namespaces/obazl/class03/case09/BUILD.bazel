@@ -26,9 +26,9 @@ ocaml_test(
 ocaml_ns_module(
     name = "color",
     submodules = {
-        "//namespaces/obazl/case01:_Red": "Red",
-        "//namespaces/obazl/case02:_Green": "Green",
-        "//namespaces/obazl/case03:_Blue": "Blue",
+        "//namespaces/obazl/class01/case01:_Red": "Red",
+        "//namespaces/obazl/class01/case02:_Green": "Green",
+        "//namespaces/obazl/class01/case03:_Blue": "Blue",
         ":_Grue": "Grue",
     },
 )

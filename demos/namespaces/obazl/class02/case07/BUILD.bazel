@@ -1,14 +1,8 @@
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
-    "ocaml_archive",
-    "ocaml_library",
-    "ocaml_module",
     "ocaml_ns_module",
     "ocaml_test",
 )
-
-# Note that in this case we do not need ns-init, since we depend on
-# modules from other packages (who have their own ns-init).
 
 ocaml_test(
     name = "test",
@@ -25,10 +19,10 @@ ocaml_test(
 
 ocaml_ns_module(
     name = "color",
-    main = "color.ml",
+    main = "color_main.ml",
     submodules = {
-        "//namespaces/obazl/case01:_Red": "Red",
-        "//namespaces/obazl/case01:_Green": "Green",
-        "//namespaces/obazl/case01:_Blue": "Blue",
+        "//namespaces/obazl/class01/case01:_Red": "Red",
+        "//namespaces/obazl/class01/case02:_Green": "Green",
+        "//namespaces/obazl/class01/case03:_Blue": "Blue",
     },
 )

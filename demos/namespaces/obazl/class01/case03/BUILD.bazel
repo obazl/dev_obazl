@@ -28,8 +28,8 @@ ocaml_test(
 
 ocaml_ns_module(
     name = "color",
-    # use user-provided file as main ns module:
-    main = "color.ml",  ## Notice that we do NOT have a compile rule for color.ml
+    # use user-provided file as main ns module. in this case it will be renamed (copied) to color.ml:
+    main = "color_main.ml",  ## Notice that we do NOT have a compile rule for color_main.ml
     submodules = {
         ":_Red": "Red",
         ":_Green": "Green",
@@ -54,5 +54,10 @@ ocaml_module(
     name = "_Blue",
     ns = ":_ns_resolver",
     struct = "blue.ml",
-    visibility = ["//visibility:public"],
+    visibility = [
+        "//namespaces/obazl/class02/case08:__pkg__",
+        "//namespaces/obazl/class02/case07:__pkg__",
+        "//namespaces/obazl/class03/case09:__pkg__",
+        "//namespaces/obazl/class03/case10:__pkg__"
+    ]
 )

@@ -25,11 +25,13 @@ ocaml_ns_module(
     name = "color",
     submodules = {
         ## one foreign ns submodule:
-        "//namespaces/obazl/case11/rgb": "RGB",
-        ## one ns submodule in a subpackage:
-        "//namespaces/obazl/case12/cmy": "CMY",
-        ## one foreign non-ns submodule:
-        "//namespaces/obazl/case01:_Blue": "Blue",
+        "//namespaces/obazl/class05/case21/rgb": "RGB",
+        ## one ns submodule in a local subpackage:
+        "//namespaces/obazl/class05/case23/cmy": "CMY",
+        ## three foreign non-ns submodules:
+        "//namespaces/obazl/class01/case01:_Red": "Red",
+        "//namespaces/obazl/class01/case01:_Green": "Green",
+        "//namespaces/obazl/class01/case01:_Blue": "Blue",
         ## three local non-ns submodules:
         ":_Hue": "Hue",
         ":_Saturation": "Saturation",

@@ -1,5 +1,8 @@
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_archive",
+    "ocaml_library",
+    "ocaml_module",
     "ocaml_ns_module",
     "ocaml_test",
 )
@@ -19,10 +22,10 @@ ocaml_test(
 
 ocaml_ns_module(
     name = "color",
-    main = "color_main.ml",
+    main = "color.ml",
     submodules = {
-        "//namespaces/obazl/case01:_Red": "Red",
-        "//namespaces/obazl/case02:_Green": "Green",
-        "//namespaces/obazl/case03:_Blue": "Blue",
+        "//namespaces/obazl/class05/case22/rgb": "RGB",
+        "//namespaces/obazl/class05/case22/cmy": "CMY",
     },
+    visibility = ["//visibility:public"],
 )
