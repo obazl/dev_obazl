@@ -21,30 +21,33 @@ load(
     "ocaml_module",
     "ocaml_test",
     "ppx_executable",
-    "ppx_module"
+    "ppx_module",
 )
 
 ###########
 ocaml_test(
     name = "test",
     main = "test.ml",
-    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    opts = [
+        "-w",
+        "-27",
+    ],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
+        ":_Hello",  # the transformed and compiled test code
         "@opam//pkg:ounit2",
-        ":_Hello"     # the transformed and compiled test code
-    ]
+    ],
 )
 
 #############
 ocaml_module(
     name = "_Hello",
-    src  = "hello.ml",
     # opts = ["-verbose"],  ## to print the expanded ppx transform command, etc.
-    ppx  = ":_ppx.exe",
+    ppx = ":_ppx.exe",
+    struct = "hello.ml",
     # ppx_print = "@ppx//print:text", # uncomment to get readable output
     deps = [
-        "@opam//pkg:core",      # contains Sexp module
-    ]
+        "@opam//pkg:core",  # contains Sexp module
+    ],
 )
 
 ###############
@@ -57,14 +60,14 @@ ppx_executable(
     # main = ":_runner",  ## hand-rolled, see below
     # opts = [], # obazl will automatically add '-predicates ppx_driver'
     deps = [
-        "@opam//pkg:ppx_sexp_value" # contains handler for `[%sexp ]` extension
-    ]
+        "@opam//pkg:ppx_sexp_value",  # contains handler for `[%sexp ]` extension
+    ],
 )
 
 ###########
 ppx_module(
     name = "_runner",
-    src = ":ppx_runner.ml",
+    struct = ":ppx_runner.ml",
     visibility = ["//visibility:public"],
     deps = ["@opam//pkg:ppxlib"],
 )
@@ -80,4 +83,3 @@ genrule(
         # "echo \"let () = Ppxlib.Driver.standalone ()\" >> \"$@\"",
     ]),
 )
-

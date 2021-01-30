@@ -3,15 +3,18 @@ load(
     "ocaml_archive",
     "ocaml_library",
     "ocaml_module",
-    "ocaml_ns",
+    "ocaml_ns_module",
 )
+load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns")
 
-load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_init")
 # To demonstate sticky deps, we do not want to include subred.ml as a namespaced submodule.
 # defines target :_ns_init, which must be reference by the ns_init attrib of each submodule.
-ns_init(srcs = glob(["*.ml"], exclude=["subred.ml"]))
+ns(srcs = glob(
+    ["*.ml"],
+    exclude = ["subred.ml"],
+))
 
-ocaml_ns(
+ocaml_ns_module(
     name = "color",
     # main = "color.ml",
     # footer  = "color_frag.ml",
@@ -25,10 +28,10 @@ ocaml_ns(
         ":_Blue": "Blue",
         # ":_CMY"  # include an ns module as a submodule
     },
-    visibility = ["//visibility:public"]
+    visibility = ["//visibility:public"],
 )
 
-ocaml_ns(
+ocaml_ns_module(
     name = "kolor",
     # include  = "kolor.ml",  # or: append?
     ## OBazl decouples (sub)module name and file name.
@@ -37,33 +40,37 @@ ocaml_ns(
         ":_Red": "Byed",
         ":_Green": "Grue",
     },
-    visibility = ["//visibility:public"]
+    visibility = ["//visibility:public"],
 )
 
 ocaml_module(
     name = "_Red",
-    src  = "red.ml",
-    deps = [":_Blue", ":_Green", ":_Subred"],
-    ns_init = ":_ns_init",
+    ns = ":_ns_resolver",
+    struct = "red.ml",
+    deps = [
+        ":_Blue",
+        ":_Green",
+        ":_Subred",
+    ],
 )
 
 # Module Red depends on Subred, but Subred is not namespaced (see 'exclude' in
-# ns-init above). It will automatically be listed as a dep for anything
+# ns() above). It will automatically be listed as a (transitive) dep for anything
 # that depends on the Red module, such as the Color module of this demo.
 ocaml_module(
     name = "_Subred",
-    src  = "subred.ml"
+    struct = "subred.ml",
 )
 
 ocaml_module(
     name = "_Green",
-    src  = "green.ml",
+    ns = ":_ns_resolver",
+    struct = "green.ml",
     deps = [":_Blue"],
-    ns_init = ":_ns_init",
 )
 
 ocaml_module(
     name = "_Blue",
-    src  = "blue.ml",
-    ns_init = ":_ns_init",
+    ns = ":_ns_resolver",
+    struct = "blue.ml",
 )

@@ -10,19 +10,18 @@ load(
 
 ocaml_executable(
     name = "hello_lwt",
+    visibility = ["//visibility:public"],
     # opts = ["-no-thread"], ## -thread is added by default
     ## without -thread:
     ## "ocamlfind: [WARNING] Package `threads': Linking problems may arise because of the missing -thread or -vmthread switch"
     ## followed by "Error: Required module `Condition' is unavailable"
     deps = [":_Hello_lwt"],
-    visibility = ["//visibility:public"],
 )
 
 ocaml_module(
     name = "_Hello_lwt",
-    src  = "hello_lwt.ml",
     opts = ["-thread"],  # avoid warning about possible linking problems
-    deps = ["@opam//pkg:lwt.unix"]
+    struct = "hello_lwt.ml",
+    deps = ["@opam//pkg:lwt.unix"],
     # default visibility is private
 )
-

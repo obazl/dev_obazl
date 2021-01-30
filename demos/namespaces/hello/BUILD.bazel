@@ -5,17 +5,17 @@ load(
     "ocaml_archive",
     "ocaml_library",
     "ocaml_module",
-    "ocaml_ns",
+    "ocaml_ns_module",
     "ocaml_test"
 )
 
-load( "@obazl_rules_ocaml//ocaml:macros.bzl", "ns_init")
-# This exposes target "_ns_init". The 'ocaml_module' instances for
-# submodules must reference this target in their `ns_init` attribute.
+load( "@obazl_rules_ocaml//ocaml:macros.bzl", "ns")
+# This exposes target "_ns_resolver". The 'ocaml_module' instances for
+# submodules must reference this target in their `ns` attribute.
 # To change the target label, use the 'name' attribute'.
-ns_init(srcs = glob(["*.ml"]))
+ns(srcs = glob(["*.ml"]))
 
-## The ns_init macro expands to an instance of rule 'ocaml_ns_init'.
+## The ns macro expands to an instance of rule 'ocaml_ns_resolver'.
 ## That rule sets the "ns prefix string", which serves as a kind of
 ## pseudo-namespace. Submodule names will be formed by prefixing this
 ## string to the (original, un-namespaced) module name, separated by
@@ -28,7 +28,7 @@ ns_init(srcs = glob(["*.ml"]))
 ## with '/' replaced by '_'. You can use the 'ns' attribute to change
 ## this:
 
-# ns_init(ns = "foobar", srcs = glob(["*.ml"]))
+# ns(ns = "foobar", srcs = glob(["*.ml"]))
 
 ocaml_test(
     name = "test",
@@ -40,7 +40,7 @@ ocaml_test(
     ]
 )
 
-ocaml_ns(
+ocaml_ns_module(
     name = "hello",
     submodules = {
         ":_Australian": "Australian",
@@ -53,25 +53,25 @@ ocaml_ns(
 ## Each submodule must depend on the ns-init target
 ocaml_module(
     name = "_Australian",
-    src  = "australian.ml",
-    ns_init = ":_ns_init",
+    struct  = "australian.ml",
+    ns = ":_ns_resolver",
 )
 
 ocaml_module(
     name = "_English",
-    src  = "english.ml",
-    ns_init = ":_ns_init",
+    struct  = "english.ml",
+    ns = ":_ns_resolver",
 )
 
 ocaml_module(
     name = "_French",
-    src  = "french.ml",
-    ns_init = ":_ns_init",
+    struct  = "french.ml",
+    ns = ":_ns_resolver",
 )
 
 ocaml_module(
     name = "_Spanish",
-    src  = "spanish.ml",
-    ns_init = ":_ns_init",
+    struct  = "spanish.ml",
+    ns = ":_ns_resolver",
 )
 

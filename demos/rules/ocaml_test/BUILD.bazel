@@ -1,4 +1,4 @@
-# run all tests: $ bazel test rules/ocaml_test
+# run all tests: $ bazel test rules/ocaml_test:test
 # run one test : $ bazel test rules/ocaml_test:hello_alcotest
 
 load(
@@ -8,36 +8,40 @@ load(
     "ocaml_module",
     "ocaml_test",
     "ppx_executable",
-    "ppx_module"
+    "ppx_module",
 )
 
 test_suite(
-    name = "ocaml_test",
+    name = "test",
     tests = [
         "hello_alcotest",
         "hello_ounit2",
-        "hello_ppx_test"
+        "hello_ppx_test",
     ],
 )
+
 ocaml_test(
     name = "hello_alcotest",
     main = "test_alcotest.ml",
     deps = [
+        "//rules/ocaml_module:Hello",
         "@opam//pkg:alcotest",
-        "//rules/ocaml_module:Hello"
-    ]
+    ],
 )
 
 ocaml_test(
     name = "hello_ounit2",
     main = "test_ounit2.ml",
-    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    opts = [
+        "-w",
+        "-27",
+    ],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
         "@opam//pkg:ounit2",
         ## Notice we're using a module from a different package:
-        "//rules/ocaml_module:Hello"
+        "//rules/ocaml_module:Hello",
         # ":_Hello"
-    ]
+    ],
 )
 
 ## For ppx_inline_test we need to use the ppx_executable the transform
@@ -45,38 +49,47 @@ ocaml_test(
 ## `Ppx_inline_test_lib.Runtime.exit ()` last.
 ocaml_test(
     name = "hello_ppx_test",
-    main = "runner.ml", ## contains Ppx_inline_test_lib.Runtime.exit (); obazl puts 'main' last
-    args = ["inline-test-runner", "hello"],
+    args = [
+        "inline-test-runner",
+        "hello",
+    ],
+    main = "runner.ml",  ## contains Ppx_inline_test_lib.Runtime.exit (); obazl puts 'main' last
     deps = [
-        ":_Test_ppx_inline",     # the transformed and compiled test code
+        ":_Test_ppx_inline",  # the transformed and compiled test code
         "@opam//pkg:ppx_inline_test.runner.lib",
-    ]
+    ],
 )
 
 ocaml_module(
     name = "_Test_ppx_inline",
-    src  = "test_ppx_inline.ml",
-    ppx  = ":ppx_inline_test",
-    ppx_args = ["-inline-test-lib", "hello"],
+    ppx = ":ppx_inline_test",
+    ppx_args = [
+        "-inline-test-lib",
+        "hello",
+    ],
     ppx_print = "@ppx//print:text",
+    struct = "test_ppx_inline.ml",
     deps = [
         "@opam//pkg:core",
         # "@opam//pkg:ppx_inline_test.runtime-lib",  ## not needed - listed as adjunct on the ppx executable
         # "//rules/ocaml_module:Hello"
-        ":_Hello"
-    ]
+        ":_Hello",
+    ],
 )
 
 ocaml_module(
     name = "_Hello",
-    src  = "hello.ml",
-    ppx  = ":ppx_inline_test",
-    ppx_args = ["-inline-test-lib", "hello"],
+    ppx = ":ppx_inline_test",
+    ppx_args = [
+        "-inline-test-lib",
+        "hello",
+    ],
+    struct = "hello.ml",
     deps = [
         "@opam//pkg:core",
         # "@opam//pkg:ppx_inline_test.runtime-lib",  ## not needed - listed as adjunct on the ppx executable
         # "//rules/ocaml_module:Hello"
-    ]
+    ],
 )
 
 # ppx_transform(
@@ -104,13 +117,13 @@ ppx_executable(
     deps = [
         "@opam//pkg:ppx_inline_test",
         # "@opam//pkg:ppxlib",
-      ],
+    ],
 )
 
 ###########
 ppx_module(
     name = "Driver",
-    src = ":ppxlib_driver.ml",
+    struct = ":ppxlib_driver.ml",
     visibility = ["//visibility:public"],
     deps = ["@opam//pkg:ppxlib"],
 )

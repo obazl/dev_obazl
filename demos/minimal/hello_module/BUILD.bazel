@@ -4,21 +4,23 @@
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
     "ocaml_module",
-    "ocaml_test"
+    "ocaml_test",
 )
 
 ocaml_test(
     name = "test",
     main = "test.ml",
-    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    opts = [
+        "-w",
+        "-27",
+    ],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
+        "_Hello",
         "@opam//pkg:ounit2",
-        "_Hello"
-    ]
+    ],
 )
 
 ocaml_module(
     name = "_Hello",
-    src  = "hello.ml",
+    struct = "hello.ml",
 )
-

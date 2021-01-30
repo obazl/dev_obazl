@@ -9,25 +9,28 @@ load(
     "ocaml_archive",
     "ocaml_executable",
     "ocaml_module",
-    "ocaml_test"
+    "ocaml_test",
 )
 
 ocaml_test(
     name = "test",
     main = "test.ml",
-    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    opts = [
+        "-w",
+        "-27",
+    ],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
         "@opam//pkg:ounit2",
-        ":main"
+        ":main",
         # "//rules/ocaml_archive:_Easy",
         # "//rules/ocaml_archive:_Simple"
-    ]
+    ],
 )
 
 ocaml_executable(
     name = "hello",
     main = ":main",
-    deps = [":main"]
+    deps = [":main"],
 )
 
 # ocaml_executable(
@@ -48,11 +51,11 @@ ocaml_executable(
 
 ocaml_module(
     name = "main",
-    src = "main.ml",
+    struct = "main.ml",
     deps = [
+        ":archive",
         "@opam//pkg:core",
-        ":archive"
-    ]
+    ],
 )
 
 # ocaml_module(
@@ -62,17 +65,20 @@ ocaml_module(
 
 ocaml_archive(
     name = "archive",
-    deps = [":_Easy", ":_Simple"],
+    deps = [
+        ":_Easy",
+        ":_Simple",
+    ],
 )
 
 ocaml_module(
     name = "_Easy",
-    src  = "easy.ml",
+    struct = "easy.ml",
 )
 
 ocaml_module(
     name = "_Simple",
-    src  = "simple.ml",
+    struct = "simple.ml",
 )
 
 # ## this target compiles sources to an archive:
@@ -93,4 +99,3 @@ ocaml_module(
 #     deps = [":simple"],
 #     visibility = ["//visibility:public"],
 # )
-

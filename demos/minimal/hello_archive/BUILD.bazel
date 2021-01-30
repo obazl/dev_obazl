@@ -33,8 +33,8 @@ ocaml_executable(
 
 ocaml_module(
     name = "main",
-    src = "main.ml",
-    deps = [":archive"]
+    struct = "main.ml",
+    deps = [":archive"],
 )
 
 # ocaml_module(
@@ -49,12 +49,12 @@ ocaml_archive(
 
 ocaml_module(
     name = "easy",
-    src  = "easy.ml",
+    struct = "easy.ml",
 )
 
 ocaml_module(
     name = "simple",
-    src  = "simple.ml",
+    struct = "simple.ml",
 )
 
 # ## this target compiles sources to an archive:

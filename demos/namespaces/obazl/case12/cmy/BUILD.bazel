@@ -1,13 +1,13 @@
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
     "ocaml_module",
-    "ocaml_ns",
+    "ocaml_ns_module",
 )
+load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns")
 
-load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_init")
-ns_init(srcs = glob(["*.ml"]))
+ns(srcs = glob(["*.ml"]))
 
-ocaml_ns(
+ocaml_ns_module(
     name = "cmy",
     submodules = {
         # We can use whatever module names we want, they do not have to match the impl. filenames.
@@ -16,23 +16,23 @@ ocaml_ns(
         ":_Magenta": "m",
         ":_Yellow": "y",
     },
-    visibility = ["//visibility:public"]
+    visibility = ["//visibility:public"],
 )
 
 ocaml_module(
     name = "_Cyan",
-    src  = "cyan.ml",
-    ns_init = ":_ns_init",
+    ns = ":_ns_resolver",
+    struct = "cyan.ml",
 )
 
 ocaml_module(
     name = "_Magenta",
-    src  = "magenta.ml",
-    ns_init = ":_ns_init",
+    ns = ":_ns_resolver",
+    struct = "magenta.ml",
 )
 
 ocaml_module(
     name = "_Yellow",
-    src  = "yellow.ml",
-    ns_init = ":_ns_init",
+    ns = ":_ns_resolver",
+    struct = "yellow.ml",
 )

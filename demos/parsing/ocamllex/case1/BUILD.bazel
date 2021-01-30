@@ -2,37 +2,45 @@
 
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
+    # "ocaml_yacc",
     "ocaml_executable",
     "ocaml_lex",
     "ocaml_module",
+    "ocaml_test",
+    "ppx_executable",
+    "ppx_module",
 )
 
 ocaml_executable(
     name = "main",
-    main = ":_Main",
+    main = ":_main",
+    deps = [
+        ":_Currdir",
+        "@opam//pkg:core",
+    ],
 )
 
 ocaml_module(
-    name = "_Main",
+    name = "_main",
     opts = [
         "-w",
         "-21-26-33",
     ],
     struct = "main.ml",
     deps = [
-        ":_Lexer",
+        ":_Currdir",
         "@opam//pkg:core",
     ],
 )
 
 ocaml_module(
-    name = "_Lexer",
-    struct = "_lexer.ml",
+    name = "_Currdir",
+    struct = "_currdir",
     deps = [
     ],
 )
 
 ocaml_lex(
-    name = "_lexer.ml",
+    name = "_currdir",
     src = "lexer.mll",
 )

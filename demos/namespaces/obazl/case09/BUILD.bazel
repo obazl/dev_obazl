@@ -1,36 +1,40 @@
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
     "ocaml_module",
-    "ocaml_ns",
+    "ocaml_ns_module",
     "ocaml_test",
 )
 
-# In this case, we need ns_init, since our ns contains a local submodule.
-load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_init")
-ns_init(srcs = glob(["*.ml"]))
+# In this case, we need ns, since our ns contains a local submodule.
+load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns")
+
+ns(srcs = glob(["*.ml"]))
 
 ocaml_test(
     name = "test",
     main = "test.ml",
-    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    opts = [
+        "-w",
+        "-27",
+    ],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
+        ":color",
         "@opam//pkg:ounit2",
-        ":color"
-    ]
+    ],
 )
 
-ocaml_ns(
+ocaml_ns_module(
     name = "color",
     submodules = {
         "//namespaces/obazl/case01:_Red": "Red",
         "//namespaces/obazl/case02:_Green": "Green",
         "//namespaces/obazl/case03:_Blue": "Blue",
-        ":_Grue": "Grue"
-    }
+        ":_Grue": "Grue",
+    },
 )
 
 ocaml_module(
     name = "_Grue",
-    src  = "grue.ml",
-    ns_init = ":_ns_init",
+    ns = ":_ns_resolver",
+    struct = "grue.ml",
 )

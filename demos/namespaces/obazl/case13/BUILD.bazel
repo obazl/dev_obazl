@@ -3,24 +3,30 @@ load(
     "ocaml_archive",
     "ocaml_library",
     "ocaml_module",
-    "ocaml_ns",
+    "ocaml_ns_module",
     "ocaml_test",
 )
+load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns")
 
-load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_init")
-ns_init(srcs = glob(["*.ml"], exclude=["subred.ml"]))
+ns(srcs = glob(
+    ["*.ml"],
+    exclude = ["subred.ml"],
+))
 
 ocaml_test(
     name = "test",
     main = "test.ml",
-    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    opts = [
+        "-w",
+        "-27",
+    ],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
+        ":color",
         "@opam//pkg:ounit2",
-        ":color"
-    ]
+    ],
 )
 
-ocaml_ns(
+ocaml_ns_module(
     name = "color",
     submodules = {
         # OBazl will put these in depencency order. E.g. Red depends on
@@ -32,13 +38,13 @@ ocaml_ns(
         ":_Blue": "Blue",
         # ":_CMY"  # include an ns module as a submodule
     },
-    visibility = ["//visibility:public"]
+    visibility = ["//visibility:public"],
 )
 
 ## we can define more than one namespace in a package!
 ## this also demonstrates that the same module can be used
 ## in multiple namespaces, under different names.
-ocaml_ns(
+ocaml_ns_module(
     name = "kolor",
     # include  = "kolor.ml",  # or: append?
     ## OBazl decouples (sub)module name and file name.
@@ -47,14 +53,18 @@ ocaml_ns(
         ":_Red": "Byed",
         ":_Green": "Grue",
     },
-    visibility = ["//visibility:public"]
+    visibility = ["//visibility:public"],
 )
 
 ocaml_module(
     name = "_Red",
-    src  = "red.ml",
-    deps = [":_Blue", ":_Green", ":_Subred"],
-    ns_init = ":_ns_init",
+    ns = ":_ns_resolver",
+    struct = "red.ml",
+    deps = [
+        ":_Blue",
+        ":_Green",
+        ":_Subred",
+    ],
 )
 
 # Module Red depends on Subred, but Subred is not namespaced (see 'exclude' in
@@ -62,18 +72,18 @@ ocaml_module(
 # that depends on the Red module, such as the Color module of this demo.
 ocaml_module(
     name = "_Subred",
-    src  = "subred.ml"
+    struct = "subred.ml",
 )
 
 ocaml_module(
     name = "_Green",
-    src  = "green.ml",
+    ns = ":_ns_resolver",
+    struct = "green.ml",
     deps = [":_Blue"],
-    ns_init = ":_ns_init",
 )
 
 ocaml_module(
     name = "_Blue",
-    src  = "blue.ml",
-    ns_init = ":_ns_init",
+    ns = ":_ns_resolver",
+    struct = "blue.ml",
 )

@@ -37,7 +37,7 @@ ocaml_executable(
 
 ocaml_module(
     name = "_Main",
-    src  = "main.ml",
+    struct = "main.ml",
     deps = [
         ## For demo purposes, we have two wrapper implementations to choose from.
         # "//interop/ffi/cclibs:print_stuff_wrapper"
@@ -47,10 +47,10 @@ ocaml_module(
 
 ocaml_module(
     name = "_Print_stuff_wrapper",
-    src  = "print_stuff_wrapper.ml",
     cc_deps = {
         ## linkmode: "default" = static on linux, dynamic on macos
         ## Correct linking to dylibs on MacOS is an open issue, so we force "static"
-        "//interop/ffi/cclibs:print_stuff": "static"
-    }
+        "//interop/ffi/cclibs:print_stuff": "static",
+    },
+    struct = "print_stuff_wrapper.ml",
 )

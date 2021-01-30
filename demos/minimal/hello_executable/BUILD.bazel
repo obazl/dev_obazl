@@ -4,7 +4,7 @@
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
     "ocaml_executable",
-    "ocaml_module"
+    "ocaml_module",
 )
 
 ocaml_executable(
@@ -14,6 +14,5 @@ ocaml_executable(
 
 ocaml_module(
     name = "_Hello",
-    src  = "hello.ml",
+    struct = "hello.ml",
 )
-

@@ -6,10 +6,10 @@ load(
 
 ocaml_module(
     name = "print_stuff_wrapper",
-    src  = "print_stuff_wrapper.ml",
     cc_deps = {
-        ":print_stuff": "static" # normally "default" is preferred, but  it causes problems on MacOS
+        ":print_stuff": "static",  # normally "default" is preferred, but  it causes problems on MacOS
     },
+    struct = "print_stuff_wrapper.ml",
     visibility = ["//interop/ffi:__pkg__"],
 )
 

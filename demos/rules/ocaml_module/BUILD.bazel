@@ -10,15 +10,18 @@ load(
 ocaml_test(
     name = "test",
     main = "test.ml",
-    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    opts = [
+        "-w",
+        "-27",
+    ],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
+        ":Hello",
         "@opam//pkg:ounit2",
-        ":Hello"
-    ]
+    ],
 )
 
 ocaml_module(
     name = "Hello",
-    src  = "hello.ml",
+    struct = "hello.ml",
     visibility = ["//visibility:public"],
 )

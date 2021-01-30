@@ -4,13 +4,13 @@
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
     "ppx_executable",
-    "ppx_module"
+    "ppx_module",
 )
 
 ###########
 ppx_module(
     name = "runner",
-    src = ":ppx_runner.ml",
+    struct = ":ppx_runner.ml",
     visibility = ["//visibility:public"],
     deps = ["@opam//pkg:ppxlib"],
 )
@@ -24,4 +24,3 @@ genrule(
         "echo \"let () = Ppxlib.Driver.standalone ()\" >> \"$@\"",
     ]),
 )
-

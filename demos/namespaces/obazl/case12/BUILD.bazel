@@ -1,24 +1,27 @@
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
     "ocaml_module",
-    "ocaml_ns",
+    "ocaml_ns_module",
     "ocaml_test",
 )
+load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns")
 
-load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_init")
-ns_init(srcs = glob(["*.ml"]))
+ns(srcs = glob(["*.ml"]))
 
 ocaml_test(
     name = "test",
     main = "test.ml",
-    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    opts = [
+        "-w",
+        "-27",
+    ],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
+        ":color",
         "@opam//pkg:ounit2",
-        ":color"
-    ]
+    ],
 )
 
-ocaml_ns(
+ocaml_ns_module(
     name = "color",
     submodules = {
         ## one foreign ns submodule:
@@ -30,26 +33,26 @@ ocaml_ns(
         ## three local non-ns submodules:
         ":_Hue": "Hue",
         ":_Saturation": "Saturation",
-        ":_Brightness": "Brightness"
+        ":_Brightness": "Brightness",
     },
-    visibility = ["//visibility:public"]
+    visibility = ["//visibility:public"],
 )
 
 ocaml_module(
     name = "_Hue",
-    src  = "hue.ml",
+    ns = ":_ns_resolver",
+    struct = "hue.ml",
     deps = [":_Brightness"],
-    ns_init = ":_ns_init",
 )
 
 ocaml_module(
     name = "_Saturation",
-    src  = "saturation.ml",
-    ns_init = ":_ns_init",
+    ns = ":_ns_resolver",
+    struct = "saturation.ml",
 )
 
 ocaml_module(
     name = "_Brightness",
-    src  = "brightness.ml",
-    ns_init = ":_ns_init",
+    ns = ":_ns_resolver",
+    struct = "brightness.ml",
 )

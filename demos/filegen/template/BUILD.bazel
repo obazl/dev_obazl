@@ -92,8 +92,8 @@ ocaml_executable(
 #############
 ocaml_module(
     name = "_Hello",
-    src  = "hello.ml",
-    deps = [":_Config"]
+    struct = "hello.ml",
+    deps = [":_Config"],
 )
 
 ###########
@@ -113,5 +113,5 @@ ocaml_test(
 ocaml_module(
     name = "_Config",
     # src is generated file
-    src  = "color_config"  #  ":coral"
+    struct = "color_config",  #  ":coral"
 )

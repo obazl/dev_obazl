@@ -22,27 +22,29 @@ load(
     "ocaml_module",
     "ocaml_test",
     "ppx_executable",
-    "ppx_module"
+    "ppx_module",
 )
 
 ###########
 ocaml_test(
     name = "test",
     main = "test.ml",
-    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    opts = [
+        "-w",
+        "-27",
+    ],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
         "@opam//pkg:ounit2",
         # "@opam//pkg:ppx_deriving",
         "@opam//pkg:ppx_deriving.ord",
         "@opam//pkg:ppx_deriving.show",
         # ":_Hello"     # the transformed and compiled test code
-    ]
+    ],
 )
 
 #############
 ocaml_module(
     name = "_Hello",
-    src  = "hello.ml",
     opts = [
         ## the ppx injects code (int_of_sexp, Sexp) that depends on these modules.
         ## usually these would be opened in the source file, but for demo purposes
@@ -50,22 +52,36 @@ ocaml_module(
         ## either way, we must also list the `sexplib` package that contains them as
         ## a dependency, either here in 'deps' or in the `adjunct_deps`
         ## attribute of the ppx transformer.
-        "-open", "Sexplib",
-        "-open", "Sexplib.Std",
+        "-open",
+        "Sexplib",
+        "-open",
+        "Sexplib.Std",
     ],
-    ppx  = ":_ppx.exe",
-    ppx_print = "@ppx//print:text", # uncomment to get readable output
+    ppx = ":_ppx.exe",
+    ppx_print = "@ppx//print:text",  # uncomment to get readable output
+    struct = "hello.ml",
     deps = [
         # we list both of these in adjunct_deps of the ppx (below),
         # but we could put them here instead.
         # "@opam//pkg:sexplib",
         # "@opam//pkg:ppx_sexp_conv.runtime-lib"
-    ]
+    ],
 )
 
 ###############
 ppx_executable(
     name = "_ppx.exe",
+    adjunct_deps = [
+        "@opam//pkg:sexplib",  # we could instead put this in deps
+        # attrib of files to be transformed by
+        # this ppx
+
+        # without the following we get: Error: Unbound module Ppx_sexp_conv_lib
+        # when we try to compile the output produced by this executable.
+        # we could instead list this in `deps` of the files to be transformed by this ppx
+        # putting it here saves us the trouble, since this ppx could be used by many modules.
+        "@opam//pkg:ppx_sexp_conv.runtime-lib",
+    ],
     # main = "//ppx/driver",      # obazl will place this last in the list of deps
     main = "@opam//pkg:ppxlib.runner",
     # opts = [],                # obazl will automatically add '-predicates ppx_driver'
@@ -73,15 +89,4 @@ ppx_executable(
         # "@opam//pkg:ppx_deriving",
         "@opam//pkg:ppx_sexp_conv",
     ],
-    adjunct_deps = [
-        "@opam//pkg:sexplib", # we could instead put this in deps
-                              # attrib of files to be transformed by
-                              # this ppx
-
-        # without the following we get: Error: Unbound module Ppx_sexp_conv_lib
-        # when we try to compile the output produced by this executable.
-        # we could instead list this in `deps` of the files to be transformed by this ppx
-        # putting it here saves us the trouble, since this ppx could be used by many modules.
-        "@opam//pkg:ppx_sexp_conv.runtime-lib"
-    ]
 )

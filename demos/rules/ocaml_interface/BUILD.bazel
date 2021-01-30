@@ -9,21 +9,24 @@ load(
 
 ocaml_module(
     name = "_Hello",
-    src  = "hello.ml",
-    intf = ":_Hello.cmi"
+    intf = ":_Hello.cmi",
+    struct = "hello.ml",
 )
 
 ocaml_interface(
     name = "_Hello.cmi",
-    src = "hello.mli"
+    src = "hello.mli",
 )
 
 ocaml_test(
     name = "test",
     main = "test.ml",
-    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    opts = [
+        "-w",
+        "-27",
+    ],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
+        ":_Hello",
         "@opam//pkg:ounit2",
-        ":_Hello"
-    ]
+    ],
 )
