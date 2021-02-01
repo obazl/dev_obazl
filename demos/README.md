@@ -7,7 +7,7 @@
 
 ### manifest
 
-> **WARNING** this manifest is outdated, but is currently being
+> **WARNING** parts of this manifest may be a little outdated; it is currently being
        updated. In the meantime see the README files and BUILD.bazel
        files in the demo subdirectories.
 
