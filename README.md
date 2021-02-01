@@ -4,9 +4,13 @@ Demos, tools, and tests for
 [obazl_rules_ocaml](https://github.com/obazl/rules_opam) and
 [obazl_rules_opam](https://github.com/obazl/rules_opam).
 
-Documentation: [docs_obazl](https://obazl.github.io/docs_ocaml/ug/)
+Documentation: [docs_obazl](https://obazl.github.io/docs_obazl/ug/)
 
 ## Demos
+
+> **WARNING** this manifest is outdated, but is currently being
+       updated. In the meantime see the README files and BUILD.bazel
+       files in the demo subdirectories.
 
 >    Contributing: if you would like to contribute a demo, please file an
 >    issue first. Demos should illustrate one concept, using minimal code.
