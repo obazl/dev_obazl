@@ -43,6 +43,7 @@ See [Developing OCaml software with OBazl](https://obazl.github.io/docs_obazl/ug
 ```
     $ bazel build minimal/hello_module:_Hello
     $ bazel test minimal/hello_module:test
+    $ bazel run minimal/hello_module:test
     $ bazel run minimal/hello_executable
 ```
 
@@ -86,8 +87,10 @@ $ bazel query 'kind(ocaml_executable, //...:*)' --output label_kind
   * [hello_module](demos/minimal/hello_module) - a simple use of `ocaml_module`
 
 * [namespaces](demos/namespaces) - using namespaces
+  * [direct](demos/namespaces/direct) - hand-rolled namespaces using makefiles instead of Bazel.
+    * [direct/hash](demos/namespaces/direct/hash) - a perverse example showing how to map modules to files named with the MD5 hash of the source files.
   * [hello](demos/namespaces/hello) - demo of a simple namespace module with four submodules.
-  * [minimal](demos/namespaces/minimal) - demo of raw namespaces using makefiles instead of Bazel.
+  * [obazl demos](demos/namespaces/obazl) - 30+ simple demos illustrating all aspects of namespacing with OBazl
 
 * [ppx](demos/ppx) - PPX support demos
   * [adjunct_deps](demos/ppx/adjunct_deps) - shows how to use PPX adjunct deps (a/k/a "runtime" deps)
