@@ -47,6 +47,7 @@
   * [ocaml_archive](rules/ocaml_archive)
   * [ocaml_executable](rules/ocaml_executable)
   * [ocaml_interface](rules/ocaml_interface)
+  * [ocaml_lex](rules/ocaml_lex)
   * [ocaml_module](rules/ocaml_module)
   * [ocaml_test](rules/ocaml_test) - demonstrates use of libs `ounit2`, `alcotest`, and `ppx_inline_test`
 
