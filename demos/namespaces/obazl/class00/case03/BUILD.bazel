@@ -6,6 +6,10 @@ load(
     "ocaml_test",
 )
 
+# To see the effect of the `prefix` and `sep` attributes,
+# run `$ bazel build namespaces/obazl/class00/case03:*`
+# or `$ bazel aquery namespaces/obazl/class00/case03:*`
+# The latter will show the renaming commands as well.
 load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_env")
 ns_env(prefix="foo.bar", sep="000")
 

@@ -15,7 +15,7 @@ e.g. `$ bazel run namespaces/obazl/class03/case10:test`
 To see what gets built for an `ocaml_ns_module`, use the `build`
 command, e.g. `$ bazel build namespaces/obazl/class02/case06:color`.
 
-"Resolver" modules are named with suffix `00`.
+"Resolver" modules are named with suffix `00` plus the `ns_env` name, by default `00_ns_env`.
 
 You can print build commands, inputs, and outputs without executing
 the build by using the `aquery` command: `$ bazel aquery

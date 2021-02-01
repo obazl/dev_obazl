@@ -55,57 +55,7 @@ To list all executable rules (which you can run with `$ bazel run ...`):
 $ bazel query 'kind(ocaml_executable, //...:*)' --output label_kind
 ```
 
-## Demos
-
->    Contributing: if you would like to contribute a demo, please file an
->    issue first. Demos should illustrate one concept, using minimal code.
->    They should not require the user to install or configure any other
->    software, unless that is the point of the demo.
-
-### manifest
-
-> **WARNING** this manifest is outdated, but is currently being
-       updated. In the meantime see the README files and BUILD.bazel
-       files in the demo subdirectories.
-
-* [conditional](demos/conditional) Conditional compilation - selection of build targets based on config parameters
-
-* [configuration](demos/configuration) - demonstrates use of build
-  flags and settings, and `--config` command line flag.
-
-* [filegen](demos/filegen) File generation techniques
-
-* [interop](demos/interop/README.md) - using C/C++ and other (Rust, Go, etc) resources
-  * [ffi](demos/interop/ffi) - Uses standard OCaml low level [FFI](https://caml.inria.fr/pub/docs/manual-ocaml/intfc.html) to wrap simple C library
-  * [ctypes](demos/interop/ctypes) - Uses the higher level [ctypes](https://github.com/ocamllabs/ocaml-ctypes) package. (Not yet implemented)
-  * [cstubs](demos/interop/cstubs) - Uses the [cstubs](http://simonjbeaumont.com/posts/ocaml-ctypes) subpackage of the [ctypes] package. (Not yet implemented)
-
-* [minimal](demos/minimal) - minimal examples
-  * [hello_archive](demos/minimal/hello_archive) - a simple use of `ocaml_archive`
-  * [hello_executable](demos/minimal/hello_executable) - a simple use of `ocaml_executable`
-  * [hello_lwt](demos/minimal/hello_lwt) - a simple use of OPAM pkg `lwt.unix`
-  * [hello_module](demos/minimal/hello_module) - a simple use of `ocaml_module`
-
-* [namespaces](demos/namespaces) - using namespaces
-  * [direct](demos/namespaces/direct) - hand-rolled namespaces using makefiles instead of Bazel.
-    * [direct/hash](demos/namespaces/direct/hash) - a perverse example showing how to map modules to files named with the MD5 hash of the source files.
-  * [hello](demos/namespaces/hello) - demo of a simple namespace module with four submodules.
-  * [obazl demos](demos/namespaces/obazl) - 30+ simple demos illustrating all aspects of namespacing with OBazl
-
-* [ppx](demos/ppx) - PPX support demos
-  * [adjunct_deps](demos/ppx/adjunct_deps) - shows how to use PPX adjunct deps (a/k/a "runtime" deps)
-  * [deriver](demos/ppx/deriver) - minimal example of a Ppxlib deriver implementation (TODO)
-  * [hello](demos/ppx/hello) - simple example using `ppx_sexp_value`
-  * [ppx_optcomp](demos/ppx/ppx_optcomp) - demonstrates runtime dependency using `[%%import ]` extension
-  * [rewriter](demos/ppx/rewriter) - simple example of a Ppxlib rewriter implementation (TODO)
-  * [runner](demos/ppx/runner) - simple `genrule` implementation of shared Ppxlib.Driver.standalone runner
-
-* [rules](demos/rules) - demos of `ocaml_*` rules
-  * [ocaml_archive](demos/rules/ocaml_archive)
-  * [ocaml_executable](demos/rules/ocaml_executable)
-  * [ocaml_interface](demos/rules/ocaml_interface)
-  * [ocaml_module](demos/rules/ocaml_module)
-  * [ocaml_test](demos/rules/ocaml_test) - demonstrates use of libs `ounit2`, `alcotest`, and `ppx_inline_test`
+[Demos](demos)
 
 ## Acknowledgements
 
