@@ -7,7 +7,9 @@ Demos, tools, and tests for
 Documentation: [docs_obazl](https://obazl.github.io/docs_obazl/)
 
 
-### prerequisites:
+### quickstart
+
+See [Developing OCaml software with OBazl](https://obazl.github.io/docs_obazl/ug/development.html) for more information on getting started.
 
 * platform: tested on MacOS Catalina (10.15.7) and Linux (Debian 9). Probably won't work on Windows.
 
