@@ -6,16 +6,6 @@ Demos, tools, and tests for
 
 Documentation: [docs_obazl](https://obazl.github.io/docs_obazl/)
 
-## Demos
-
-> **WARNING** this manifest is outdated, but is currently being
-       updated. In the meantime see the README files and BUILD.bazel
-       files in the demo subdirectories.
-
->    Contributing: if you would like to contribute a demo, please file an
->    issue first. Demos should illustrate one concept, using minimal code.
->    They should not require the user to install or configure any other
->    software, unless that is the point of the demo.
 
 ### prerequisites:
 
@@ -46,6 +36,8 @@ Documentation: [docs_obazl](https://obazl.github.io/docs_obazl/)
     * MacOS:  `brew install libev`
     * Linux: use your package manager to install `libev-dev` or `libev-devel`.
 
+* Set up your [user.bazelrc]() file.
+
 * `cd demos` and build/run/test some demos. See the `BUILD.bazel` files for instructions. For example:
 
 ```
@@ -56,10 +48,24 @@ Documentation: [docs_obazl](https://obazl.github.io/docs_obazl/)
 
 To run all tests:  `$ bazel test //...:*`
 
+To list all executable rules (which you can run with `$ bazel run ...`):
+
+```
+$ bazel query 'kind(ocaml_executable, //...:*)' --output label_kind
+```
+
+## Demos
+
+>    Contributing: if you would like to contribute a demo, please file an
+>    issue first. Demos should illustrate one concept, using minimal code.
+>    They should not require the user to install or configure any other
+>    software, unless that is the point of the demo.
+
 ### manifest
 
-> **NOTE**: the `demos/dev` subdirectory is not a demo; it's a private
-       workspace you can use to store shell scripts, data files, etc. Everything in it is gitignored.
+> **WARNING** this manifest is outdated, but is currently being
+       updated. In the meantime see the README files and BUILD.bazel
+       files in the demo subdirectories.
 
 * [conditional](demos/conditional) Conditional compilation - selection of build targets based on config parameters
 

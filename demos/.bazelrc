@@ -1,13 +1,1 @@
-# --config=lavender
-build:lavender --//configuration:colorize=True
-build:lavender --//configuration:red=230
-build:lavender --//configuration:green=230
-build:lavender --//configuration:blue=250
-
-# --config=teal
-build:teal --//configuration:colorize=True
-build:teal --//configuration:red=0
-build:teal --//configuration:green=128
-build:teal --//configuration:blue=128
-
 try-import dev/user.bazelrc
