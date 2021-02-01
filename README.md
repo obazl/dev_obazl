@@ -22,8 +22,6 @@ See [Developing OCaml software with OBazl](https://obazl.github.io/docs_obazl/ug
 
 * install ocamlfind: `$ opam install ocamlfind`
 
-* install merlin (if you use emacs): `$ opam install merlin`
-
 * install the packages listed in `demos/WORKSPACE.bzl`.
 
 >    You can ask OBazl to do this for you by setting a few environment variables:
