@@ -7,9 +7,6 @@ load(
     "ocaml_test",
 )
 
-# Note that in this case we do not need ns-init, since we depend on
-# modules from other packages (who have their own ns-init).
-
 ocaml_test(
     name = "test",
     main = "test.ml",

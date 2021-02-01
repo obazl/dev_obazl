@@ -1,0 +1,55 @@
+load(
+    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_archive",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns_module",
+    "ocaml_test",
+)
+load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_env")
+
+# 'test' target will file without resolver=True
+ns_env(
+    aliases = glob(["*.ml"])
+)
+
+ocaml_test(
+    name = "test",
+    main = "test.ml",
+    opts = [
+        "-w",
+        "-27",
+    ],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [
+        ":color",
+        "@opam//pkg:ounit2",
+    ],
+)
+
+ocaml_ns_module(
+    name = "color",
+    submodules = {
+        ":_Red": "Red",
+        ":_Green": "Green",
+        ":_Blue": "Blue",
+    },
+)
+
+ocaml_module(
+    name = "_Red",
+    prefix = ":_ns_env",
+    struct = "red.ml",
+    deps = [":_Green"],  ## all dependencies must be explicitly listed, even those in same ns.
+)
+
+ocaml_module(
+    name = "_Green",
+    prefix = ":_ns_env",
+    struct = "green.ml",
+)
+
+ocaml_module(
+    name = "_Blue",
+    prefix = ":_ns_env",
+    struct = "blue.ml",
+)

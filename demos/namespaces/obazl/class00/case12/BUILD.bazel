@@ -1,0 +1,67 @@
+load(
+    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_archive",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_test",
+)
+load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_env")
+
+# This example is the same as class00/case11, but we complicate it a little bit
+# by using two ns environments and a prefix.
+# Here Green depends on Blue, just as in demo class00/case11, but
+# in this case we add a prefix for the env containing green and blue.
+ns_env(
+    name    = "ns_foo",
+)
+
+ns_env(
+    name    = "ns_grue",
+    # In this case, green.ml refers to the pseudo-namespaced module Grue__Blue rather than Blue,
+    # so we do not need a resolver module to compile it. If green.ml referred to Blue, we would
+    # need a resolver containing alias equations.
+    # aliases = [
+    #     "blue.ml",
+    #     "green.ml",
+    # ],
+    prefix = "grue",
+)
+
+ocaml_test(
+    name = "test",
+    main = "test.ml",
+    opts = [
+        "-w",
+        "-27",
+    ],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [
+        ":_Blue",
+        ":_Green",
+        ":_Red",
+        "@opam//pkg:ounit2",
+    ],
+)
+
+# Without an ns attribute, the following targets will still compile,
+# yielding red.cmo, green.cmo, and blue.cmo.
+# With the attribute, the outputs will be prefixed with
+# "Demos_Namespaces_Obazl_Class00_Case11__"
+
+ocaml_module(
+    name = "_Red",
+    prefix = ":ns_foo",  # => Demos_Namespaces_Obazl_Class00_Case12__Red.cmo
+    struct = "red.ml",
+)
+
+ocaml_module(
+    name = "_Green",
+    prefix = ":ns_grue",
+    struct = "green.ml",
+    deps = [":_Blue"],
+)
+
+ocaml_module(
+    name = "_Blue",
+    prefix = ":ns_grue",
+    struct = "blue.ml",
+)

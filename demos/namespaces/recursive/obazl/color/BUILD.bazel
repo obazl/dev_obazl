@@ -5,11 +5,11 @@ load(
     "ocaml_module",
     "ocaml_ns_module",
 )
-load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns")
+load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_env")
 
 # To demonstate sticky deps, we do not want to include subred.ml as a namespaced submodule.
 # defines target :_ns_init, which must be reference by the ns_init attrib of each submodule.
-ns(srcs = glob(
+ns_env(aliases = glob(
     ["*.ml"],
     exclude = ["subred.ml"],
 ))
@@ -45,7 +45,7 @@ ocaml_ns_module(
 
 ocaml_module(
     name = "_Red",
-    ns = ":_ns_resolver",
+    prefix = ":_ns_env",
     struct = "red.ml",
     deps = [
         ":_Blue",
@@ -64,13 +64,13 @@ ocaml_module(
 
 ocaml_module(
     name = "_Green",
-    ns = ":_ns_resolver",
+    prefix = ":_ns_env",
     struct = "green.ml",
     deps = [":_Blue"],
 )
 
 ocaml_module(
     name = "_Blue",
-    ns = ":_ns_resolver",
+    prefix = ":_ns_env",
     struct = "blue.ml",
 )

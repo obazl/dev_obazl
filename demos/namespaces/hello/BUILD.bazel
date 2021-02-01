@@ -9,13 +9,13 @@ load(
     "ocaml_test"
 )
 
-load( "@obazl_rules_ocaml//ocaml:macros.bzl", "ns")
-# This exposes target "_ns_resolver". The 'ocaml_module' instances for
-# submodules must reference this target in their `ns` attribute.
+load( "@obazl_rules_ocaml//ocaml:macros.bzl", "ns_env")
+# This exposes target "_ns_env". The 'ocaml_module' instances for
+# submodules must reference this target in their `prefix` attribute.
 # To change the target label, use the 'name' attribute'.
-ns(srcs = glob(["*.ml"]))
+ns_env(aliases = glob(["*.ml"]))
 
-## The ns macro expands to an instance of rule 'ocaml_ns_resolver'.
+## The ns_env macro expands to an instance of rule 'ocaml_ns_env'.
 ## That rule sets the "ns prefix string", which serves as a kind of
 ## pseudo-namespace. Submodule names will be formed by prefixing this
 ## string to the (original, un-namespaced) module name, separated by
@@ -25,10 +25,10 @@ ns(srcs = glob(["*.ml"]))
 ## module names to these prefixed module names.
 
 ## By default, the ns prefix string is formed from the package name,
-## with '/' replaced by '_'. You can use the 'ns' attribute to change
-## this:
+## with '/' replaced by the ns_env.sep string (default: '_'). You can
+## use the 'prefix' attribute to change this:
 
-# ns(ns = "foobar", srcs = glob(["*.ml"]))
+# ns(prefix = "foobar", aliases = glob(["*.ml"]))
 
 ocaml_test(
     name = "test",
@@ -54,24 +54,24 @@ ocaml_ns_module(
 ocaml_module(
     name = "_Australian",
     struct  = "australian.ml",
-    ns = ":_ns_resolver",
+    prefix = ":_ns_env",
 )
 
 ocaml_module(
     name = "_English",
     struct  = "english.ml",
-    ns = ":_ns_resolver",
+    prefix = ":_ns_env",
 )
 
 ocaml_module(
     name = "_French",
     struct  = "french.ml",
-    ns = ":_ns_resolver",
+    prefix = ":_ns_env",
 )
 
 ocaml_module(
     name = "_Spanish",
     struct  = "spanish.ml",
-    ns = ":_ns_resolver",
+    prefix = ":_ns_env",
 )
 

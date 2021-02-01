@@ -1,0 +1,43 @@
+load(
+    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_archive",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_test",
+)
+
+load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_env")
+ns_env()
+
+ocaml_test(
+    name = "test",
+    main = "test.ml",
+    opts = [
+        "-w",
+        "-27",
+    ],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [
+        ":_Blue",
+        ":_Green",
+        ":_Red",
+        "@opam//pkg:ounit2",
+    ],
+)
+
+ocaml_module(
+    name = "_Red",
+    prefix = ":_ns_env",
+    struct = "red.ml",
+)
+
+ocaml_module(
+    name = "_Green",
+    prefix = ":_ns_env",
+    struct = "green.ml",
+)
+
+ocaml_module(
+    name = "_Blue",
+    prefix = ":_ns_env",
+    struct = "blue.ml",
+)

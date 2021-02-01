@@ -6,12 +6,12 @@ load(
     "ocaml_ns_module",
     "ocaml_test",
 )
-load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns")
 
-ns(srcs = glob(
-    ["*.ml"],
-    exclude = ["subred.ml"],
-))
+# In this case the main ns module is generated and submodules have not
+# mutual deps, so we do not need to initialize a resolver. We also do
+# not need to annotate submodules with an 'ns' attribute.
+# load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns")
+# ns()
 
 ocaml_test(
     name = "test",
@@ -41,7 +41,6 @@ ocaml_ns_module(
 
 ocaml_module(
     name = "_Red",
-    ns = ":_ns_resolver",
     struct = "red.ml",
     visibility = [
         "//namespaces/obazl/class02/case05:__pkg__",
@@ -51,30 +50,28 @@ ocaml_module(
         "//namespaces/obazl/class03/case09:__pkg__",
         "//namespaces/obazl/class03/case10:__pkg__",
         "//namespaces/obazl/class04/case12:__pkg__",
-        "//namespaces/obazl/class05/case23:__pkg__"
+        "//namespaces/obazl/class05/case27:__pkg__"
     ],
 )
 
 ocaml_module(
     name = "_Green",
-    ns = ":_ns_resolver",
     struct = "green.ml",
     visibility = [
         "//namespaces/obazl/class02/case05:__pkg__",
         "//namespaces/obazl/class02/case06:__pkg__",
         "//namespaces/obazl/class04/case12:__pkg__",
-        "//namespaces/obazl/class05/case23:__pkg__"
+        "//namespaces/obazl/class05/case27:__pkg__"
     ],
 )
 
 ocaml_module(
     name = "_Blue",
-    ns = ":_ns_resolver",
     struct = "blue.ml",
     visibility = [
         "//namespaces/obazl/class02/case05:__pkg__",
         "//namespaces/obazl/class02/case06:__pkg__",
         "//namespaces/obazl/class04/case12:__pkg__",
-        "//namespaces/obazl/class05/case23:__pkg__"
+        "//namespaces/obazl/class05/case27:__pkg__"
     ],
 )

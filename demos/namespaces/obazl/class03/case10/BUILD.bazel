@@ -6,9 +6,9 @@ load(
 )
 
 # In this case, we need ns, since our ns contains a local submodule.
-load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns")
+load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_env")
 
-ns(srcs = glob(["*.ml"]))
+ns_env()
 
 ocaml_test(
     name = "test",
@@ -36,6 +36,6 @@ ocaml_ns_module(
 
 ocaml_module(
     name = "_Grue",
-    ns = ":_ns_resolver",
+    prefix = ":_ns_env",
     struct = "grue.ml",
 )

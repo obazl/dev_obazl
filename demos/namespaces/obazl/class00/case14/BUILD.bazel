@@ -1,0 +1,55 @@
+load(
+    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_module",
+    "ocaml_ns_module",
+    "ocaml_test",
+)
+
+# Same as class00/case13, with the addition of an ocaml_ns_module and
+# the subtraction of prefixing. This means that each submodule will
+# be accessible both under its original name (e.g. 'Red') and under
+# module path name (e.g. 'Color.Red').
+
+ocaml_test(
+    name = "test",
+    main = "test.ml",
+    opts = [
+        "-w",
+        "-27",
+    ],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [
+        ":color",
+        "@opam//pkg:ounit2",
+    ],
+)
+
+# This will generate a main ns module, which doubles as a resolver
+# module. Since we have not renamed the submodules, it will contain
+# pseudo-recursive alias equations, e.g. 'module Red = Red'.
+ocaml_ns_module(
+    name = "color",
+    submodules = {
+        ":_Red": "Red",
+        ":_Green": "Green",
+        ":_Blue": "Blue",
+    },
+)
+
+ocaml_module(
+    name   = "_Red",
+    struct = "red.ml", # no prefix => red.cmo
+    deps = [":_Blue"],
+)
+
+ocaml_module(
+    name = "_Green",
+    # prefix = ":ns_grue",
+    struct = "green.ml",  # => green.cmo
+    deps = [":_Blue"],
+)
+
+ocaml_module(
+    name = "_Blue",
+    # prefix = ":ns_grue",
+    struct = "blue.ml",  # => blue.cmo
+)

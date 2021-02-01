@@ -1,0 +1,58 @@
+load(
+    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_archive",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_test",
+)
+load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_env")
+
+# This example is the same as class00/case10, except that we use an
+# ocaml_ns_env to rename (e.g. pseudo-namespace) our modules.
+# We do not need to list `srcs` here, since we are only depending
+# on the ocaml_ns_env for its pseudo-namespacing prefix string.
+# Note that we must use the correct ns prefix in our test cases in test.ml;
+ns_env()
+
+ocaml_test(
+    name = "test",
+    main = "test.ml",
+    opts = [
+        "-w",
+        "-27",
+    ],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [
+        ":_Blue",
+        ":_Green",
+        ":_Red",
+        "@opam//pkg:ounit2",
+    ],
+)
+
+# Without an ns attribute, the following targets will still compile,
+# yielding red.cmo, green.cmo, and blue.cmo.
+# With the attribute, the outputs will be prefixed with
+# "Demos_Namespaces_Obazl_Class00_Case11__"
+
+ocaml_module(
+    name = "_Red",
+    prefix = ":_ns_env",  # => Demos_Namespaces_Obazl_Class00_Case11__Red.cmo
+    struct = "red.ml",
+)
+
+ocaml_module(
+    name = "_Green",
+    prefix = ":_ns_env",  # => Demos_Namespaces_Obazl_Class00_Case11__Green.cmo
+    struct = "green.ml",
+    # green calls blue (using the prefix!), so the dep must be explicitly listed.
+    # but notice that the dependency target label has no connection with the actual
+    # module name. Green calls Demos_Namespaces_Obazl_Class00_Case11__Blue, but it
+    # depends on :_Blue.
+    deps = [":_Blue"],
+)
+
+ocaml_module(
+    name = "_Blue",
+    prefix = ":_ns_env",  # => Demos_Namespaces_Obazl_Class00_Case11__Blue.cmo
+    struct = "blue.ml",
+)

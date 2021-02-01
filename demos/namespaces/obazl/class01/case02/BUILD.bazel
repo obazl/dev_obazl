@@ -6,11 +6,9 @@ load(
     "ocaml_ns_module",
     "ocaml_test",
 )
-load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns")
+load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_env")
 
-ns(srcs = glob( ["*.ml"], exclude = ["subred.ml"]),
-   # name = "foobar"
-   )
+ns_env(aliases = glob(["*.ml"]))
 
 ocaml_test(
     name = "test",
@@ -39,25 +37,25 @@ ocaml_ns_module(
 
 ocaml_module(
     name = "_Red",
-    ns = ":_ns_resolver",
+    prefix = ":_ns_env",
     struct = "red.ml",
 )
 
 ocaml_module(
     name = "_Green",
-    ns = ":_ns_resolver",
+    prefix = ":_ns_env",
     struct = "green.ml",
     visibility = [
         "//namespaces/obazl/class02/case07:__pkg__",
         "//namespaces/obazl/class02/case08:__pkg__",
         "//namespaces/obazl/class03/case09:__pkg__",
-        "//namespaces/obazl/class03/case10:__pkg__"
-    ]
+        "//namespaces/obazl/class03/case10:__pkg__",
+    ],
 )
 
 ocaml_module(
     name = "_Blue",
-    ns = ":_ns_resolver",
+    prefix = ":_ns_env",
     struct = "blue.ml",
     visibility = ["//namespaces/obazl/class02/case07:__pkg__"],
 )

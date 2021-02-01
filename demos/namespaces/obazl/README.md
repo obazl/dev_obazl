@@ -19,7 +19,19 @@ You can print build commands, inputs, and outputs without executing
 the build by using the `aquery` command: `$ bazel aquery
 namespaces/obazl/class02/case06:color`.
 
-## Class 01: Minimal examples
+## Class 00: Renaming without namespaces (aliasing)
+
+In case of renaming without namespacing (aliasing), references to
+modules must use the new name. For example, if red.ml->Foo_bar__red.ml
+(as in case03), then source code must use 'Foo_bar__red`.
+
+* case 01: plain ol' modules
+
+* case 02: plain ol' modules, renamed using default prefix (package name)
+
+* case 03: plain ol' modules, renamed using custom prefix
+
+## Class 01: Namespaces without renaming, minimal examples
 
 * case 01: ns module generated, contains only alias equations. no resolver module needed
 
@@ -32,6 +44,12 @@ namespaces/obazl/class02/case06:color`.
 
 * case 04: user provides ns main module with different name. obazl will copy the
   user-provided file to the ns name.  resolver module generated.
+
+## Class 01ns: Namespaces with renaming, minimal examples
+
+Cases are mostly the same as Class01, except for renaming.
+
+* case01: submodule Red depends on submodule Green
 
 ## Class02: Exogenous submodules
 
@@ -57,6 +75,8 @@ have their ns resolvers.
 
 * case 10: same as case09, except with a user-provided main ns module
 
+## Class 04:
+
 ## Class 05: Chained namespaces
 
 Demonstrating how to construct multi-segment module paths like
@@ -68,13 +88,12 @@ Demonstrating how to construct multi-segment module paths like
 
 * case 23: generated main ns module containing a variety of submodules: ns and non-ns, local and exogenous
 
-* case 24: defines A.Color in one package (directory). Main ns module is A, submodule Color is defined endogenously (in same package as A).
+* case 24: defines A.Color in one package (directory). Main ns module is A, submodule Color is defined endogenously (in same package as A).  Also demonstrates use of alternative name (label) for ns resolver.
 
-## Extended examples
+## Class 06: Extended examples
 
-* case 13: demonstrates submodule interdependencies, sticky deps, mulitiple namespaces in on package.
+* case 31: demonstrates submodule interdependencies, sticky deps, mulitiple namespaces in on package, decoupling of submodule names and filenames.
 
-## Class 06: 
 
 ## Troubleshooting
 
