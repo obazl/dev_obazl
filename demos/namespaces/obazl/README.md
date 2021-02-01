@@ -1,5 +1,7 @@
 # Emulating namespaces with OBazl
 
+>    **WARNING** this documentation is outdated but currently undergoing revision.
+
 Run one test: `$ bazel test namespaces/obazl/class01/case01:test`
 
 Run all tests: `$ bazel test //...:*`
