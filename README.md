@@ -36,7 +36,7 @@ See [Developing OCaml software with OBazl](https://obazl.github.io/docs_obazl/ug
     * MacOS:  `brew install libev`
     * Linux: use your package manager to install `libev-dev` or `libev-devel`.
 
-* Set up your [user.bazelrc]() file.
+* Set up your [user.bazelrc](https://obazl.github.io/docs_obazl/ug/user_bazelrc.html) file.
 
 * `cd demos` and build/run/test some demos. See the `BUILD.bazel` files for instructions. For example:
 
