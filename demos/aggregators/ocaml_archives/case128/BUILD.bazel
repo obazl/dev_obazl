@@ -1,4 +1,5 @@
-## aggregators/archives/case120: two simple archives
+## aggregators/ocaml_archives/case128: chained archives
+## DOES NOT WORK - chaining archives not supported by OCaml
 
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",

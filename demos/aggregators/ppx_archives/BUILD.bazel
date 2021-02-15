@@ -1,0 +1,7 @@
+
+test_suite(
+    name = "test",
+    tests = [
+        "//aggregators/ppx_archives/case310:test",
+    ]
+)

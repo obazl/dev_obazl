@@ -11,7 +11,10 @@
 
 * case 110: simple `ocaml_archive`
 * case 114: two (independent) archives in one package
-* case 118: two archives in one package, one depending on the other
+
+* case 118: chained archives, one depending on the other
+
+**EXPECTED FAIL** One archive file cannot contain another.
 
 * case 120: simple archive (same as 110), with a module that depends on it, with executable
 
@@ -19,6 +22,8 @@
 
 * case 128: two archives, one depending on the other (same as 118),
   with a module that depends on them, with executable
+
+**EXPECTED FAIL** One archive file cannot contain another.
 
 TODO: archives whose components have cc deps
 

@@ -1,4 +1,5 @@
-## aggregators/archives/case120: two simple archives
+## aggregators/ocaml_archives/case118: chained archives
+## DOES NOT WORK - you cannot chain archives, since an archive cannot contain another archive
 
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",

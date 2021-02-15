@@ -19,7 +19,8 @@ git_repository(
 git_repository(
     name = "obazl_rules_ocaml",
     remote = "https://github.com/obazl/rules_ocaml",
-    tag    = "v1.0.0-beta.1"
+    branch = "dev",
+    # tag    = "v1.0.0-beta.1"
 )
 
 load("@obazl_rules_ocaml//ocaml:bootstrap.bzl", "ocaml_configure")
