@@ -1,0 +1,26 @@
+## set400/case425: user-provided main, multiple exogenous submodules
+
+load(
+    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    deps_opam = ["ounit2"],
+    main = "test.ml",
+    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [":color"],
+)
+
+ocaml_ns_library(
+    name = "color",
+    main = "color.ml",
+    submodules = {
+        ## a mix of different types of submodules, some renamed some not
+        "//namespaces/obazl/set100/case110:_Red": "Red",
+        "//namespaces/obazl/set200/case210:_Green": "Green",
+        "//namespaces/obazl/set200/case220:_Blue": "Blue",
+    },
+)

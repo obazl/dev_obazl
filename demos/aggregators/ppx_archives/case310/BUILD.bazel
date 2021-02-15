@@ -1,0 +1,83 @@
+## aggregators/ppx_libraries/case110
+
+load(
+    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_module",
+    "ocaml_test",
+    "ppx_executable",
+    "ppx_archive",
+    "ppx_module",
+    "ppx_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "test.ml",
+    ppx       = ":ppx.exe",
+    ppx_print = "@ppx//print:text",
+    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    deps_opam = ["ounit2"]
+)
+
+###############
+ppx_executable(
+    name = "ppx.exe",
+    main = ":Runner",
+    deps = [
+        ":driver"
+    ],
+    deps_opam = ["ppxlib"]
+)
+
+###########
+ppx_module(
+    name      = "driver",
+    struct    = "driver.ml",
+    deps      = [":ppx_color"],
+    opts      = ["-w", "-33"]   ## unused open
+)
+
+############
+ppx_archive(
+    name = "ppx_color",
+    modules = [
+        ":ppx_red",
+        ":ppx_green",
+        ":ppx_blue",
+    ],
+)
+
+ppx_module(
+    name      = "ppx_red",
+    struct    = "ppx_red.ml",
+    deps_opam = ["ppxlib"]
+)
+
+ppx_module(
+    name      = "ppx_green",
+    struct    = "ppx_green.ml",
+    deps_opam = ["ppxlib"]
+)
+
+ppx_module(
+    name      = "ppx_blue",
+    struct    = "ppx_blue.ml",
+    deps_opam = ["ppxlib"]
+)
+
+###########
+ppx_module(
+    name = "Runner",
+    struct = ":ppxlib_runner.ml",
+    deps_opam = ["ppxlib"]
+)
+
+########
+genrule(
+    name = "genrunner",
+    outs = ["ppxlib_runner.ml"],
+    cmd = "\n".join([
+        "echo \"(* GENERATED FILE - DO NOT EDIT *)\" > \"$@\"",
+        "echo \"let () = Ppxlib.Driver.standalone ()\" >> \"$@\"",
+    ]),
+)

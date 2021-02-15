@@ -10,37 +10,16 @@ load(
 )
 
 ocaml_executable(
-    name = "hello_archive",
+    name = "hello",
     main = ":main",
-    deps = [":main"]
+    # deps = [":main"]
 )
-
-# ocaml_executable(
-#     name = "hello2",
-#     deps = [":main", ":archive"]
-# )
-
-# ocaml_executable(
-#     name = "hello3",
-#     deps = [":archive", ":main"]
-# )
-
-# ocaml_executable(
-#     name = "hello4",
-#     main = ":simple",
-#     deps = [":main2", ":easy"]
-# )
 
 ocaml_module(
     name = "main",
     struct = "main.ml",
     deps = [":archive"],
 )
-
-# ocaml_module(
-#     name = "main2",
-#     src = "main2.ml",
-# )
 
 ocaml_archive(
     name = "archive",

@@ -1,0 +1,46 @@
+## set020/case30
+
+load(
+    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    deps_opam = ["ounit2"],
+    main = "test.ml",
+    opts = [
+        "-w",
+        "-27",
+    ],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [":color"],
+)
+
+ocaml_ns_library(
+    name = "color",
+    ## Just like case20, but the name differs. Here color_main.ml will be copied to color.ml and compiled.
+    main = "color_main.ml",
+    submodules = {
+        ":_Red": "Red",
+        ":_Green": "Green",
+        ":_Blue": "Blue",
+    },
+    visibility = ["//visibility:public"],
+)
+
+ocaml_module(
+    name = "_Red",
+    struct = "red.ml",
+)
+
+ocaml_module(
+    name = "_Green",
+    struct = "green.ml",
+)
+
+ocaml_module(
+    name = "_Blue",
+    struct = "blue.ml",
+)

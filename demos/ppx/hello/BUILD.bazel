@@ -34,8 +34,8 @@ ocaml_test(
     ],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
         ":_Hello",  # the transformed and compiled test code
-        "@opam//pkg:ounit2",
     ],
+    deps_opam = ["ounit2"]
 )
 
 #############
@@ -45,23 +45,24 @@ ocaml_module(
     ppx = ":_ppx.exe",
     struct = "hello.ml",
     # ppx_print = "@ppx//print:text", # uncomment to get readable output
-    deps = [
-        "@opam//pkg:core",  # contains Sexp module
+    deps_opam = [
+        "core",  # contains Sexp module
     ],
 )
 
 ###############
 ppx_executable(
     name = "_ppx.exe",
+    main = ":_runner",  ## hand-rolled, see below
+    # opts = [], # obazl will automatically add '-predicates ppx_driver'
+    deps_opam = [
+        "ppx_sexp_value",  # contains handler for `[%sexp ]` extension
+    ],
+    ## obsolete:
     ## For 'main' we have two options: use a runner from an OPAM pkg, or roll our own;
     ## either way, obazl will place 'main' last in the list of deps.
     # main = "@opam//pkg:ppxlib.runner_as_ppx",  ## contains only 'Pppxlib.Driver.standalone ()'
-    main = "@opam//pkg:ppxlib.runner",  ## contains only 'Pppxlib.Driver.standalone ()'
-    # main = ":_runner",  ## hand-rolled, see below
-    # opts = [], # obazl will automatically add '-predicates ppx_driver'
-    deps = [
-        "@opam//pkg:ppx_sexp_value",  # contains handler for `[%sexp ]` extension
-    ],
+    # main = "@opam//pkg:ppxlib.runner",  ## contains only 'Pppxlib.Driver.standalone ()'
 )
 
 ###########
@@ -69,7 +70,7 @@ ppx_module(
     name = "_runner",
     struct = ":ppx_runner.ml",
     visibility = ["//visibility:public"],
-    deps = ["@opam//pkg:ppxlib"],
+    deps_opam = ["ppxlib"],
 )
 
 ########

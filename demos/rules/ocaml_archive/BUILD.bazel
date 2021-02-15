@@ -20,11 +20,11 @@ ocaml_test(
         "-27",
     ],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
-        "@opam//pkg:ounit2",
         ":main",
         # "//rules/ocaml_archive:_Easy",
         # "//rules/ocaml_archive:_Simple"
     ],
+    deps_opam = ["ounit2"]
 )
 
 ocaml_executable(
@@ -52,10 +52,19 @@ ocaml_executable(
 ocaml_module(
     name = "main",
     struct = "main.ml",
+    opts = ["-linkall",
+            # "-verbose",
+            # "-I",
+            # "rules/ocaml_archive/_obazl_",
+            # "/Users/gar/bazel/obazl/dev_obazl/demos/bazel-out/darwin-fastbuild/bin/rules/ocaml_archive/_obazl_",
+            # "/Users/gar/bazel/obazl/dev_obazl/demos/bazel-out/darwin-fastbuild/bin/rules/ocaml_archive/_obazl_/arch.cma"
+            ],
     deps = [
-        ":archive",
-        "@opam//pkg:core",
+        ":arch",
+        # ":_Easy",
+        # ":_Simple",
     ],
+    deps_opam = ["core"]
 )
 
 # ocaml_module(
@@ -64,7 +73,8 @@ ocaml_module(
 # )
 
 ocaml_archive(
-    name = "archive",
+    name = "arch",
+    opts = ["-linkall",],
     deps = [
         ":_Easy",
         ":_Simple",
@@ -74,11 +84,13 @@ ocaml_archive(
 ocaml_module(
     name = "_Easy",
     struct = "easy.ml",
+    opts = ["-linkall"],
 )
 
 ocaml_module(
     name = "_Simple",
     struct = "simple.ml",
+    opts = ["-linkall"],
 )
 
 # ## this target compiles sources to an archive:

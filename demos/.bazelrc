@@ -1,1 +1,10 @@
+common --color=yes
+
+build:dbg --subcommands=pretty_print
+build:dbg --verbose_failures
+build:dbg --sandbox_debug
+
+build:native --@ocaml//mode=native
+build:native --@ppx//mode=native
+
 try-import dev/user.bazelrc

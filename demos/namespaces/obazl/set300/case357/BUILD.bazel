@@ -1,0 +1,61 @@
+load(
+    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_archive",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns_archive",
+    "ocaml_test",
+)
+
+load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_env")
+## default prefix, but no ns_env aliasing - submodules will only be
+## accessible under renames. they will NOT be accessible within
+## namespace, e.g. Color.Red will fail, since there is no second-level resolver for Red.
+ns_env()
+
+ocaml_test(
+    name = "test",
+    deps_opam = ["ounit2"],
+    main = "test.ml",
+    opts = [
+        "-w",
+        "-27",
+    ],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [":color"],
+)
+
+ocaml_ns_archive(
+    name = "color",
+    # use user-provided file as main ns module. in this case it will be renamed (copied) to color.ml:
+    main = "color_main.ml",  ## Notice that we do NOT have a compile rule for color_main.ml
+    submodules = {
+        ":_Red": "Red",
+        ":_Green": "Green",
+        ":_Blue": "Blue",
+    },
+    visibility = ["//visibility:public"],
+)
+
+ocaml_module(
+    name = "_Red",
+    ns_env = ":_ns_env",
+    struct = "red.ml",
+)
+
+ocaml_module(
+    name = "_Green",
+    ns_env = ":_ns_env",
+    struct = "green.ml",
+)
+
+ocaml_module(
+    name = "_Blue",
+    ns_env = ":_ns_env",
+    struct = "blue.ml",
+    visibility = [
+        "//namespaces/obazl/class02/case07:__pkg__",
+        "//namespaces/obazl/class02/case08:__pkg__",
+        "//namespaces/obazl/class03/case09:__pkg__",
+        "//namespaces/obazl/class03/case10:__pkg__",
+    ],
+)

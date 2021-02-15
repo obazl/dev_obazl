@@ -17,22 +17,48 @@ git_repository(
     branch = "dev",
 )
 git_repository(
-    name = "obazl_rules_opam",
-    remote = "https://github.com/obazl/rules_opam",
-    branch = "dev",
-)
-git_repository(
     name = "obazl_rules_ocaml",
     remote = "https://github.com/obazl/rules_ocaml",
     tag    = "v1.0.0-beta.1"
 )
 
-load("@obazl_rules_opam//opam:bootstrap.bzl", opam_configure = "configure")
-load("//:WORKSPACE.bzl", "opam")  # configuration struct defined by user
-switch = opam_configure(opam = opam)
+load("@obazl_rules_ocaml//ocaml:bootstrap.bzl", "ocaml_configure")
+load("//:WORKSPACE.bzl", opam = "opam")
 
-load("@obazl_rules_ocaml//ocaml:bootstrap.bzl", ocaml_configure = "configure")
-ocaml_configure( switch = switch )
+# ocaml_configure(verbose=True, debug=True)              ## case 0
+ocaml_configure()                                      ## case 0
+# ocaml_configure(switch = "4.11.1")                     ## case 1
+# ocaml_configure(switch = "4.11.1", verbose=True, debug=True) ## case 1
+# ocaml_configure(switch = "4.11.1", opam=opam)          ## error: incompatible
+# ocaml_configure(switch = "4.11.1", build="4.11.1")     ## error: incompatible
+# ocaml_configure(switch = "noswitch")                   ## error: not found
+
+## opam arg incompatible with env var OPAMSWITCH
+# ocaml_configure(opam = opam, verbose=True, debug=True) ## case 2
+
+## build config v1.0.0-dev has verify=True; this makes it VERY slow
+# ocaml_configure(opam = opam, build="v1.0.0-dev", verbose=True, debug=True)    ## case 2:
+# ocaml_configure(opam = opam, build="v1.0.0-beta.1", verbose=True, debug=True)    ## case 2:
+
+# ocaml_configure(opam = opam, switch="4.11.1")          ## error: incompatible
+# ocaml_configure(opam = opam, build="v1.0.0-dev", switch="4.11.1") ## error: incompatible
+# ocaml_configure(opam = opam, build="v1.0.0-dev", verbose=True, debug=True)                           ## case 2
+
+
+# ocaml_configure(build = "v1.0.0-dev")                   ## error
+# ocaml_configure(opam=opam, build = "v1.0.0-dev", switch="4.11.1")  ## error
+# verify, install, pin, hermetic only make sense with opam
+# ocaml_configure(verify = True)                          ## error
+# ocaml_configure(install = True)                         ## error
+# ocaml_configure(pin = True)                             ## error
+# ocaml_configure(hermetic = True)                        ## error
+# ocaml_configure(verify = True, install = True)          ## error
+
+# ocaml_configure(build = "v1.0.0-dev")                 ## error
+
+
+# ocaml_configure(opam = opam, switch = "mina-0.1.0")  ## case A.1
+
 
 # local_repository(
 #     name = "obazl_rules_ocaml",

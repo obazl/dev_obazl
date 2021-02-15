@@ -1,0 +1,12 @@
+test_suite(
+    name = "test",
+    tests = [
+        "//ppx/adjunct_deps:test",
+        "//ppx/derivers/simple_deriver:test",
+        "//ppx/genrule:test",
+        "//ppx/hello:test",
+        "//ppx/mixed_mode:test",
+        "//ppx/ppx_optcomp:test",
+        "//ppx/rewriters/greeting:test",
+    ]
+)

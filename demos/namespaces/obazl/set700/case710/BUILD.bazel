@@ -1,0 +1,80 @@
+load(
+    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_env")
+
+ns_env( aliases = glob(["*.ml"], exclude=["color.ml"]) )
+
+ocaml_test(
+    name = "test",
+    deps_opam = ["ounit2"],
+    main = "test.ml",
+    opts = [
+        "-w",
+        "-27",
+    ],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [":color"],
+)
+
+ocaml_ns_library(
+    name = "color",
+    submodules = {
+        # OBazl will put these in depencency order. E.g. Red depends on
+        # Blue, Green and Subred, and Green depends on Blue, so the order on the
+        # command line will be Blue, Green, Subred, Red, Color.
+        # To see this without building, run:
+        # $ bazel aquery namespaces/obazl/class04/case13:test
+        ":_Red": "Red",
+        ":_Green": "Green",
+        ":_Blue": "Blue",
+        # ":_CMY"  # include an ns module as a submodule
+    },
+    visibility = ["//visibility:public"],
+)
+
+## we can define more than one namespace in a package!
+## this also demonstrates that the same module can be used
+## in multiple namespaces, under different names.
+ocaml_ns_library(
+    name = "kolor",
+    ## OBazl decouples (sub)module name and file name.
+    ## Here module Byed maps to file red.ml, Grue maps to green.ml
+    submodules = {
+        ":_Red": "Byed",
+        ":_Green": "Grue",
+    },
+    visibility = ["//visibility:public"],
+)
+
+ocaml_module(
+    name = "_Red",
+    ns_env = ":_ns_env",
+    struct = "red.ml",
+    deps = [
+        ":_Blue",
+        ":_Green",
+        ":_Subred",
+    ],
+)
+
+ocaml_module(
+    name = "_Subred",
+    ns_env = ":_ns_env",
+    struct = "subred.ml",
+)
+
+ocaml_module(
+    name = "_Green",
+    ns_env = ":_ns_env",
+    struct = "green.ml",
+    deps = [":_Blue"],
+)
+
+ocaml_module(
+    name = "_Blue",
+    ns_env = ":_ns_env",
+    struct = "blue.ml",
+)

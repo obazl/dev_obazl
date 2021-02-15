@@ -1,0 +1,103 @@
+## aggregators/archives/case120: two simple (independent) archives
+
+load(
+    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_test",
+    "ppx_executable",
+    "ppx_library",
+    "ppx_module"
+)
+
+ocaml_test(
+    name = "test",
+    main = "test.ml",
+    ppx  = ":ppx.exe",
+    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    ## NOTE: test.ml does NOT have any ppx _build_ dependencies ('deps'), only
+    ## preprocessing deps, which are handled by the ppx_executable passed via
+    ## the 'ppx' attribute.
+    deps_opam = ["ounit2"]
+)
+
+###############
+ppx_executable(
+    name = "ppx.exe",
+    main = ":_Driver",
+    deps = [":_Ppx_color"],
+    deps_opam = ["ppxlib"]
+)
+
+############
+ppx_library(
+    name = "_Ppx_color",
+    modules = [
+        ":_Ppx_red",
+        ":_Ppx_green",
+        ":_Ppx_blue",
+        ":_Ppx_greek"
+    ],
+)
+
+ppx_module(
+    name      = "_Ppx_red",
+    struct    = "ppx_red.ml",
+    deps_opam = ["ppxlib"]
+)
+
+ppx_module(
+    name      = "_Ppx_green",
+    struct    = "ppx_green.ml",
+    deps_opam = ["ppxlib"]
+)
+
+ppx_module(
+    name      = "_Ppx_blue",
+    struct    = "ppx_blue.ml",
+    deps_opam = ["ppxlib"]
+)
+
+############
+ppx_library(
+    name = "_Ppx_greek",
+    modules = [
+        ":_Ppx_alpha",
+        ":_Ppx_beta",
+        ":_Ppx_gamma",
+    ],
+)
+
+ppx_module(
+    name      = "_Ppx_alpha",
+    struct    = "ppx_alpha.ml",
+    deps_opam = ["ppxlib"]
+)
+
+ppx_module(
+    name      = "_Ppx_beta",
+    struct    = "ppx_beta.ml",
+    deps_opam = ["ppxlib"]
+)
+
+ppx_module(
+    name      = "_Ppx_gamma",
+    struct    = "ppx_gamma.ml",
+    deps_opam = ["ppxlib"]
+)
+
+################################################################
+###########
+ppx_module(
+    name = "_Driver",
+    struct = ":ppxlib_driver.ml",
+    deps_opam = ["ppxlib"]
+)
+
+########
+genrule(
+    name = "gendriver",
+    outs = ["ppxlib_driver.ml"],
+    cmd = "\n".join([
+        "echo \"(* GENERATED FILE - DO NOT EDIT *)\" > \"$@\"",
+        "echo \"let () = Ppxlib.Driver.standalone ()\" >> \"$@\"",
+    ]),
+)

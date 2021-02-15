@@ -1,0 +1,44 @@
+## aggregators/set100/case110: simple archive
+## executable uses 'main'
+
+load(
+    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_executable",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_test"
+)
+
+ocaml_test(
+    name = "test",
+    main = "test.ml",
+    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [
+        ":color",
+    ],
+    deps_opam = ["ounit2"]
+)
+
+ocaml_library(
+    name = "color",
+    modules = [
+        ":_Red",
+        ":_Green",
+        ":_Blue",
+    ],
+)
+
+ocaml_module(
+    name = "_Red",
+    struct = "red.ml",
+)
+
+ocaml_module(
+    name = "_Green",
+    struct = "green.ml",
+)
+
+ocaml_module(
+    name = "_Blue",
+    struct = "blue.ml",
+)

@@ -1,0 +1,53 @@
+# set200/case220
+
+load(
+    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_env")
+
+ocaml_test(
+    name = "test",
+    deps_opam = ["ounit2"],
+    main = "test.ml",
+    opts = [
+        "-w",
+        "-27",
+    ],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [":color"],
+)
+
+ocaml_ns_library(
+    name = "color",
+    # 'main' tells OBazl to use the provided file as main ns module
+    # instead of generating one. In this case, the designated file has
+    # the same name as this ocaml_ns_library instance, but that is not
+    # required; see set020/case30 for an example.
+    main = "color.ml",  ## Notice that we do NOT have a compile rule for color.ml
+    submodules = {
+        ":_Red": "Red",
+        ":_Green": "Green",
+        ":_Blue": "Blue",
+    },
+)
+
+ocaml_module(
+    name = "_Red",
+    struct = "red.ml",
+)
+
+ocaml_module(
+    name = "_Green",
+    struct = "green.ml",
+)
+
+ocaml_module(
+    name = "_Blue",
+    struct = "blue.ml",
+    visibility = [
+        ## this target is used by set400,  cases 415, 425
+        "//namespaces/obazl/set400:__subpackages__",
+    ],
+)

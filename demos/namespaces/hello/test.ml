@@ -1,10 +1,10 @@
-open OUnit2 ;;
-open Hello ;;
+open OUnit2
+open Hello
 
-let test1 test_ctxt = assert_equal "G'day!" (Australian.msg);;
-let test2 test_ctxt = assert_equal "Hello!" (English.msg);;
-let test3 test_ctxt = assert_equal "Salut!" (French.msg);;
-let test4 test_ctxt = assert_equal "Hola!" (Spanish.msg);;
+let test1 test_ctxt = assert_equal "G'day!" (Australian.msg)
+let test2 test_ctxt = assert_equal "Hello!" (English.msg)
+let test3 test_ctxt = assert_equal "Salut!" (French.msg)
+let test4 test_ctxt = assert_equal "Hola!" (Spanish.msg)
 
 let suite =
   "suite">::: [
@@ -13,8 +13,6 @@ let suite =
     "test3">:: test3 ;
     "test4">:: test4 ;
 ]
-;;
 
 let () =
   run_test_tt_main suite
-;;

@@ -1,0 +1,68 @@
+## ppx/mixed_mode - dependency graph contains a target (mixed_mode.ml)
+## that must be built in both native and bytecode modes.
+
+# $ bazel test ppx/mixed_mode:test
+# $ bazel run ppx/mixed_mode:test
+
+load(
+    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_module",
+    "ocaml_test",
+    "ppx_executable",
+    "ppx_module",
+)
+
+###########
+## ocaml_test - unit testing
+ocaml_test(
+    name = "test",
+    main = "test.ml",
+    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [
+        ":alpha",
+    ],
+    deps_opam = ["ounit2"]
+)
+
+## ppx_expect_test - compare whole actual output to expected output
+# ppx_expect_test(
+# )
+
+#############
+ocaml_module(
+    name   = "alpha",
+    struct = "alpha.ml",
+    ppx    = ":ppx.exe",
+    ppx_print = "@ppx//print:text"
+)
+
+###############
+ppx_executable(
+    name = "ppx.exe",
+    main = ":Driver",
+    deps = [":ppx_deriving_accessors"]
+)
+
+###########
+ppx_module(
+    name      = "ppx_deriving_accessors",
+    struct    = ":ppx_deriving_accessors.ml",
+    deps_opam = ["ppxlib"]
+)
+
+###########
+ppx_module(
+    name = "Driver",
+    struct = ":ppxlib_driver.ml",
+    deps_opam = ["ppxlib"]
+)
+
+########
+genrule(
+    name = "gendriver",
+    outs = ["ppxlib_driver.ml"],
+    cmd = "\n".join([
+        "echo \"(* GENERATED FILE - DO NOT EDIT *)\" > \"$@\"",
+        "echo \"let () = Ppxlib.Driver.standalone ()\" >> \"$@\"",
+    ]),
+)

@@ -1,0 +1,8 @@
+
+test_suite(
+    name = "test",
+    tests = [
+        "//namespaces/obazl/set000/case110:test",
+        "//namespaces/obazl/set000/case120:test"
+    ]
+)

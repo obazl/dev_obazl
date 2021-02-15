@@ -5,7 +5,7 @@ load(
     "ocaml_archive",
     "ocaml_library",
     "ocaml_module",
-    "ocaml_ns_module",
+    "ocaml_ns_library",
     "ocaml_test"
 )
 
@@ -13,7 +13,10 @@ load( "@obazl_rules_ocaml//ocaml:macros.bzl", "ns_env")
 # This exposes target "_ns_env". The 'ocaml_module' instances for
 # submodules must reference this target in their `prefix` attribute.
 # To change the target label, use the 'name' attribute'.
-ns_env(aliases = glob(["*.ml"]))
+# Exclude the main module of the ns lib, so it does not get aliased.
+ns_env(aliases = glob(["*.ml"],
+                      exclude = ["hello.ml"]
+                      ))
 
 ## The ns_env macro expands to an instance of rule 'ocaml_ns_env'.
 ## That rule sets the "ns prefix string", which serves as a kind of
@@ -35,12 +38,14 @@ ocaml_test(
     main = "test.ml",
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
-        "@opam//pkg:ounit2",
         ":hello",
+    ],
+    deps_opam = [
+        "ounit2",
     ]
 )
 
-ocaml_ns_module(
+ocaml_ns_library(
     name = "hello",
     submodules = {
         ":_Australian": "Australian",
@@ -50,28 +55,29 @@ ocaml_ns_module(
     },
 )
 
-## Each submodule must depend on the ns-init target
+## Each submodule must depend on the ns env target
 ocaml_module(
     name = "_Australian",
     struct  = "australian.ml",
-    prefix = ":_ns_env",
+    ns_env = ":_ns_env",
 )
 
 ocaml_module(
     name = "_English",
     struct  = "english.ml",
-    prefix = ":_ns_env",
+    ns_env = ":_ns_env",
+    visibility = ["//visibility:public"],
 )
 
 ocaml_module(
     name = "_French",
     struct  = "french.ml",
-    prefix = ":_ns_env",
+    ns_env = ":_ns_env",
 )
 
 ocaml_module(
     name = "_Spanish",
     struct  = "spanish.ml",
-    prefix = ":_ns_env",
+    ns_env = ":_ns_env",
 )
 

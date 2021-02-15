@@ -11,9 +11,11 @@
        updated. In the meantime see the README files and BUILD.bazel
        files in the demo subdirectories.
 
+* [aggregators](aggregators/readme.md) - archives and libraries.
+
 * [conditional](conditional) Conditional compilation - selection of build targets based on config parameters
 
-* [configuration](configuration) - demonstrates use of build
+* [configuration](configuration/readme.md) - demonstrates use of build
   flags and settings, and `--config` command line flag.
 
 * [filegen](filegen) File generation techniques

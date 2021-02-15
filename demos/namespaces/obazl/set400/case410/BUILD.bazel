@@ -1,0 +1,30 @@
+load(
+    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+
+# Note that in this case we do not need ns() to generate an ns
+# resolver, since we depend on modules from other packages (who have
+# their own ns resolvers).
+
+ocaml_test(
+    name = "test",
+    deps_opam = ["ounit2"],
+    main = "test.ml",
+    opts = [
+        "-w",
+        "-27",
+    ],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [":color"],
+)
+
+# Here we depend on modules that happen also to be used as submodules in their own directory.
+ocaml_ns_library(
+    name = "color", # => color.ml
+    submodules = {
+        "//namespaces/obazl/set100/case110:_Red": "Red",
+        "//namespaces/obazl/set100/case110:_Green": "Green",
+        "//namespaces/obazl/set100/case110:_Blue": "Blue",
+    },
+)

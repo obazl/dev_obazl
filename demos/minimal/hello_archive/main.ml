@@ -1,5 +1,8 @@
-print_endline "Hello from Main!" ;;
+let ()
+  = print_endline "Hello from Main!" ;
 
-Easy.msg() ;;
+  print_endline "Hello again" ;
 
-Simple.msg() ;;
+  Easy.msg();
+
+  Simple.msg()

@@ -1,0 +1,3 @@
+(* message *)
+
+let msg = "Hello"

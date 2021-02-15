@@ -1,10 +1,14 @@
 # interop demos
 
+TODO: add 'test' targets
+
 Demos:
 
+* [ffi](ffi/readme.md) Demos using the standard OCaml FFI (**F**oreign **F**unction **I**nterface).
+
+Not yet implemented:
 * [cstubs](cstubs) Simple demo showing how to use the `cstubs` subpackage of `ctypes` to access C libraries.
 * [ctypes](ctypes) Simple demo showing how to use the `ctypes` package to access C libraries.
-* [ffi](ffi) Simple demo showing how to use the OCaml FFI (**F**oreign **F**unction **I**nterface) to access C libraries, and the 'cc_deps` attribute to link them.
 
 ## resources
 

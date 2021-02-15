@@ -1,0 +1,67 @@
+# set200/case210
+
+load(
+    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+
+# In this case we use rule `ocaml_ns_library`, which will generate the
+# main ns module containing pseudo-recursive aliasing equations -
+# statements of the form 'module X = X'.
+
+# Since there are no intramural dependencies, we do not need a
+# resolver; the aliasing equations in the main module will suffice.
+
+# We are not using renaming - no ns_env(), and ocaml_module instances
+# do not need to enroll in an ns environment.
+
+ocaml_test(
+    name = "test",
+    deps_opam = ["ounit2"],
+    main = "test.ml",
+    opts = [
+        "-w",
+        "-27",
+    ],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [":color"],
+)
+
+# This will generate color.ml, containing one pseudo-recursive aliasing equation per submodule.
+# This tells OCaml to resolve e.g. Color.Red to Red to red.ml (or Red.ml).
+ocaml_ns_library(
+    name = "color",
+    submodules = {
+        ":_Red": "Red",
+        ":_Green": "Green",
+        ":_Blue": "Blue",
+    },
+)
+
+ocaml_module(
+    name = "_Red",
+    struct = "red.ml",
+    visibility = [
+        "//namespaces/obazl/set400:__subpackages__",
+        "//namespaces/obazl/set600/case640:__pkg__",
+    ]
+)
+
+ocaml_module(
+    name = "_Green",
+    struct = "green.ml",
+    visibility = [
+        "//namespaces/obazl/set400:__subpackages__",
+        "//namespaces/obazl/set600/case640:__pkg__",
+    ],
+)
+
+ocaml_module(
+    name = "_Blue",
+    struct = "blue.ml",
+    visibility = [
+        "//namespaces/obazl/set400:__subpackages__",
+        "//namespaces/obazl/set600/case640:__pkg__",
+    ]
+)

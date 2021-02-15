@@ -1,0 +1,37 @@
+## set400/case446: exogenous ns library dep.
+
+load(
+    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    deps_opam = ["ounit2"],
+    main = "test.ml",
+    opts = ["-w", "-27"], ## Error (warning 27): unused variable test_ctxt.
+    deps = [
+        ## either one works
+        ":x"
+        # "//namespaces/obazl/set300/case310:color"
+    ],
+)
+
+ocaml_ns_library(
+    name = "x", # avoid name clash
+    includes = [":_Color_include"],
+    submodules = {
+        ## this is a namespace library:
+        "//namespaces/obazl/set300/case310:color": "Color",
+    },
+)
+
+ocaml_module(
+    name = "_Color_include",
+    struct = "color_include.ml",
+    deps = ["//namespaces/obazl/set300/case310:color"]
+
+)
+

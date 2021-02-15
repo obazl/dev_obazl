@@ -9,7 +9,7 @@ Documentation: [docs_obazl](https://obazl.github.io/docs_obazl/)
 
 [Quickstart](quickstart.md)
 
-[Demos documentation.](demos)
+[Demos documentation.](demos/readme.md)
 
 ## Acknowledgements
 

@@ -1,0 +1,57 @@
+workspace( name = "demos" )
+
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
+
+http_archive(
+    name = "bazel_skylib",
+    urls = [
+        "https://github.com/bazelbuild/bazel-skylib/releases/download/1.0.3/bazel-skylib-1.0.3.tar.gz",
+        "https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/releases/download/1.0.3/bazel-skylib-1.0.3.tar.gz",
+    ],
+    sha256 = "1c531376ac7e5a180e0237938a2536de0c54d93f5c278634818e0efc952dd56c",
+)
+git_repository(
+    name = "obazl_tools_bazel",
+    remote = "https://github.com/obazl/tools_bazel",
+    branch = "dev",
+)
+# git_repository(
+#     name = "obazl_rules_opam",
+#     remote = "https://github.com/obazl/rules_opam",
+#     branch = "dev",
+# )
+git_repository(
+    name = "obazl_rules_ocaml",
+    remote = "https://github.com/obazl/rules_ocaml",
+    tag    = "v1.0.0-beta.1"
+)
+# local_repository(
+#     name = "obazl_rules_ocaml",
+#     path = "/Users/gar/bazel/obazl/rules_obazl"
+# )
+
+# load("@obazl_rules_opam//opam:bootstrap.bzl", opam_configure = "configure")
+# load("//:WORKSPACE.bzl", "opam")  # configuration struct defined by user
+# switch = opam_configure(opam = opam)
+
+load("@obazl_rules_ocaml//ocaml:bootstrap.bzl", ocaml_configure = "configure")
+# ocaml_configure( switch = switch )
+# ocaml_configure(switch="4.10.0")
+ocaml_configure(verbose = True)
+
+# local_repository(
+#     name = "obazl_rules_ocaml",
+#     path = ".."
+# )
+
+# load("@obazl_rules_ocaml//ocaml:deps.bzl",
+#      "ocaml_configure_tooling",
+#      # "ocaml_repositories",
+#      # "ocaml_home_sdk",
+#      "ocaml_register_toolchains")
+
+# ocaml_configure_tooling()
+
+# ocaml_register_toolchains(installation="host")
+

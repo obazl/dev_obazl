@@ -1,0 +1,54 @@
+# set100/case160: makes Red, Green, Blue accessible as Roux, Vert, Bleu
+
+load(
+    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+
+# Here we're not exactly renaming anything, so we do not use ns_env.
+# But we do use rule `ocaml_ns_library` to change module names without
+# renaming the module files. That is, we change the names under which
+# the module implementations are made accessible.
+
+ocaml_test(
+    name = "test",
+    deps_opam = ["ounit2"],
+    main = "test.ml",
+    opts = [
+        "-w",
+        "-27",
+    ],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [":couleur"],
+)
+
+# This will generate couleur.ml, containing one aliasing equation per
+# submodule. The submodule files are not renamed, but the aliases
+# under which they are accessible are determined by the values of the
+# submodules dictionary, which can be anything.
+ocaml_ns_library(
+    name = "couleur",
+    submodules = {
+        # keys: module targets; values: module names
+        # output: alias equations mapping modnames (values) to module names derived from keys
+        ":_Red": "Roux",  # maps Couleur.Roux to Red.cmo
+        ":_Green": "Vert",
+        ":_Blue": "Bleu",
+    },
+)
+
+ocaml_module(
+    name = "_Red",
+    struct = "red.ml",
+)
+
+ocaml_module(
+    name = "_Green",
+    struct = "green.ml",
+)
+
+ocaml_module(
+    name = "_Blue",
+    struct = "blue.ml",
+)

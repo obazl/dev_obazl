@@ -1,0 +1,34 @@
+
+test_suite(
+    name = "test",
+    tests = [
+        "//namespaces/obazl/set300/case310:test",
+        "//namespaces/obazl/set300/case311:test",
+        "//namespaces/obazl/set300/case316:test",
+        "//namespaces/obazl/set300/case317:test",
+        "//namespaces/obazl/set300/case320:test",
+        "//namespaces/obazl/set300/case321:test",
+        "//namespaces/obazl/set300/case326:test",
+        "//namespaces/obazl/set300/case327:test",
+        "//namespaces/obazl/set300/case330:test",
+        "//namespaces/obazl/set300/case331:test",
+        "//namespaces/obazl/set300/case336:test",
+        "//namespaces/obazl/set300/case337:test",
+        "//namespaces/obazl/set300/case340:test",
+        "//namespaces/obazl/set300/case341:test",
+        "//namespaces/obazl/set300/case350:test",
+        "//namespaces/obazl/set300/case351:test",
+        "//namespaces/obazl/set300/case356:test",
+        "//namespaces/obazl/set300/case357:test",
+        "//namespaces/obazl/set300/case360:test",
+        "//namespaces/obazl/set300/case361:test",
+        "//namespaces/obazl/set300/case366:test",
+        "//namespaces/obazl/set300/case367:test",
+        "//namespaces/obazl/set300/case370/foo-bar:test",
+        "//namespaces/obazl/set300/case371/foo-bar:test",
+        "//namespaces/obazl/set300/case376:test",
+        "//namespaces/obazl/set300/case377:test",
+        "//namespaces/obazl/set300/case380:test",
+        "//namespaces/obazl/set300/case381:test"
+    ]
+)

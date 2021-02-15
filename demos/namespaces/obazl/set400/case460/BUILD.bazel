@@ -1,0 +1,37 @@
+load(
+    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+
+## Name clash!  ns module Color depends on same from another package.
+## Result:
+# File "namespaces/obazl/set035/case03/test.ml", line 1:
+# Error: Files namespaces/obazl/set035/case03/test.cmo
+#        and bazel-out/darwin-fastbuild/bin/namespaces/obazl/set035/case03/_obazl_/color.cmo
+#        make inconsistent assumptions over interface Color
+
+ocaml_test(
+    name = "test",
+    deps_opam = ["ounit2"],
+    main = "test.ml",
+    opts = [
+        "-w",
+        "-27",  ## Error (warning 27): unused variable test_ctxt.
+        # "-open", "Demos_Namespaces_Obazl_Set030_Case01__00_ns_env"
+    ],
+    deps = [":x"],
+)
+
+ocaml_ns_library(
+    name = "x",
+    main = "color_main.ml",
+    submodules = {
+        ## this is a namespace library:
+        "//namespaces/obazl/set300/case310:color": "Color",
+        # # "//namespaces/obazl/set020ns/case01:_Red": "Red",
+        # "//namespaces/obazl/set020/case02:_Green": "Green",
+        # # "//namespaces/obazl/set020ns/case01:_Blue": "Blue",
+        # "//namespaces/obazl/set030/case01:color": "Color",
+    },
+)

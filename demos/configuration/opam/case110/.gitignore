@@ -1,0 +1,10 @@
+bazel-*
+dev
+logs
+tmp
+
+**/*.cmo
+**/*.cmi
+**/*.cmx
+**/*.exe
+**/.merlin
