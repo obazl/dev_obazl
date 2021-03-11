@@ -5,15 +5,15 @@ test_suite(
         "//namespaces/obazl/set400/case410:test",
         "//namespaces/obazl/set400/case415:test",
         "//namespaces/obazl/set400/case420:test",
-        "//namespaces/obazl/set400/case422:test",
-        "//namespaces/obazl/set400/case424:test",
         "//namespaces/obazl/set400/case426:test",
         "//namespaces/obazl/set400/case428:test",
-        "//namespaces/obazl/set400/case430:test",
-        "//namespaces/obazl/set400/case440:test",
-        "//namespaces/obazl/set400/case446:test",
-        "//namespaces/obazl/set400/case448:test",
-        "//namespaces/obazl/set400/case460:test",
-        "//namespaces/obazl/set400/case470:test",
+
+        ## Not yet updated to latest version:
+        # "//namespaces/obazl/set400/case430:test",
+        # "//namespaces/obazl/set400/case440:test",
+        # "//namespaces/obazl/set400/case446:test",
+        # "//namespaces/obazl/set400/case448:test",
+        # "//namespaces/obazl/set400/case460:test",
+        # "//namespaces/obazl/set400/case470:test",
     ]
 )

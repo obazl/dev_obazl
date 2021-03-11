@@ -1,0 +1,117 @@
+# dune build
+# OCAMLPARAM: unset
+# Workspace root: /Users/gar/bazel/obazl/dev_obazl/demos/ppx/rewriter
+$ /usr/local/opt/coreutils/libexec/gnubin/nproc > /var/folders/wz/dx0cgvqx5qn802qmc3d4hcfr0000gp/T/dune162f26.output 2> /dev/null
+# Auto-detected concurrency: 6
+# disable binary cache
+$ /Users/gar/.opam/mina-0.1.0/bin/ocamlc.opt -config > /var/folders/wz/dx0cgvqx5qn802qmc3d4hcfr0000gp/T/duneb870e2.output
+# Dune context:
+#  { name = "default"
+#  ; kind = "default"
+#  ; profile = Dyn
+#  ; merlin = true
+#  ; for_host = None
+#  ; fdo_target_exe = None
+#  ; build_dir = "default"
+#  ; toplevel_path = Some External "/Users/gar/.opam/mina-0.1.0/lib/toplevel"
+#  ; ocaml_bin = External "/Users/gar/.opam/mina-0.1.0/bin"
+#  ; ocaml = Ok External "/Users/gar/.opam/mina-0.1.0/bin/ocaml"
+#  ; ocamlc = External "/Users/gar/.opam/mina-0.1.0/bin/ocamlc.opt"
+#  ; ocamlopt = Ok External "/Users/gar/.opam/mina-0.1.0/bin/ocamlopt.opt"
+#  ; ocamldep = Ok External "/Users/gar/.opam/mina-0.1.0/bin/ocamldep.opt"
+#  ; ocamlmklib = Ok External "/Users/gar/.opam/mina-0.1.0/bin/ocamlmklib.opt"
+#  ; env =
+#      map
+#        { "INSIDE_DUNE" :
+#            "/Users/gar/bazel/obazl/dev_obazl/demos/ppx/rewriter/_build/default"
+#        ; "MANPATH" :
+#            "/Users/gar/bazel/obazl/dev_obazl/demos/ppx/rewriter/_build/install/default/bin"
+#        ; "OCAMLFIND_IGNORE_DUPS_IN" :
+#            "/Users/gar/bazel/obazl/dev_obazl/demos/ppx/rewriter/_build/install/default/lib"
+#        ; "OCAMLPATH" :
+#            "/Users/gar/bazel/obazl/dev_obazl/demos/ppx/rewriter/_build/install/default/lib"
+#        ; "OCAMLTOP_INCLUDE_PATH" :
+#            "/Users/gar/bazel/obazl/dev_obazl/demos/ppx/rewriter/_build/install/default/lib/toplevel"
+#        ; "OCAML_COLOR" : "always"
+#        ; "OPAMCOLOR" : "always"
+#        }
+#  ; findlib_path = [ External "/Users/gar/.opam/mina-0.1.0/lib" ]
+#  ; arch_sixtyfour = true
+#  ; natdynlink_supported = true
+#  ; supports_shared_libraries = true
+#  ; ocaml_config =
+#      { version = "4.07.1"
+#      ; standard_library_default = "/Users/gar/.opam/mina-0.1.0/lib/ocaml"
+#      ; standard_library = "/Users/gar/.opam/mina-0.1.0/lib/ocaml"
+#      ; standard_runtime = "/Users/gar/.opam/mina-0.1.0/bin/ocamlrun"
+#      ; ccomp_type = "cc"
+#      ; c_compiler = "cc"
+#      ; ocamlc_cflags = [ "-O2"; "-fno-strict-aliasing"; "-fwrapv" ]
+#      ; ocamlc_cppflags = [ "-D_FILE_OFFSET_BITS=64"; "-D_REENTRANT" ]
+#      ; ocamlopt_cflags = [ "-O2"; "-fno-strict-aliasing"; "-fwrapv" ]
+#      ; ocamlopt_cppflags = [ "-D_FILE_OFFSET_BITS=64"; "-D_REENTRANT" ]
+#      ; bytecomp_c_compiler =
+#          [ "cc"
+#          ; "-O2"
+#          ; "-fno-strict-aliasing"
+#          ; "-fwrapv"
+#          ; "-D_FILE_OFFSET_BITS=64"
+#          ; "-D_REENTRANT"
+#          ]
+#      ; bytecomp_c_libraries = [ "-lpthread" ]
+#      ; native_c_compiler =
+#          [ "cc"
+#          ; "-O2"
+#          ; "-fno-strict-aliasing"
+#          ; "-fwrapv"
+#          ; "-D_FILE_OFFSET_BITS=64"
+#          ; "-D_REENTRANT"
+#          ]
+#      ; native_c_libraries = []
+#      ; cc_profile = [ "-pg" ]
+#      ; architecture = "amd64"
+#      ; model = "default"
+#      ; int_size = 63
+#      ; word_size = 64
+#      ; system = "macosx"
+#      ; asm = [ "clang"; "-arch"; "x86_64"; "-Wno-trigraphs"; "-c" ]
+#      ; asm_cfi_supported = true
+#      ; with_frame_pointers = false
+#      ; ext_exe = ""
+#      ; ext_obj = ".o"
+#      ; ext_asm = ".s"
+#      ; ext_lib = ".a"
+#      ; ext_dll = ".so"
+#      ; os_type = "Unix"
+#      ; default_executable_name = "a.out"
+#      ; systhread_supported = true
+#      ; host = "x86_64-apple-darwin19.6.0"
+#      ; target = "x86_64-apple-darwin19.6.0"
+#      ; profiling = true
+#      ; flambda = false
+#      ; spacetime = false
+#      ; safe_string = false
+#      ; exec_magic_number = "Caml1999X023"
+#      ; cmi_magic_number = "Caml1999I024"
+#      ; cmo_magic_number = "Caml1999O023"
+#      ; cma_magic_number = "Caml1999A023"
+#      ; cmx_magic_number = "Caml1999Y023"
+#      ; cmxa_magic_number = "Caml1999Z023"
+#      ; ast_impl_magic_number = "Caml1999M023"
+#      ; ast_intf_magic_number = "Caml1999N023"
+#      ; cmxs_magic_number = "Caml1999D023"
+#      ; cmt_magic_number = "Caml1999T024"
+#      ; natdynlink_supported = true
+#      ; supports_shared_libraries = true
+#      ; windows_unicode = false
+#      }
+#  }
+$ (cd _build/default && /Users/gar/.opam/mina-0.1.0/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -49 -nopervasives -nostdlib -g -bin-annot -I .ppx_get_env.objs/byte -no-alias-deps -opaque -o .ppx_get_env.objs/byte/ppx_get_env__.cmo -c -impl ppx_get_env__.ml-gen)
+$ (cd _build/default && /Users/gar/.opam/mina-0.1.0/bin/ocamldep.opt -modules -impl main.ml) > _build/default/.ppx_get_env.objs/main.ml.d
+$ (cd _build/default && /Users/gar/.opam/mina-0.1.0/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I .ppx_get_env.objs/byte -I /Users/gar/.opam/mina-0.1.0/lib/base -I /Users/gar/.opam/mina-0.1.0/lib/base/caml -I /Users/gar/.opam/mina-0.1.0/lib/base/shadow_stdlib -I /Users/gar/.opam/mina-0.1.0/lib/ocaml-compiler-libs/common -I /Users/gar/.opam/mina-0.1.0/lib/ocaml-compiler-libs/shadow -I /Users/gar/.opam/mina-0.1.0/lib/ocaml-migrate-parsetree -I /Users/gar/.opam/mina-0.1.0/lib/ocaml/compiler-libs -I /Users/gar/.opam/mina-0.1.0/lib/ppx_derivers -I /Users/gar/.opam/mina-0.1.0/lib/ppxlib -I /Users/gar/.opam/mina-0.1.0/lib/ppxlib/ast -I /Users/gar/.opam/mina-0.1.0/lib/ppxlib/print_diff -I /Users/gar/.opam/mina-0.1.0/lib/ppxlib/traverse_builtins -I /Users/gar/.opam/mina-0.1.0/lib/result -I /Users/gar/.opam/mina-0.1.0/lib/sexplib0 -I /Users/gar/.opam/mina-0.1.0/lib/stdio -no-alias-deps -opaque -open Ppx_get_env__ -o .ppx_get_env.objs/byte/ppx_get_env__Main.cmo -c -impl main.ml)
+> File "main.ml", line 1, characters 25-32:
+> Error: Uninterpreted extension 'get_env'.
+[2]
+$ (cd _build/default && /Users/gar/.opam/mina-0.1.0/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -49 -nopervasives -nostdlib -g -I .ppx_get_env.objs/byte -I .ppx_get_env.objs/native -intf-suffix .ml-gen -no-alias-deps -opaque -o .ppx_get_env.objs/native/ppx_get_env__.cmx -c -impl ppx_get_env__.ml-gen)
+$ (cd _build/default && /Users/gar/.opam/mina-0.1.0/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I .ppx_get_env.objs/byte -I /Users/gar/.opam/mina-0.1.0/lib/base -I /Users/gar/.opam/mina-0.1.0/lib/base/caml -I /Users/gar/.opam/mina-0.1.0/lib/base/shadow_stdlib -I /Users/gar/.opam/mina-0.1.0/lib/ocaml-compiler-libs/common -I /Users/gar/.opam/mina-0.1.0/lib/ocaml-compiler-libs/shadow -I /Users/gar/.opam/mina-0.1.0/lib/ocaml-migrate-parsetree -I /Users/gar/.opam/mina-0.1.0/lib/ocaml/compiler-libs -I /Users/gar/.opam/mina-0.1.0/lib/ppx_derivers -I /Users/gar/.opam/mina-0.1.0/lib/ppxlib -I /Users/gar/.opam/mina-0.1.0/lib/ppxlib/ast -I /Users/gar/.opam/mina-0.1.0/lib/ppxlib/print_diff -I /Users/gar/.opam/mina-0.1.0/lib/ppxlib/traverse_builtins -I /Users/gar/.opam/mina-0.1.0/lib/result -I /Users/gar/.opam/mina-0.1.0/lib/sexplib0 -I /Users/gar/.opam/mina-0.1.0/lib/stdio -no-alias-deps -opaque -open Ppx_get_env__ -o .ppx_get_env.objs/byte/ppx_get_env.cmo -c -impl ppx_get_env.ml)
+$ (cd _build/default && /Users/gar/.opam/mina-0.1.0/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I .ppx_get_env.objs/byte -I .ppx_get_env.objs/native -I /Users/gar/.opam/mina-0.1.0/lib/base -I /Users/gar/.opam/mina-0.1.0/lib/base/caml -I /Users/gar/.opam/mina-0.1.0/lib/base/shadow_stdlib -I /Users/gar/.opam/mina-0.1.0/lib/ocaml-compiler-libs/common -I /Users/gar/.opam/mina-0.1.0/lib/ocaml-compiler-libs/shadow -I /Users/gar/.opam/mina-0.1.0/lib/ocaml-migrate-parsetree -I /Users/gar/.opam/mina-0.1.0/lib/ocaml/compiler-libs -I /Users/gar/.opam/mina-0.1.0/lib/ppx_derivers -I /Users/gar/.opam/mina-0.1.0/lib/ppxlib -I /Users/gar/.opam/mina-0.1.0/lib/ppxlib/ast -I /Users/gar/.opam/mina-0.1.0/lib/ppxlib/print_diff -I /Users/gar/.opam/mina-0.1.0/lib/ppxlib/traverse_builtins -I /Users/gar/.opam/mina-0.1.0/lib/result -I /Users/gar/.opam/mina-0.1.0/lib/sexplib0 -I /Users/gar/.opam/mina-0.1.0/lib/stdio -intf-suffix .ml -no-alias-deps -opaque -open Ppx_get_env__ -o .ppx_get_env.objs/native/ppx_get_env.cmx -c -impl ppx_get_env.ml)

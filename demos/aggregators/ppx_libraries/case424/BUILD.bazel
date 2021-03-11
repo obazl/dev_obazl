@@ -1,4 +1,4 @@
-## aggregators/archives/case120: two simple (independent) archives
+## aggregators/ppx_libraries/case424:
 
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
@@ -12,7 +12,12 @@ load(
 
 ocaml_test(
     name = "test",
-    main = "test.ml",
+    main = "_Test"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
     ppx  = ":ppx.exe",
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
     deps = [":_main"],
@@ -34,7 +39,7 @@ ocaml_module(
 ###############
 ppx_executable(
     name = "ppx.exe",
-    main = ":Driver",
+    main = ":_Ppxlib_driver",
     deps = [":_Ppx_color", "_Ppx_greek"],
     deps_opam = ["ppxlib"]
 )
@@ -98,7 +103,7 @@ ppx_module(
 ################################################################
 ###########
 ppx_module(
-    name = "Driver",
+    name = "_Ppxlib_driver",
     struct = ":ppxlib_driver.ml",
     deps_opam = ["ppxlib"]
 )

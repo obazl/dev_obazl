@@ -99,7 +99,12 @@ ocaml_module(
 ###########
 ocaml_test(
     name = "test",
-    main = "test.ml",
+    main = "_Test"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
     opts = [
         "-w", "-27",  ## Error (warning 27): unused variable test_ctxt.
     ],

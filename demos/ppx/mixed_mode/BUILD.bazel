@@ -15,7 +15,12 @@ load(
 ###########
 ocaml_test(
     name = "test",
-    main = "test.ml",
+    main = "_Test"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
         ":main",
@@ -39,10 +44,16 @@ ocaml_module(
     deps   = [":mixed_mode"]
 )
 
+############# this module is used as both a ppx and a non-ppx module
+ocaml_module(
+    name = "mixed_mode",
+    struct = "mixed_mode.ml",
+)
+
 ###############
 ppx_executable(
     name = "ppx.exe",
-    main = ":Driver",
+    main = ":ppxlib_driver",
     deps = [":ppx_message"]
 )
 
@@ -54,16 +65,11 @@ ppx_module(
     deps_opam = ["ppxlib"]
 )
 
-#############
-ocaml_module(
-    name = "mixed_mode",
-    struct = "mixed_mode.ml",
-)
-
 ###########
 ppx_module(
-    name = "Driver",
+    name = "ppxlib_driver",
     struct = ":ppxlib_driver.ml",
+    opts   = ["-linkall"],
     deps_opam = ["ppxlib"]
 )
 

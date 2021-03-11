@@ -4,22 +4,16 @@ load(
     "ocaml_ns_library",
     "ocaml_test",
 )
-load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_env")
-
-# Same as class00/case14, with the addition prefixing to rename submodules.
-
-# Intra-modular cross-references do not need to be qualified by the ns
-# module. E.g. red.ml refers to 'Blue', not 'Color.Blue'.
-
-# References by external clients, however, must use the ns-qualified
-# path, e.g. 'Color.Red' (as test.ml does).
-
-ns_env(aliases = glob(["*.ml"]))
 
 ocaml_test(
     name = "test",
+    main = "_Test"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
     deps_opam = ["ounit2"],
-    main = "test.ml",
     opts = [
         "-w",
         "-27",
@@ -40,20 +34,17 @@ ocaml_ns_library(
 
 ocaml_module(
     name = "_Red",
-    ns_env = ":_ns_env",
     struct = "red.ml",  # no prefix => red.cmo
     deps = [":_Blue"],
 )
 
 ocaml_module(
     name = "_Green",
-    ns_env = ":_ns_env",
     struct = "green.ml",  # => green.cmo
     deps = [":_Blue"],
 )
 
 ocaml_module(
     name = "_Blue",
-    ns_env = ":_ns_env",
     struct = "blue.ml",  # => blue.cmo
 )

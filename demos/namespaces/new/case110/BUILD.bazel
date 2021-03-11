@@ -1,0 +1,91 @@
+## new/case110: minimal ns lib with ppx transforms
+
+load(
+    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_test",
+    "ppx_executable",
+    "ppx_module",
+)
+
+ocaml_test(
+    name = "test",
+    main = "_Test"
+)
+
+ocaml_module(
+    name = "_Test",
+    struct = "test.ml",
+    deps = [":color"],
+    deps_opam = ["ounit2"],
+    opts = [
+        "-w", "-27"  ## Error (warning 27): unused variable test_ctxt.
+    ],
+)
+
+ocaml_ns_library(
+    name = "color",
+    submodules = [
+        ":_Red",
+        ":_Green",
+        ":_Blue",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+## change this to "@ppx//print:text" to get readable output
+PPX_PRINT = "@ppx//print:binary"
+
+ocaml_module(
+    name = "_Red",
+    ppx  = ":ppx.exe",
+    ppx_print = PPX_PRINT,
+    struct = "red.ml",
+)
+
+ocaml_module(
+    name = "_Green",
+    ppx  = ":ppx.exe",
+    ppx_print = PPX_PRINT,
+    struct = "green.ml",
+)
+
+ocaml_module(
+    name = "_Blue",
+    ppx  = ":ppx.exe",
+    ppx_print = PPX_PRINT,
+    struct = "blue.ml",
+)
+
+################################################################
+###############
+ppx_executable(
+    name = "ppx.exe",
+    main = ":Ppxlib_runner",
+    deps = [":ppx_hex_of_dec"]
+)
+
+###########
+ppx_module(
+    name      = "ppx_hex_of_dec",
+    struct    = ":ppx_hex_of_dec.ml",
+    deps_opam = ["ppxlib"]
+)
+
+###########
+ppx_module(
+    name = "Ppxlib_runner",
+    struct = ":ppxlib_runner.ml",
+    deps_opam = ["ppxlib"]
+)
+
+########
+genrule(
+    name = "genrunner",
+    outs = ["ppxlib_runner.ml"],
+    cmd = "\n".join([
+        "echo \"(* GENERATED FILE - DO NOT EDIT *)\" > \"$@\"",
+        "echo \"let () = Ppxlib.Driver.standalone ()\" >> \"$@\"",
+    ]),
+)

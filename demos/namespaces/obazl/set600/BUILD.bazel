@@ -3,10 +3,12 @@ test_suite(
     name = "test",
     tests = [
         "//namespaces/obazl/set600/case610:test",
+        "//namespaces/obazl/set600/case612:test",
         "//namespaces/obazl/set600/case614:test",
         "//namespaces/obazl/set600/case620:test",
-        "//namespaces/obazl/set600/case630:test",
-        "//namespaces/obazl/set600/case640:test",
-        "//namespaces/obazl/set600/case650:test",
+
+        # "//namespaces/obazl/set600/case630:test",
+        # "//namespaces/obazl/set600/case640:test",
+        # "//namespaces/obazl/set600/case650:test",
     ]
 )

@@ -1,0 +1,23 @@
+test_suite(
+    name = "test",
+    tests = [
+        "//namespaces/new/case100:test",
+        # "//namespaces/new/case102:test",
+        "//namespaces/new/case104:test",
+        "//namespaces/new/case110:test",
+        "//namespaces/new/case120:test",
+        "//namespaces/new/case130:test",
+        "//namespaces/new/case140:test",
+        "//namespaces/new/case150:test",
+        "//namespaces/new/case160:test",
+
+        "//namespaces/new/case200:test",
+
+        ## 500 series: complex depgraphs
+        "//namespaces/new/case500:test",
+        "//namespaces/new/case502:test",
+        "//namespaces/new/case510:test",
+        "//namespaces/new/case520:test"
+
+    ]
+)

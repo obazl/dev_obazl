@@ -8,21 +8,16 @@ load(
     "ocaml_ns_library",
     "ocaml_test",
 )
-load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_env")
-
-ns_env(aliases = glob(["*.ml"],
-                      exclude = [
-                          # if color_include.ml is included in ns_env,
-                          # then it must be enrolled too; see its
-                          # build rule below.
-                          # "color_include.ml",
-                          "test.ml"
-                      ]))
 
 ocaml_test(
     name = "test",
+    main = "_Test"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
     deps_opam = ["ounit2"],
-    main = "test.ml",
     opts = [
         "-w",
         "-27",
@@ -32,37 +27,38 @@ ocaml_test(
 
 ocaml_ns_library(
     name = "color",
-    includes = [":_Color_include"],
-    submodules = {
-        ":_Red": "Red",
-        ":_Green": "Green",
-        ":_Blue": "Blue",
-    },
+    # main = ":_Color",
+    submodules = [
+        ":_Red",
+        ":_Green",
+        ":_Blue",
+        ":_Color"
+    ],
+)
+
+ocaml_module(
+    name = "_Color",
+    struct = "color.ml",
+    deps   = [":_Color_include"]
 )
 
 ocaml_module(
     name = "_Color_include",
-    # if ns_env includes color_include.ml, then it must be enrolled.
-    # otherwise we get "Internal path is dangling" error.
-    ns_env = ":_ns_env",
     struct = "color_include.ml",
     deps   = [":_Red"]
 )
 
 ocaml_module(
     name = "_Red",
-    ns_env = ":_ns_env",
     struct = "red.ml",
 )
 
 ocaml_module(
     name = "_Green",
-    ns_env = ":_ns_env",
     struct = "green.ml",
 )
 
 ocaml_module(
     name = "_Blue",
-    ns_env = ":_ns_env",
     struct = "blue.ml",
 )

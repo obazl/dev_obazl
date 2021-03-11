@@ -1,33 +1,40 @@
 ## set400/case420: user-supplied main module, multiple exogenous submodules.
-## In this case the submodules are pseudo-namespaced but they are not submodules of an ns library.
-## This means there is no resolver file of aliasing equations for them.
-## WARNING: this pattern is NOT optimal, see comments in color.ml.
-## A better solution is to used 'include' instead of 'main' - see set400/case440.
-## Another possibility, if you control the exogenous submodules, is to put them into an ns library.
-## See set400/case422 for and example.
 
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_module",
     "ocaml_ns_library",
     "ocaml_test",
 )
 
 ocaml_test(
     name = "test",
+    main = "_Test"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
     deps_opam = ["ounit2"],
-    main = "test.ml",
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
     deps = [":color"],
 )
 
 ocaml_ns_library(
     name = "color",
-    main = "color.ml", # in this case, color.ml contains NON-recursive equations - see file for comments
-    submodules = {
+    # main = "_Color",
+    submodules = [
         ## these are plain ol' modules, not submodules in an ns library.
-        ## but they are enrolled in an ns_env, so they are renamed.
-        "//namespaces/obazl/set100/case110:_Red": "Red",
-        "//namespaces/obazl/set100/case110:_Green": "Green",
-        "//namespaces/obazl/set100/case110:_Blue": "Blue",
-    },
+        "//namespaces/obazl/set100/case130:_Demo__Red",
+        "//namespaces/obazl/set100/case130:_Demo__Green",
+        "//namespaces/obazl/set100/case130:_Demo__Blue",
+        ":_Color"
+    ],
 )
+
+# Color maps Red to Demo__Red, etc.
+ocaml_module(
+    name = "_Color",
+    struct = "color.ml",
+)
+

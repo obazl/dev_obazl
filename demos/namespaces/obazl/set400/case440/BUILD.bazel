@@ -1,3 +1,6 @@
+
+## OBSOLETE! not yet updated to latest version...
+
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
     "ocaml_module",

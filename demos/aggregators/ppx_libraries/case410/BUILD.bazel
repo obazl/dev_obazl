@@ -12,7 +12,12 @@ load(
 
 ocaml_test(
     name = "test",
-    main = "test.ml",
+    main = "_Test"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
     ppx = ":ppx.exe",
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
     deps_opam = ["ounit2"]
@@ -21,7 +26,7 @@ ocaml_test(
 ###############
 ppx_executable(   ## make this ppx_test, with predefined driver? e.g. ppxlib_test? macro!
     name = "ppx.exe",
-    main = ":Driver",
+    main = ":_Ppxlib_driver",
     deps = [":ppx_color"],
     deps_opam = ["ppxlib"]
 )
@@ -56,7 +61,7 @@ ppx_module(
 
 ###########
 ppx_module(
-    name = "Driver",
+    name = "_Ppxlib_driver",
     struct = ":ppxlib_driver.ml",
     deps_opam = ["ppxlib"]
 )

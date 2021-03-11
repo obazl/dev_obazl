@@ -3,8 +3,7 @@
 >    **WARNING** this documentation is outdated but currently undergoing revision.
 
 * [Overview](#overview)
-* [Set 000](#set000) Baseline
-* [Set 100](#set100) Renaming only
+* [Set 100](#set100) Basic stuff used as deps by other test cases
 * [Set 200](#set200) Aliasing only
 * [Set 300](#set300) Namespacing
 * [Set 400](#set400) Exogenous submodules
@@ -16,73 +15,29 @@
 
 ## <a name="overview">Overview</a>
 
-Run one test: `$ bazel test namespaces/obazl/class01/case01:test`
+Run one test: `$ bazel test namespaces/obazl/set300/case310:test`
 
-Run all tests: `$ bazel test //...:*`
+Run all tests: `$ bazel test test`
 
-Run all tests in one "class" package: `$ bazel test namespaces/obazl/class01/...:*`
+Run all tests in one set: `$ bazel test namespaces/obazl/set200:test`
 
 Some of the tests print lines to stdout. To see them you can inspect
 the test log, or you can use the Bazel `run` command to run tests,
-e.g. `$ bazel run namespaces/obazl/class03/case10:test`
+e.g. `$ bazel run namespaces/obazl/set200/case210:test`
 
 To see what gets built for an `ocaml_ns_library`, use the `build`
-command, e.g. `$ bazel build namespaces/obazl/class02/case06:color`.
+command, e.g. `$ bazel build namespaces/obazl/set400/case410:color`.
 
-"Resolver" modules are named with suffix `00` plus the `ns_env` name, by default `00_ns_env`.
+"Resolver" modules are named with suffix `0Resolver`.
 
 You can print build commands, inputs, and outputs without executing
-the build by using the `aquery` command: `$ bazel aquery
-namespaces/obazl/class02/case06:color`.
+the build by using the `aquery` command:
+`$ bazel aquery namespaces/obazl/set400/case410:color`.
 
-## <a name="set000">Set 000: Baseline
+## <a name="set100">Set 100: Basic module builds.
 
-No renaming, no aliasing, no namespacing. Just to demo how to build
-modules with OBazl and test them with ounit2.
+These cases build some modules that are used as deps by other cases.
 
-* case 10: Minimal example, builds three modules: Red, Green, Blue.
-
-* case 20: As case 10, but with intra-mural dependencies: Red depends
-  on Green, which depends on Blue. Bazel disallows cyclic
-  dependencies, so we cannot also have Blue depend on Red.
-
-Demo ... shows how to finess cyclic dependencies.
-
-## <a name="set100">Set 100: Renaming without namespaces (aliasing)</a>
-
-The `ns_env` macro is used to support automatic renaming. It expands
-to an instance of rule `ocaml_ns_env`. Normally you will never need to
-pay it any mind, but if you want to you can see the expansion using
-the query facility; for example, `ns_env()` in `set100/case110`
-expands as follows:
-
-```
-$ bazel query --output=build namespaces/obazl/set100/case110:_ns_env
-# /Users/<USERID>/bazel/obazl/dev_obazl/demos/namespaces/obazl/set100/case110/BUILD.bazel:19:7
-ocaml_ns_env(
-  name = "_ns_env",
-  generator_name = "_ns_env",
-  generator_function = "ns_env",
-  generator_location = "namespaces/obazl/set100/case110/BUILD.bazel:19:7",
-  sep = "_",
-  aliases = [],
-)
-# Rule _ns_env instantiated at (most recent call last):
-#   /Users/<USERID>/bazel/obazl/dev_obazl/demos/namespaces/obazl/set100/case110/BUILD.bazel:19:7                        in <toplevel>
-#   /private/var/tmp/_bazel_<USERID>/07858b33091346eb9c40f9f55369f0e5/external/obazl_rules_ocaml/ocaml/macros.bzl:14:17 in ns_env
-# Rule ocaml_ns_env defined at (most recent call last):
-#   /private/var/tmp/_bazel_<USERID>/07858b33091346eb9c40f9f55369f0e5/external/obazl_rules_ocaml/ocaml/_rules/ocaml_ns_env.bzl:181:20 in <toplevel>
-```
-
-Using the same Red, Blue, Green modules as in Set 000, these demos
-show how to automatically rename modules. None of the demos in this
-set use `ocaml_ns_library`.
-
-In case of renaming without aliasing, references to modules must use
-the new name. For example, if we rename `red.ml` to `Demo_bar__red.ml`
-(as in case120), then source code must use 'Demo_bar__red`. With
-aliasing, as shown in later examples, we will automatically generate
-an alias that maps `Red` to `Demo_bar__Red`, so source code can use `Red`.
 
 * case 110: Default renaming uses the package path to form the
   pseudo-namespace prefix used to rename modules.
@@ -219,7 +174,7 @@ Exogenous submodules are also supported - see demos below.
 
 * case311: Same as case 310 but uses `ocaml_ns_archive` instead of `ocaml_ns_library`.
 
-* case 316: same as case10, but with ns_env resolver supporting intramural deps.
+* case 316: same as case310, but with ns_env resolver supporting intramural deps.
 
 To enable intramural deps, we specify an `aliases` list for our
 ns_env. That is what enables compilation of submodules with

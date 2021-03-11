@@ -1,0 +1,63 @@
+
+## DISABLED.  For now we do not support hand-rolled ns libs.
+
+## new/case100: minimal hand-rolled ns lib (not using ocaml_ns_library)
+
+load(
+    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns_resolver",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = ":_Test",
+    # deps = [":_Test"]
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
+    deps   = [":color_lib"],
+    deps_opam = ["ounit2"],
+    opts = [
+        "-w", "-27"  ## Error (warning 27): unused variable test_ctxt.
+    ],
+)
+
+ocaml_library(
+    name = "color_lib",
+    modules = [
+        ":color",
+        ":_Red",
+        ":_Green",
+        ":_Blue"
+    ]
+)
+
+ocaml_ns_resolver(
+    name = "color",
+    submodules = [
+        "Red", "Green", "Blue"
+    ]
+)
+
+ocaml_module(
+    name   = "_Red",
+    ns     = ":color",
+    struct = "red.ml",
+)
+
+ocaml_module(
+    name   = "_Green",
+    ns     = ":color",
+    struct = "green.ml",
+)
+
+ocaml_module(
+    name   = "_Blue",
+    ns     = ":color",
+    struct = "blue.ml",
+)

@@ -1,9 +1,8 @@
-(* user-supplied main ns module must contain aliasing equations for all submodules *)
 
 module Red   = Demo__Red
-module Green = Demo__Green
-module Blue  = Demo__Blue
+module Green = Foo__Green
+module Blue  = Bar__Blue
 
-module Grue  = Demos_Namespaces_Obazl_Set500_Case520__Grue
+module Grue  = Grue
 
-let () = print_endline ("Hello from user-supplied module Color.")
+let () = print_endline ("Hello from user-supplied main ns module Color.")

@@ -1,8 +1,8 @@
 open OUnit2
 
-let test1 test_ctxt = assert_equal 255 (Demos_Namespaces_Obazl_Set100_Case110__Red.v)
-let test2 test_ctxt = assert_equal 127 (Demos_Namespaces_Obazl_Set100_Case110__Green.v)
-let test3 test_ctxt = assert_equal 80  (Demos_Namespaces_Obazl_Set100_Case110__Blue.v)
+let test1 test_ctxt = assert_equal 255 (Red.v)
+let test2 test_ctxt = assert_equal 127 (Green.v)
+let test3 test_ctxt = assert_equal 80  (Blue.v)
 
 let suite =
 "suite">:::

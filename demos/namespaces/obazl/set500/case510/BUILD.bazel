@@ -4,14 +4,16 @@ load(
     "ocaml_ns_library",
     "ocaml_test",
 )
-load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_env")
-
-ns_env()
 
 ocaml_test(
     name = "test",
+    main = "_Test"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
     deps_opam = ["ounit2"],
-    main = "test.ml",
     opts = [
         "-w",
         "-27",
@@ -22,15 +24,14 @@ ocaml_test(
 ocaml_ns_library(
     name = "color",
     submodules = {
-        "//namespaces/obazl/set000/case110:_Red": "Red",
-        "//namespaces/obazl/set000/case110:_Green": "Green",
-        "//namespaces/obazl/set000/case110:_Blue": "Blue",
+        "//namespaces/obazl/set100/case110:_Red": "Red",
+        "//namespaces/obazl/set100/case110:_Green": "Green",
+        "//namespaces/obazl/set100/case110:_Blue": "Blue",
         ":_Grue": "Grue",
     },
 )
 
 ocaml_module(
     name = "_Grue",
-    ns_env = ":_ns_env",
     struct = "grue.ml",
 )

@@ -1,3 +1,7 @@
+
+## OBSOLETE! not yet updated to latest version...
+
+
 ## set400/case430: user-provided main whose name does not match ns
 ## library's name, with multiple exogenous submodules
 ## WARNING: this pattern is NOT optimal, see set400/case420

@@ -49,6 +49,8 @@ TODO: ns archives whose submodules have cc deps
 
 ## <a name="nslibs">Ns Libraries</a>
 
+See the demos under [demos/namespaces/obazl](../namespaces/obazl/readme.md)
+
 ## <a name="ppxarchives">PPX Archives</a>
 
 PPX archive demos use [ppxlib](https://github.com/ocaml-ppx/ppxlib).

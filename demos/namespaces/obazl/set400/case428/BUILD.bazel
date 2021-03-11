@@ -1,26 +1,38 @@
-## set400/case425: user-provided main, multiple exogenous submodules
+## set400/case425: user-provided main maps color names to arbitrary modules
 
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_module",
     "ocaml_ns_library",
     "ocaml_test",
 )
 
 ocaml_test(
     name = "test",
+    main = "_Test"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
     deps_opam = ["ounit2"],
-    main = "test.ml",
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
     deps = [":color"],
 )
 
 ocaml_ns_library(
     name = "color",
-    main = "color.ml",
-    submodules = {
-        ## a mix of different types of submodules, some renamed some not
-        "//namespaces/obazl/set100/case110:_Red": "Red",
-        "//namespaces/obazl/set200/case210:_Green": "Green",
-        "//namespaces/obazl/set200/case220:_Blue": "Blue",
-    },
+    # main = ":_Color",
+    submodules = [
+        "//namespaces/obazl/set100/case130:_Demo__Red",
+        "//namespaces/obazl/set100/case132:_Foo__Green",
+        "//namespaces/obazl/set100/case134:_Bar__Blue",
+        ":_Color"
+    ],
 )
+
+ocaml_module(
+    name   = "_Color",
+    struct = "color.ml"
+)
+

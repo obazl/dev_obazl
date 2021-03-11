@@ -1,3 +1,5 @@
+## set300/case320: ns lib with intramural deps
+
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
     "ocaml_archive",
@@ -6,17 +8,16 @@ load(
     "ocaml_ns_library",
     "ocaml_test",
 )
-load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_env")
-
-# 'test' target will fail without aliases
-ns_env(
-    aliases = glob(["*.ml"]),
-)
 
 ocaml_test(
     name = "test",
+    main = "_Test"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
     deps_opam = ["ounit2"],
-    main = "test.ml",
     opts = [
         "-w",
         "-27",
@@ -24,13 +25,14 @@ ocaml_test(
     deps = [":color"],
 )
 
+#################
 ocaml_ns_library(
     name = "color",
-    submodules = {
-        ":_Red": "Red",
-        ":_Green": "Green",
-        ":_Blue": "Blue",
-    },
+    submodules = [
+        ":_Red",
+        ":_Green",
+        ":_Blue"
+    ],
     visibility = [
         "//namespaces/obazl/set035/case03:__pkg__",
     ],
@@ -38,7 +40,6 @@ ocaml_ns_library(
 
 ocaml_module(
     name = "_Red",
-    ns_env = ":_ns_env",
     struct = "red.ml",
     visibility = [
         "//namespaces/obazl/class02/case07:__pkg__",
@@ -48,13 +49,11 @@ ocaml_module(
 
 ocaml_module(
     name = "_Green",
-    ns_env = ":_ns_env",
     struct = "green.ml",
 )
 
 ocaml_module(
     name = "_Blue",
-    ns_env = ":_ns_env",
     struct = "blue.ml",
     visibility = [
         "//namespaces/obazl/class02/case07:__pkg__",

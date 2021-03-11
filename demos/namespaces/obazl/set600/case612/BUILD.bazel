@@ -1,0 +1,25 @@
+## set600/case612:  horizontally "chained" nslibs
+
+load(
+    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_module",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "_Test"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
+    deps_opam = ["ounit2"],
+    opts = [
+        "-w",
+        "-27",  ## Error (warning 27): unused variable test_ctxt.
+    ],
+    deps = [
+        "//namespaces/obazl/set600/case612/src:_Alpha",
+    ],
+)

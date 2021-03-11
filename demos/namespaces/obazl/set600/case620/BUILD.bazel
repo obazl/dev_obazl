@@ -1,3 +1,5 @@
+## set600/case620:  sublibs only, no direct submodules
+
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
     "ocaml_archive",
@@ -9,20 +11,25 @@ load(
 
 ocaml_test(
     name = "test",
+    main = "_Test"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
     deps_opam = ["ounit2"],
-    main = "test.ml",
     opts = [
         "-w",
-        "-27",
-    ],  ## Error (warning 27): unused variable test_ctxt.
+        "-27",  ## Error (warning 27): unused variable test_ctxt.
+        "-I", "bazel-out/darwin-fastbuild-ST-49f66a5c6204/bin/external/ocaml/ns"
+    ],
     deps = [":color"],
 )
 
 ocaml_ns_library(
     name = "color",
-    submodules = {
-        "//namespaces/obazl/set600/case620/rgb": "RGB",
-        "//namespaces/obazl/set600/case620/cmy": "CMY",
-    },
-    visibility = ["//visibility:public"],
+    sublibs = [
+        "//namespaces/obazl/set600/case620/rgb",
+        "//namespaces/obazl/set600/case620/cmy"
+    ]
 )

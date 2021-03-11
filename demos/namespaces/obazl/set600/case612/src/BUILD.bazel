@@ -1,0 +1,103 @@
+load(
+    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_archive",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "_Test"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
+    deps_opam = ["ounit2"],
+    opts = [
+        "-w",
+        "-27",  ## Error (warning 27): unused variable test_ctxt.
+    ],
+    deps = [":_Alpha"],
+)
+
+#################
+ocaml_ns_library(
+    name = "_Alpha",
+    submodules = [
+        ":_Ared",
+        ":_Agreen",
+        ":_Ablue",
+        ":_Beta"  # nslib as submodule
+    ],
+    visibility = ["//visibility:public"],
+)
+
+ocaml_module(
+    name = "_Ared",
+    struct = "ared.ml",
+)
+
+ocaml_module(
+    name = "_Agreen",
+    struct = "agreen.ml",
+)
+
+ocaml_module(
+    name = "_Ablue",
+    struct = "ablue.ml",
+)
+
+#################
+ocaml_ns_library(
+    name = "_Beta",
+    submodules = [
+        ":_Bred",
+        ":_Bgreen",
+        ":_Bblue",
+        ":_Gamma"   # nslib as submodule
+    ],
+)
+
+ocaml_module(
+    name = "_Bred",
+    struct = "bred.ml",
+)
+
+ocaml_module(
+    name = "_Bgreen",
+    struct = "bgreen.ml",
+)
+
+ocaml_module(
+    name = "_Bblue",
+    struct = "bblue.ml",
+)
+
+#################
+ocaml_ns_library(
+    name = "_Gamma",
+    submodules = [
+        ":_Cred",
+        ":_Cgreen",
+        ":_Cblue"
+    ],
+)
+
+#############
+ocaml_module(
+    name = "_Cred",
+    struct = "cred.ml",
+)
+
+ocaml_module(
+    name = "_Cgreen",
+    struct = "cgreen.ml",
+)
+
+ocaml_module(
+    name = "_Cblue",
+    struct = "cblue.ml",
+)

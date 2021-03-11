@@ -5,40 +5,15 @@ load(
 )
 
 ocaml_module(
-    name = "alpha",
-    cc_deps = {
-        ":libalpha": "default",
-    },
+    name = "alpha", # _static",
     struct = "alpha.ml",
-    visibility = ["//interop/ffi/case110:__pkg__"],
-)
-
-ocaml_module(
-    name = "alpha_dynamic",
-    cc_deps = {
-        ":libalpha": "dynamic",
-    },
-    struct = "alpha.ml",
-    visibility = ["//interop/ffi/case110:__pkg__"],
-)
-
-ocaml_module(
-    name = "alpha_static",
     cc_deps = {
         ":libalpha": "static",
+        # ":libalpha": "default",
+        # ":libalpha": "dynamic",
     },
-    struct = "alpha.ml",
     visibility = ["//interop/ffi/case110:__pkg__"],
 )
-
-# ocaml_module(
-#     name = "alpha",
-#     cc_deps = {
-#         ":libalpha": "default",
-#     },
-#     struct = "alpha.ml",
-#     visibility = ["//interop/ffi/case110:__pkg__"],
-# )
 
 cc_library(
     name = "libalpha",

@@ -9,8 +9,13 @@ load(
 
 ocaml_test(
     name = "test",
+    main = "_Test"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
     deps_opam = ["ounit2"],
-    main = "test.ml",
     opts = [
         "-w",
         "-27",  ## Error (warning 27): unused variable test_ctxt.
@@ -21,36 +26,30 @@ ocaml_test(
 # How to support articulated module paths like Alpha.Beta.Color
 ocaml_ns_library(
     name = "alpha",
-    submodules = {
-        ":beta": "Beta",  ## ns submodule
-    },
+    submodules = [
+        ":_Red",
+        ":beta"  # nslib as submodule
+    ],
     visibility = ["//visibility:public"],
 )
 
-## Clients that depend on //namespaces/obazl/set600/case610/src:alpha can
-## access this directly as 'B', or indirectly as 'B.Color', by dep transitivity.
-## But since it has private visibility by default, clients outside of this package
-## cannot depend on it directly.
 ocaml_ns_library(
     name = "beta",
-    submodules = {
-        ":color": "Color",  ## ns submodule
-    },
+    submodules = [
+        ":_Green",
+        ":_Eggs",
+        ":color"   # nslib as submodule
+    ],
 )
 
-## Clients that depend on //namespaces/obazl/class05/case21/src:a can
-## can access this directly as 'Color', or indirectly as 'B.Color' and 'A.B.Color'.
-## But since it has private visibility by default, clients outside of this package
-## cannot depend on it directly.
 ocaml_ns_library(
     name = "color",
-    submodules = {
-        ":_Red": "Red",
-        ":_Green": "Green",
-        ":_Blue": "Blue",
-    },
+    submodules = [
+        ":_Blue"
+    ],
 )
 
+################################################################
 ocaml_module(
     name = "_Red",
     struct = "red.ml",
@@ -59,6 +58,18 @@ ocaml_module(
 ocaml_module(
     name = "_Green",
     struct = "green.ml",
+    deps = [
+        ":_Red",
+        ":_Eggs",
+    ]
+)
+
+ocaml_module(
+    name = "_Eggs",
+    struct = "eggs.ml",
+    deps   = [
+        ":color"
+    ]
 )
 
 ocaml_module(

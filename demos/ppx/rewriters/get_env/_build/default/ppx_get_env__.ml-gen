@@ -1,0 +1,2 @@
+(** @canonical Ppx_get_env.Main *)
+module Main = Ppx_get_env__Main

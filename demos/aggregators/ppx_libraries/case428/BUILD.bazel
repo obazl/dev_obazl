@@ -1,4 +1,4 @@
-## aggregators/archives/case120: two simple (independent) archives
+## aggregators/ppx_libraries/case428:
 
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
@@ -12,7 +12,12 @@ load(
 
 ocaml_test(
     name = "test",
-    main = "test.ml",
+    main = "_Test"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
     ppx  = ":ppx.exe",     ## test.ml contains extension points (thus preprocessing deps)
     deps = [":_main"],     ## test.ml accesses fields in module Main that contain extension points
@@ -34,7 +39,7 @@ ocaml_module(
 ###############
 ppx_executable(
     name = "ppx.exe",
-    main = ":Driver",
+    main = ":_Ppxlib_driver",
     deps = [":_Ppx_color"],
     deps_opam = ["ppxlib"]
 )
@@ -99,7 +104,7 @@ ppx_module(
 ################################################################
 ###########
 ppx_module(
-    name = "Driver",
+    name = "_Ppxlib_driver",
     struct = ":ppxlib_driver.ml",
     deps_opam = ["ppxlib"]
 )

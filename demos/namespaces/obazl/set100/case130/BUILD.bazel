@@ -5,50 +5,48 @@ load(
     "ocaml_module",
     "ocaml_test",
 )
-load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_env")
-
-# Tell OBazl to rename modules using prefix "Demo__",
-# and give the ns env a custom name (to be used by ocaml_module rules).
-ns_env(
-    name = "demo_env",
-    prefix = "demo",
-)
 
 ocaml_test(
     name = "test",
+    main = "_Test"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
     deps_opam = ["ounit2"],
-    main = "test.ml",
     opts = [
         "-w",
         "-27",
     ],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
-        ":_Blue",
-        ":_Green",
-        ":_Red",
+        ":_Demo__Blue",
+        ":_Demo__Green",
+        ":_Demo__Red",
     ],
 )
 
-# Each module to be renamed must "enroll" in the ns env, by passing
-# its label via the 'ns_env' attribute.
-
 ocaml_module(
-    name = "_Red",
-    ns_env = ":demo_env",
-    struct = "red.ml",
-)
-
-ocaml_module(
-    name = "_Green",
-    ns_env = ":demo_env",
-    struct = "green.ml",
-)
-
-ocaml_module(
-    name = "_Blue",
-    ns_env = ":demo_env",
-    struct = "blue.ml",
+    name = "_Demo__Red",
+    struct = "demo__Red.ml",
     visibility = [
+        "//namespaces/obazl/set400:__subpackages__",
         "//namespaces/obazl/set500:__subpackages__"
+    ]
+)
+
+ocaml_module(
+    name = "_Demo__Green",
+    struct = "demo__Green.ml",
+    visibility = [
+        "//namespaces/obazl/set400:__subpackages__"
+    ]
+)
+
+ocaml_module(
+    name = "_Demo__Blue",
+    struct = "demo__Blue.ml",
+    visibility = [
+        "//namespaces/obazl/set400:__subpackages__"
     ]
 )

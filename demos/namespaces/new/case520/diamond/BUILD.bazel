@@ -1,0 +1,43 @@
+load(
+    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_archive",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+
+ocaml_module(
+    name = "diamond",
+    struct = "diamond.ml",
+    visibility = [
+        "//namespaces/new/case520/en:__pkg__",
+        "//namespaces/new/case520/fr:__pkg__"
+    ]
+)
+
+ocaml_ns_library(
+    name = "gem",
+    submodules = {
+        ":_Alpha": "Alpha",
+        ":_Beta": "Beta",
+        ":_Gamma": "Gamma",
+    },
+    visibility = ["//namespaces/new/case520:__pkg__"]
+)
+
+ocaml_module(
+    name = "_Alpha",
+    struct = "alpha.ml",
+    deps = [":_Beta"],
+)
+
+ocaml_module(
+    name = "_Beta",
+    struct = "beta.ml",
+)
+
+ocaml_module(
+    name = "_Gamma",
+    struct = "gamma.ml",
+)

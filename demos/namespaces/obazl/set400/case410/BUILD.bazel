@@ -1,5 +1,6 @@
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_module",
     "ocaml_ns_library",
     "ocaml_test",
 )
@@ -10,8 +11,13 @@ load(
 
 ocaml_test(
     name = "test",
+    main = "_Test"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
     deps_opam = ["ounit2"],
-    main = "test.ml",
     opts = [
         "-w",
         "-27",
@@ -19,12 +25,12 @@ ocaml_test(
     deps = [":color"],
 )
 
-# Here we depend on modules that happen also to be used as submodules in their own directory.
+# Here we modules from another package as submodules.
 ocaml_ns_library(
     name = "color", # => color.ml
-    submodules = {
-        "//namespaces/obazl/set100/case110:_Red": "Red",
-        "//namespaces/obazl/set100/case110:_Green": "Green",
-        "//namespaces/obazl/set100/case110:_Blue": "Blue",
-    },
+    submodules = [
+        "//namespaces/obazl/set100/case110:_Red",
+        "//namespaces/obazl/set100/case110:_Green",
+        "//namespaces/obazl/set100/case110:_Blue"
+    ],
 )

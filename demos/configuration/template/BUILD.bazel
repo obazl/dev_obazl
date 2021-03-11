@@ -73,7 +73,12 @@ int_setting( name = "blue_80",  build_setting_default = 80 )
 ###########
 ocaml_test(
     name = "test",
-    main = "test.ml",
+    main = ":_Test"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
     opts = [
         "-w", "-27",  ## Error (warning 27): unused variable test_ctxt.
     ],

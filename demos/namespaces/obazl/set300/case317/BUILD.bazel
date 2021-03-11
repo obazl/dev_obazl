@@ -1,4 +1,4 @@
-## set300/case315: same as case310, with the addition of ns_env aliases.
+## set300/case315: same as case316, using archive instead of library
 
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",

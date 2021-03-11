@@ -13,33 +13,24 @@ load(
 )
 
 ###########
-## ocaml_test - unit testing
 ocaml_test(
     name = "test",
-    main = "test.ml",
-    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
-    deps = [
-        ":alpha",
-    ],
-    deps_opam = ["ounit2"]
+    main = ":_Test"
 )
 
-## ppx_expect_test - compare whole actual output to expected output
-# ppx_expect_test(
-# )
-
-#############
 ocaml_module(
-    name   = "alpha",
-    struct = "alpha.ml",
-    ppx    = ":ppx.exe",
-    ppx_print = "@ppx//print:text"
+    name   = "_Test",
+    struct = "test.ml",
+    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    ppx  = ":ppx.exe",
+    # ppx_print = "@ppx//print:text",
+    deps_opam = ["ounit2"]
 )
 
 ###############
 ppx_executable(
     name = "ppx.exe",
-    main = ":Driver",
+    main = ":ppxlib_driver",
     deps = [":ppx_deriving_accessors"]
 )
 
@@ -52,7 +43,7 @@ ppx_module(
 
 ###########
 ppx_module(
-    name = "Driver",
+    name = "ppxlib_driver",
     struct = ":ppxlib_driver.ml",
     deps_opam = ["ppxlib"]
 )

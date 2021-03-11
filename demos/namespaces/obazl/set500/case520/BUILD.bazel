@@ -1,4 +1,4 @@
-# set050/case10
+# set500/case520
 
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
@@ -7,15 +7,15 @@ load(
     "ocaml_test",
 )
 
-# In this case, we need ns, since our ns contains a local submodule.
-load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_env")
-
-ns_env()
-
 ocaml_test(
     name = "test",
+    main = "_Test"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
     deps_opam = ["ounit2"],
-    main = "test.ml",
     opts = [
         "-w",
         "-27",
@@ -25,20 +25,22 @@ ocaml_test(
 
 ocaml_ns_library(
     name = "color",
-    main = "color.ml",
-    submodules = {
-        ## won't work? because these are (renamed) submodules,
-        ## we don't inherit the resolvers for the enrollment ns_envs.
-        ## so we get: "Error: The module Color.Red is an alias for module Red, which is missing"
-        "//namespaces/obazl/set100/case120:_Red": "Red",
-        "//namespaces/obazl/set100/case120:_Green": "Green",
-        "//namespaces/obazl/set100/case130:_Blue": "Blue",
-        ":_Grue": "Grue",
-    },
+    # main = "_Color",
+    submodules = [
+        "//namespaces/obazl/set100/case130:_Demo__Red",
+        "//namespaces/obazl/set100/case132:_Foo__Green",
+        "//namespaces/obazl/set100/case134:_Bar__Blue",
+        ":_Grue",
+        ":_Color"
+    ],
+)
+
+ocaml_module(
+    name = "_Color",
+    struct = "color.ml",
 )
 
 ocaml_module(
     name = "_Grue",
-    ns_env = ":_ns_env",
     struct = "grue.ml",
 )

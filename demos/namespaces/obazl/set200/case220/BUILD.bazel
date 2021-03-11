@@ -6,12 +6,16 @@ load(
     "ocaml_ns_library",
     "ocaml_test",
 )
-load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_env")
 
 ocaml_test(
     name = "test",
+    main = "_Test"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
     deps_opam = ["ounit2"],
-    main = "test.ml",
     opts = [
         "-w",
         "-27",
@@ -19,18 +23,26 @@ ocaml_test(
     deps = [":color"],
 )
 
+#################
 ocaml_ns_library(
     name = "color",
-    # 'main' tells OBazl to use the provided file as main ns module
-    # instead of generating one. In this case, the designated file has
-    # the same name as this ocaml_ns_library instance, but that is not
-    # required; see set020/case30 for an example.
-    main = "color.ml",  ## Notice that we do NOT have a compile rule for color.ml
-    submodules = {
-        ":_Red": "Red",
-        ":_Green": "Green",
-        ":_Blue": "Blue",
-    },
+    # main = ":_Color",
+    submodules = [
+        ":_Red",
+        ":_Green",
+        ":_Blue",
+        ":_Color"
+    ],
+)
+
+ocaml_module(
+    name = "_Color",
+    struct = "color.ml",
+    deps   = [
+        ":_Red",
+        ":_Green",
+        ":_Blue"
+    ]
 )
 
 ocaml_module(

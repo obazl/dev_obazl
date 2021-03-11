@@ -7,20 +7,15 @@ load(
     "ocaml_test",
 )
 
-# In this case we use rule `ocaml_ns_library`, which will generate the
-# main ns module containing pseudo-recursive aliasing equations -
-# statements of the form 'module X = X'.
-
-# Since there are no intramural dependencies, we do not need a
-# resolver; the aliasing equations in the main module will suffice.
-
-# We are not using renaming - no ns_env(), and ocaml_module instances
-# do not need to enroll in an ns environment.
-
 ocaml_test(
     name = "test",
+    main = "_Test"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
     deps_opam = ["ounit2"],
-    main = "test.ml",
     opts = [
         "-w",
         "-27",
@@ -28,15 +23,13 @@ ocaml_test(
     deps = [":color"],
 )
 
-# This will generate color.ml, containing one pseudo-recursive aliasing equation per submodule.
-# This tells OCaml to resolve e.g. Color.Red to Red to red.ml (or Red.ml).
 ocaml_ns_library(
     name = "color",
-    submodules = {
-        ":_Red": "Red",
-        ":_Green": "Green",
-        ":_Blue": "Blue",
-    },
+    submodules = [
+        ":_Red",
+        ":_Green",
+        ":_Blue"
+    ],
 )
 
 ocaml_module(

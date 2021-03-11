@@ -2,22 +2,27 @@
 test_suite(
     name = "test",
     tests = [
+
         "//aggregators:test",
         "//configuration/template:test",
         "//filegen/genrule:test",
         "//filegen/template:test",
+        "//interop:test",
         "//minimal:test",
 
+        "//namespaces/new:test",
+
         "//namespaces/hello:test",
-        "//namespaces/obazl/set000:test",
         "//namespaces/obazl/set100:test",
         "//namespaces/obazl/set200:test",
         "//namespaces/obazl/set300:test",
         "//namespaces/obazl/set400:test",
         "//namespaces/obazl/set500:test",
         "//namespaces/obazl/set600:test",
-        "//namespaces/obazl/set700:test",
+        # "//namespaces/obazl/set700:test",
 
-        "//ppx:test"
+        "//ppx/mixed_mode:test",
+        "//ppx/derivers/simple_deriver:test"
+        # "//ppx:test"
     ]
 )

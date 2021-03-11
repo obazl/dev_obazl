@@ -1,0 +1,64 @@
+# new/case200:  user-defined 'main'
+
+load(
+    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "_Test",
+)
+
+ocaml_module(
+    name = "_Test",
+    struct = "test.ml",
+    deps_opam = ["ounit2"],
+    opts = [
+        "-w", "-27",  ## Error (warning 27): unused variable test_ctxt.
+        # "bazel-out/darwin-fastbuild-ST-25560b8c99c6/bin/namespaces/new/case200/Color.cmo",
+        "-I",
+        "bazel-out/darwin-fastbuild-ST-25560b8c99c6/bin/namespaces/new/case200",
+        # "-open", "Color__0Resolver"
+    ],
+    deps = [":color"],
+)
+
+ocaml_ns_library(
+    name = "color",
+    # use user-provided file as main ns module:
+    # main = ":_Color",
+    submodules = [
+        ":_Color",
+        ":_Red",
+        ":_Green",
+        ":_Blue"
+    ],
+    visibility = ["//visibility:public"],
+)
+
+ocaml_module(
+    name = "_Color",
+    struct = "color.ml",
+    opts   = [
+        # "-no-alias-deps",
+        "-w", "-49"
+    ]
+)
+
+ocaml_module(
+    name = "_Red",
+    struct = "red.ml",
+)
+
+ocaml_module(
+    name = "_Green",
+    struct = "green.ml",
+)
+
+ocaml_module(
+    name = "_Blue",
+    struct = "blue.ml",
+)

@@ -1,4 +1,4 @@
-## set300/case310
+## set300/case311 - same as case310 but using archive instead of library
 
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
@@ -6,18 +6,16 @@ load(
     "ocaml_ns_archive",
     "ocaml_test",
 )
-load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_env")
-
-# 'ns_env()' is sufficient to initialize the ns eval environment with a
-# prefix string, but it does not by default initialize a resolver - for
-# that we need to add the 'aliases' attribute, as shown in the demo after this.
-
-ns_env(prefix = "Demo")  ## For readability; no aliases = no ns_env resolver
 
 ocaml_test(
     name = "test",
+    main = "_Test"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
     deps_opam = ["ounit2"],
-    main = "test.ml",
     opts = [
         "-w",
         "-27",
@@ -25,16 +23,14 @@ ocaml_test(
     deps = [":color"],
 )
 
-# This will generate an ns main module, its submodules, and an archive
-# file that contains them.
 ocaml_ns_archive(
     name = "color",
     opts = ["-linkall"],
-    submodules = {
-        ":_Red": "Red",  # equation:  module Red = Demo__Red
-        ":_Green": "Green",
-        ":_Blue": "Blue",
-    },
+    submodules = [
+        ":_Red",
+        ":_Green",
+        ":_Blue",
+    ],
     visibility = ["//visibility:public"],
 )
 
@@ -44,21 +40,18 @@ ocaml_ns_archive(
 
 ocaml_module(
     name = "_Red",
-    ns_env = ":_ns_env",
     struct = "red.ml",
     visibility = ["//visibility:public"],
 )
 
 ocaml_module(
     name = "_Green",
-    ns_env = ":_ns_env",
     struct = "green.ml",
     visibility = ["//visibility:public"],
 )
 
 ocaml_module(
     name = "_Blue",
-    ns_env = ":_ns_env",
     struct = "blue.ml",
     visibility = ["//visibility:public"],
 )

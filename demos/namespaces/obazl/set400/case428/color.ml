@@ -1,10 +1,6 @@
-(* This file is designated as the 'main' module of an ns library whose
-   submodules are exogenous - meaning they are in a different
-   namespace. So the aliasing equations must refer to the namespaced
-   names. *)
 
-module Red   = Demos_Namespaces_Obazl_Set100_Case110__Red
-module Green = Green
-module Blue  = Blue
+module Red   = Demo__Red
+module Green = Foo__Green
+module Blue  = Bar__Blue
 
-let () = print_endline ("Hello from user-supplied module Color.")
+let () = print_endline ("Hello from user-supplied main ns module Color.")

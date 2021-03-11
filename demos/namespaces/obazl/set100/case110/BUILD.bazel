@@ -1,4 +1,4 @@
-# set100/case110
+# set100/case110:  modules used as remote deps by set400 test cases
 
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
@@ -6,22 +6,15 @@ load(
     "ocaml_test",
 )
 
-# Step 1: initialize the ns "evaluation environment".
-load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_env")
-
-# With no parameters, `ns_env()` sets the prefix string to the
-# default: the package path, sanitized ( tr("/-", "__") ) and normalized
-# (each segment capitalized). In this case, that yields:
-# 'Demos_Namespaces_Obazl_Set010_Case10'. The default separator is
-# '__'. Renaming will prepend <prefix><sep> to each module.
-# See `test.ml` for the result.
-# The default name of the ns environment is "_ns_env".
-ns_env()
-
 ocaml_test(
     name = "test",
+    main = "_Test"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
     deps_opam = ["ounit2"],
-    main = "test.ml",
     opts = [
         "-w",
         "-27",
@@ -33,28 +26,29 @@ ocaml_test(
     ],
 )
 
-# Each module to be renamed must "enroll" in the ns env, by passing
-# its label via the 'ns_env' attribute.
-
 ocaml_module(
     name = "_Red",
-    ns_env = ":_ns_env",
     struct = "red.ml",  # => 'Demos_Namespaces_Obazl_Set010_Case10__Red.cmo'
     visibility = [
         "//namespaces/obazl/set400:__subpackages__",
+        "//namespaces/obazl/set500:__subpackages__",
     ]
 )
 
 ocaml_module(
     name = "_Green",
-    ns_env = ":_ns_env",
     struct = "green.ml",
-    visibility = ["//namespaces/obazl/set400:__subpackages__"]
+    visibility = [
+        "//namespaces/obazl/set400:__subpackages__",
+        "//namespaces/obazl/set500:__subpackages__",
+    ]
 )
 
 ocaml_module(
     name = "_Blue",
-    ns_env = ":_ns_env",
     struct = "blue.ml",
-    visibility = ["//namespaces/obazl/set400:__subpackages__"]
+    visibility = [
+        "//namespaces/obazl/set400:__subpackages__",
+        "//namespaces/obazl/set500:__subpackages__",
+    ]
 )

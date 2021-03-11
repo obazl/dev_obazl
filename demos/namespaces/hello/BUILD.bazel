@@ -9,33 +9,14 @@ load(
     "ocaml_test"
 )
 
-load( "@obazl_rules_ocaml//ocaml:macros.bzl", "ns_env")
-# This exposes target "_ns_env". The 'ocaml_module' instances for
-# submodules must reference this target in their `prefix` attribute.
-# To change the target label, use the 'name' attribute'.
-# Exclude the main module of the ns lib, so it does not get aliased.
-ns_env(aliases = glob(["*.ml"],
-                      exclude = ["hello.ml"]
-                      ))
-
-## The ns_env macro expands to an instance of rule 'ocaml_ns_env'.
-## That rule sets the "ns prefix string", which serves as a kind of
-## pseudo-namespace. Submodule names will be formed by prefixing this
-## string to the (original, un-namespaced) module name, separated by
-## the separator string (default: '__').
-
-## The main namespace module will contain aliasing equations that map
-## module names to these prefixed module names.
-
-## By default, the ns prefix string is formed from the package name,
-## with '/' replaced by the ns_env.sep string (default: '_'). You can
-## use the 'prefix' attribute to change this:
-
-# ns(prefix = "foobar", aliases = glob(["*.ml"]))
-
 ocaml_test(
     name = "test",
-    main = "test.ml",
+    main = "_Test"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
         ":hello",
@@ -59,25 +40,21 @@ ocaml_ns_library(
 ocaml_module(
     name = "_Australian",
     struct  = "australian.ml",
-    ns_env = ":_ns_env",
 )
 
 ocaml_module(
     name = "_English",
     struct  = "english.ml",
-    ns_env = ":_ns_env",
     visibility = ["//visibility:public"],
 )
 
 ocaml_module(
     name = "_French",
     struct  = "french.ml",
-    ns_env = ":_ns_env",
 )
 
 ocaml_module(
     name = "_Spanish",
     struct  = "spanish.ml",
-    ns_env = ":_ns_env",
 )
 

@@ -1,55 +1,11 @@
-load(
-    "@obazl_rules_ocaml//ocaml:rules.bzl",
-    "ocaml_module",
-    # "ocaml_test"
-)
-
-ocaml_module(
-    name = "alpha",
-    cc_deps = {
-        ":libalpha": "default",
-    },
-    struct = "alpha.ml",
-    visibility = ["//interop/ffi/case110:__pkg__"],
-)
-
-ocaml_module(
-    name = "alpha_dynamic",
-    cc_deps = {
-        ":libalpha": "dynamic",
-    },
-    struct = "alpha.ml",
-    visibility = ["//interop/ffi/case110:__pkg__"],
-)
-
-ocaml_module(
-    name = "alpha_static",
-    cc_deps = {
-        ":libalpha": "static",
-    },
-    struct = "alpha.ml",
-    visibility = ["//interop/ffi/case110:__pkg__"],
-)
-
-# ocaml_module(
-#     name = "alpha",
-#     cc_deps = {
-#         ":libalpha": "default",
-#     },
-#     struct = "alpha.ml",
-#     visibility = ["//interop/ffi/case110:__pkg__"],
-# )
-
 cc_library(
-    name = "libalpha",
-    srcs = [
-        "alpha_adapter.c",
-        "alpha.c",
-        "alpha.h",
-    ],
+    name = "alpha",
+    srcs = ["alpha.c"],
+    hdrs = ["alpha.h"],
+    linkstatic = True,
     deps = [
         "@ocaml//csdk:hdrs",
         "@ocaml//csdk/ctypes"
     ],
-    visibility = ["//interop/ffi/case110:__pkg__"],
+    visibility = ["//interop/ffi/case120:__pkg__"],
 )
