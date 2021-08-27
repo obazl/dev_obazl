@@ -23,12 +23,7 @@ ocaml_module(
     deps_opam = ["ounit2"]
 )
 
-#################
-ocaml_executable(
-    name = "hello",
-    main = ":main",
-)
-
+#############
 ocaml_module(
     name = "main",
     struct = "main.ml",

@@ -18,20 +18,14 @@ ocaml_module(
     deps_opam = ["ounit2"],
     opts = [
         "-w", "-27",  ## Error (warning 27): unused variable test_ctxt.
-        # "bazel-out/darwin-fastbuild-ST-25560b8c99c6/bin/namespaces/new/case200/Color.cmo",
-        "-I",
-        "bazel-out/darwin-fastbuild-ST-25560b8c99c6/bin/namespaces/new/case200",
-        # "-open", "Color__0Resolver"
     ],
-    deps = [":color"],
+    deps = [":#color"],
 )
 
 ocaml_ns_library(
-    name = "color",
-    # use user-provided file as main ns module:
-    # main = ":_Color",
+    name = "#color",
     submodules = [
-        ":_Color",
+        ":_Color", ## user-provided main module
         ":_Red",
         ":_Green",
         ":_Blue"
@@ -42,10 +36,6 @@ ocaml_ns_library(
 ocaml_module(
     name = "_Color",
     struct = "color.ml",
-    opts   = [
-        # "-no-alias-deps",
-        "-w", "-49"
-    ]
 )
 
 ocaml_module(

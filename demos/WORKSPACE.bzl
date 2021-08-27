@@ -71,7 +71,7 @@ opam = OpamConfig(
         "4.11.1+flambda": BuildConfig(
             switch   = "4.11.1+flambda",
             compiler = "4.11.1+flambda",
-            verify   = True,
+            # verify   = True,
             # pin      = True,
             packages = opam_pkgs
         ),

@@ -11,12 +11,12 @@ load(
 
 ###################
 ocaml_ns_library(
-    name = "greek",
-    submodules = {
-        ":_Alpha": "Alpha",
-        ":_Beta": "Beta",
-        ":_Gamma": "Gamma",
-    },
+    name = "#greek",
+    submodules = [
+        ":_Alpha",
+        ":_Beta",
+        ":_Gamma"
+    ],
     visibility = ["//namespaces/new/case160:__pkg__"]
 )
 

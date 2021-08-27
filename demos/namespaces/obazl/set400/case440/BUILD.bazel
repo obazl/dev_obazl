@@ -1,5 +1,5 @@
-
-## OBSOLETE! not yet updated to latest version...
+## set400/case440: user-provided main contains 'include', which defines a var
+## and references a submodule directly.
 
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
@@ -10,20 +10,33 @@ load(
 
 ocaml_test(
     name = "test",
+    main = "_Test"
+)
+
+ocaml_module(
+    name = "_Test",
+    struct = "test.ml",
     deps_opam = ["ounit2"],
-    main = "test.ml",
     opts = ["-w", "-27"], ## Error (warning 27): unused variable test_ctxt.
-    deps = [":color"],
+    deps = [":#color"],
 )
 
 ocaml_ns_library(
-    name = "color",
-    includes = [":_Color_include"],
-    submodules = {
-        "//namespaces/obazl/set100/case110:_Red": "Red",
-        "//namespaces/obazl/set100/case110:_Green": "Green",
-        "//namespaces/obazl/set100/case110:_Blue": "Blue",
-    },
+    name = "#color",
+    submodules = [
+        ":_Color", # user-defined main, aliases to these submodules:
+        "//namespaces/obazl/set100/case110:_Red",
+        "//namespaces/obazl/set100/case110:_Green",
+        "//namespaces/obazl/set100/case110:_Blue"
+    ],
+)
+
+ocaml_module(
+    name = "_Color",
+    struct = "color.ml",
+    deps   = [
+        ":_Color_include"
+    ]
 )
 
 ocaml_module(

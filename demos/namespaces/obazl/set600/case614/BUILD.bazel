@@ -20,6 +20,6 @@ ocaml_module(
         "-27",  ## Error (warning 27): unused variable test_ctxt.
     ],
     deps = [
-        "//namespaces/obazl/set600/case614/alpha:_Alpha",
+        "//namespaces/obazl/set600/case614/alpha:#alpha",
     ],
 )

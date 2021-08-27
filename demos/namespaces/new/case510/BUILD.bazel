@@ -30,7 +30,7 @@ ocaml_module(
     name = "main",
     struct = "main.ml",
     deps   = [
-        "//namespaces/new/case510/en:color",
-        "//namespaces/new/case510/fr:couleur"
+        "//namespaces/new/case510/en:#color",
+        "//namespaces/new/case510/fr:#couleur"
     ]
 )

@@ -8,12 +8,12 @@ load(
 )
 
 ocaml_ns_library(
-    name = "couleur",
-    submodules = {
-        ":_Rouge": "Rouge",
-        ":_Vert": "Vert",
-        ":_Bleu": "Bleu",
-    },
+    name = "#couleur",
+    submodules = [
+        ":_Rouge",
+        ":_Vert",
+        ":_Bleu"
+    ],
     visibility = ["//namespaces/new/case520:__pkg__"]
 )
 
@@ -31,7 +31,6 @@ ocaml_module(
     struct = "vert.ml",
     deps = [
         "//namespaces/new/case520/diamond"
-        # ":_Vert",
     ],
 )
 

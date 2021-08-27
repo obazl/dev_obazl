@@ -5,7 +5,7 @@ load(
 )
 
 ocaml_ns_library(
-    name = "cmy",
+    name = "#cmy",
     submodules = [
         ":_Cyan",
         ":_Magenta",

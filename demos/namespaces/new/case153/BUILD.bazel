@@ -8,27 +8,33 @@ load(
     "ocaml_ns_library",
     "ocaml_test",
 )
+
 ocaml_test(
     name = "test",
+    main = "_Test"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
     deps_opam = ["ounit2"],
-    main = "test.ml",
     opts = [
         "-w", "-27"  ## Error (warning 27): unused variable test_ctxt.
     ],
     deps = [
-        ":color",
-        # ":greek"
+        ":#color",
     ],
 )
 
+#################
 ocaml_ns_library(
-    name = "color",
-    submodules = {
-        ":_Red": "Red",
-        ":_Green": "Green",
-        ":_Blue": "Blue",
-        ":greek": "Greek"
-    },
+    name = "#color",
+    submodules = [
+        ":_Red",
+        ":_Green",
+        ":_Blue",
+        ":#greek"
+    ],
 )
 
 ocaml_module(
@@ -49,13 +55,13 @@ ocaml_module(
 
 ###################
 ocaml_ns_library(
-    name = "greek",
-    submodules = {
-        ":_Alpha": "Alpha",
-        ":_Beta": "Beta",
-        ":_Gamma": "Gamma",
-        ":foobar": "Foobar"
-    },
+    name = "#greek",
+    submodules = [
+        ":_Alpha",
+        ":_Beta",
+        ":_Gamma",
+        ":#foobar"
+    ],
 )
 
 ocaml_module(
@@ -76,12 +82,12 @@ ocaml_module(
 ################################################################
 ###################
 ocaml_ns_library(
-    name = "foobar",
-    submodules = {
-        ":_Foo": "Foo",
-        ":_Bar": "Bar",
-        ":_Baz": "Baz",
-    },
+    name = "#foobar",
+    submodules = [
+        ":_Foo",
+        ":_Bar",
+        ":_Baz"
+    ],
 )
 
 ocaml_module(

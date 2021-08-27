@@ -6,9 +6,11 @@ test_suite(
         "//namespaces/obazl/set600/case612:test",
         "//namespaces/obazl/set600/case614:test",
         "//namespaces/obazl/set600/case620:test",
+        "//namespaces/obazl/set600/case630:test",
+        "//namespaces/obazl/set600/case640:test",
 
-        # "//namespaces/obazl/set600/case630:test",
-        # "//namespaces/obazl/set600/case640:test",
+        ## NOT YET UPDATED to latest
         # "//namespaces/obazl/set600/case650:test",
+        # "//namespaces/obazl/set600/case660:test",
     ]
 )

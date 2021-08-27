@@ -8,7 +8,7 @@ load(
 
 ###################
 ocaml_ns_library(
-    name = "greek",
+    name = "#greek",
     submodules = {
         ":_Alpha": "Alpha",
         ":_Beta": "Beta",

@@ -20,12 +20,12 @@ ocaml_module(
         "-w",
         "-27",
     ],  ## Error (warning 27): unused variable test_ctxt.
-    deps = [":color"],
+    deps = [":#color"],
 )
 
 #################
 ocaml_ns_library(
-    name = "color",
+    name = "#color",
     # use user-provided file as main ns module:
     # main = ":_Color",
     submodules = [

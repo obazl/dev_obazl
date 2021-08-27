@@ -9,21 +9,39 @@ load(
 
 ocaml_test(
     name = "test",
+    main = "_Test"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
     deps_opam = ["ounit2"],
-    main = "test.ml",
     opts = [
         "-w",
         "-27",
     ],  ## Error (warning 27): unused variable test_ctxt.
-    deps = [":color"],
+    deps = [":#color"],
 )
 
 ocaml_ns_library(
-    name = "color",
-    main = "color.ml",
-    submodules = {
-        "//namespaces/obazl/set600/case630/rgb": "RGB",
-        "//namespaces/obazl/set600/case630/cmy": "CMY",
-    },
+    name = "#color",
+    submodules = [
+        ":_Color",
+        "//namespaces/obazl/set600/case630/rgb:#rgb",
+        "//namespaces/obazl/set600/case630/cmy:#cmy"
+    ],
     visibility = ["//visibility:public"],
 )
+
+ocaml_module(
+    name = "_Color",
+    struct = "color.ml",
+    ## Since this module _uses_ the submodules (in addition to aliasing them),
+    ## me need to list them as deps.
+    deps   = [
+        "//namespaces/obazl/set600/case630/rgb:#rgb",
+        "//namespaces/obazl/set600/case630/cmy:#cmy"
+    ]
+)
+
+

@@ -23,27 +23,27 @@ ocaml_module(
     deps = [":alpha"],
 )
 
-# How to support articulated module paths like Alpha.Beta.Color
+# How to support articulated module paths like Alpha.Beta.Gamma
 ocaml_ns_library(
-    name = "alpha",
+    name = "#alpha",
     submodules = [
         ":_Red",
-        ":beta"  # nslib as submodule
+        ":#beta"  # nslib as submodule
     ],
     visibility = ["//visibility:public"],
 )
 
 ocaml_ns_library(
-    name = "beta",
+    name = "#beta",
     submodules = [
         ":_Green",
         ":_Eggs",
-        ":color"   # nslib as submodule
+        ":#gamma"   # nslib as submodule
     ],
 )
 
 ocaml_ns_library(
-    name = "color",
+    name = "#gamma",
     submodules = [
         ":_Blue"
     ],
@@ -68,7 +68,7 @@ ocaml_module(
     name = "_Eggs",
     struct = "eggs.ml",
     deps   = [
-        ":color"
+        ":#gamma"
     ]
 )
 

@@ -1,4 +1,5 @@
-## new/case520: diamond dependency
+## new/case520: diamond dependency on module
+## diamond dep should only be built once
 
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
@@ -47,7 +48,7 @@ ocaml_module(
     name = "main",
     struct = "main.ml",
     deps   = [
-        "//namespaces/new/case520/en:color",
-        "//namespaces/new/case520/fr:couleur"
+        "//namespaces/new/case520/en:#color",
+        "//namespaces/new/case520/fr:#couleur"
     ]
 )

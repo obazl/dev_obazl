@@ -25,12 +25,12 @@ ocaml_module(
 
 #################
 ocaml_ns_library(
-    name = "_Alpha",
+    name = "#alpha",
     submodules = [
         ":_Ared",
         ":_Agreen",
         ":_Ablue",
-        ":_Beta"  # nslib as submodule
+        ":#beta"  # nslib as submodule
     ],
     visibility = ["//visibility:public"],
 )
@@ -52,12 +52,12 @@ ocaml_module(
 
 #################
 ocaml_ns_library(
-    name = "_Beta",
+    name = "#beta",
     submodules = [
         ":_Bred",
         ":_Bgreen",
         ":_Bblue",
-        ":_Gamma"   # nslib as submodule
+        ":#gamma"   # nslib as submodule
     ],
 )
 
@@ -78,7 +78,7 @@ ocaml_module(
 
 #################
 ocaml_ns_library(
-    name = "_Gamma",
+    name = "#gamma",
     submodules = [
         ":_Cred",
         ":_Cgreen",

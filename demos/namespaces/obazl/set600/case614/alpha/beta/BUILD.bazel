@@ -9,12 +9,12 @@ load(
 
 #################
 ocaml_ns_library(
-    name = "_Beta",
+    name = "#beta",
     submodules = [
         ":_Red",
         ":_Green",
         ":_Blue",
-        "//namespaces/obazl/set600/case614/alpha/beta/gamma:_Gamma"   # nslib as submodule
+        "//namespaces/obazl/set600/case614/alpha/beta/gamma:#gamma"   # nslib as submodule
     ],
     visibility = ["//namespaces/obazl/set600/case614/alpha:__pkg__"]
 )

@@ -7,12 +7,15 @@ load(
     "ocaml_test",
 )
 
-# No need for ns_env, since no name clash
-
 ocaml_test(
     name = "test",
+    main = "_Test"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
     deps_opam = ["ounit2"],
-    main = "test.ml",
     opts = [
         "-w", "-27",  ## Error (warning 27): unused variable test_ctxt.
         "-w", "-31",  ## Error (warning 31): files X and Y both define a module named Z
@@ -21,9 +24,9 @@ ocaml_test(
 )
 
 ocaml_ns_library(
-    name = "beta",
-    submodules = {
-        "//namespaces/obazl/set700/case730/alpha/beta/color": "Color",
-    },
+    name = "#beta",
+    submodules = [
+        "//namespaces/obazl/set700/case730/alpha/beta/color:#color"
+    ],
     visibility = ["//visibility:public"]
 )

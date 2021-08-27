@@ -96,16 +96,25 @@ ocaml_module(
     deps = [":_Config"],
 )
 
+################################################################
 ###########
 ocaml_test(
     name = "test",
-    main = "_Test"
+    opts = [
+        "-verbose",
+        "-linkall"
+    ],
+    main = "_Test",
 )
 
+#############
 ocaml_module(
     name   = "_Test",
     struct = "test.ml",
     opts = [
+        "-verbose",
+        "-linkall",
+        "-no-opaque",
         "-w", "-27",  ## Error (warning 27): unused variable test_ctxt.
     ],
     deps = [
@@ -117,6 +126,7 @@ ocaml_module(
 #############
 ocaml_module(
     name = "_Config",
+    opts = ["-linkall"],
     # src is generated file
     struct = "color_config",  #  ":coral"
 )

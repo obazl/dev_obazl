@@ -19,7 +19,7 @@ ocaml_module(
     struct = "test.ml",
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
-        ":hello",
+        ":#hello",
     ],
     deps_opam = [
         "ounit2",
@@ -27,7 +27,7 @@ ocaml_module(
 )
 
 ocaml_ns_library(
-    name = "hello",
+    name = "#hello",
     submodules = {
         ":_Australian": "Australian",
         ":_English": "English",

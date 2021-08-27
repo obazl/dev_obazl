@@ -10,16 +10,15 @@ let test6 test_ctxt = assert_equal 201  (Color.CMY.Yellow.v)
 
 let suite =
 "suite">:::
-["test1">:: test1;
- "test2">:: test2;
- "test3">:: test3;
+[
+  "test1">:: test1;
+  "test2">:: test2;
+  "test3">:: test3;
 
- "test4">:: test4;
- "test5">:: test5;
- "test6">:: test6;
+  "test4">:: test4;
+  "test5">:: test5;
+  "test6">:: test6;
 ]
-;;
 
 let () =
   run_test_tt_main suite
-;;

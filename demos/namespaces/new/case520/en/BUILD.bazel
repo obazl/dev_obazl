@@ -8,12 +8,12 @@ load(
 )
 
 ocaml_ns_library(
-    name = "color",
-    submodules = {
-        ":_Red": "Red",
-        ":_Green": "Green",
-        ":_Blue": "Blue",
-    },
+    name = "#color",
+    submodules = [
+        ":_Red",
+        ":_Green",
+        ":_Blue"
+    ],
     visibility = ["//namespaces/new/case520:__pkg__"]
 )
 

@@ -2,14 +2,14 @@ open OUnit2
 
 let test1 test_ctxt = assert_equal 255 (Alpha.Red.v)
 let test2 test_ctxt = assert_equal 127 (Alpha.Beta.Green.v)
-let test3 test_ctxt = assert_equal 80  (Alpha.Beta.Color.Blue.v)
+let test3 test_ctxt = assert_equal 80  (Alpha.Beta.Gamma.Blue.v)
 
 (* let test5 test_ctxt = assert_equal 127 (Beta.Green.v)
- * let test6 test_ctxt = assert_equal 80  (Beta.Color.Blue.v) *)
+ * let test6 test_ctxt = assert_equal 80  (Beta.Gamma.Blue.v) *)
 
-(* let test7 test_ctxt = assert_equal 255 (Color.Red.v)
- * let test8 test_ctxt = assert_equal 127 (Color.Green.v) *)
-(* let test9 test_ctxt = assert_equal 80  (Color.Blue.v) *)
+(* let test7 test_ctxt = assert_equal 255 (Gamma.Red.v)
+ * let test8 test_ctxt = assert_equal 127 (Gamma.Green.v) *)
+(* let test9 test_ctxt = assert_equal 80  (Gamma.Blue.v) *)
 
 let suite =
 "suite">:::

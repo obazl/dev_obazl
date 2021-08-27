@@ -1,3 +1,5 @@
+## set300/case370
+
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
     "ocaml_signature",
@@ -16,15 +18,14 @@ ocaml_module(
     struct = "test.ml",
     deps_opam = ["ounit2"],
     opts = [
-        "-w",
-        "-27",
-    ],  ## Error (warning 27): unused variable test_ctxt.
-    deps = [":color"],
+        "-w", "-27", ## Error (warning 27): unused variable test_ctxt.
+    ],
+    deps = [":#color"],
 )
 
 #################
 ocaml_ns_library(
-    name = "color",
+    name = "#color",
     submodules = {
         ":_Red": "Red",
         ":_Green": "Green",
