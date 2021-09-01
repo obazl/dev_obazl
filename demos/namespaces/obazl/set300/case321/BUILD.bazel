@@ -1,3 +1,5 @@
+fail("OBSOLETE CASE - ns_env etc. no longer supported")
+
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
     "ocaml_archive",
@@ -6,12 +8,12 @@ load(
     "ocaml_ns_archive",
     "ocaml_test",
 )
-load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_env")
+# load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_env")
 
-# 'test' target will fail without aliases
-ns_env(
-    aliases = glob(["*.ml"]),
-)
+# # 'test' target will fail without aliases
+# ns_env(
+#     aliases = glob(["*.ml"]),
+# )
 
 ocaml_test(
     name = "test",

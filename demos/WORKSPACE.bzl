@@ -61,22 +61,23 @@ opam = OpamConfig(
             compiler = "4.11.1",
             packages = opam_pkgs
         ),
-        "v1.0.0-release": BuildConfig(
-            verify   = True,
-            switch   = "4.11.1+flambda",
-            compiler = "4.11.1+flambda",
-            packages = opam_pkgs
-        ),
+        # "v1.0.0-release": BuildConfig(
+        #     verify   = True,
+        #     switch   = "4.11.1+flambda",
+        #     compiler = "4.11.1+flambda",
+        #     packages = opam_pkgs
+        # ),
         # Default: build id == opam switch id
-        "4.11.1+flambda": BuildConfig(
-            switch   = "4.11.1+flambda",
-            compiler = "4.11.1+flambda",
-            # verify   = True,
-            # pin      = True,
-            packages = opam_pkgs
-        ),
+        # "4.11.1+flambda": BuildConfig(
+        #     switch   = "4.11.1+flambda",
+        #     compiler = "4.11.1+flambda",
+        #     # verify   = True,
+        #     # pin      = True,
+        #     packages = opam_pkgs
+        # ),
         "4.11.1": BuildConfig(
             # omission of switch ok if switch name = compiler version
+            # switch   = "4.11.1",
             compiler = "4.11.1",
             packages = opam_pkgs
         ),

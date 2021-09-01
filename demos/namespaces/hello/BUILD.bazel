@@ -18,12 +18,8 @@ ocaml_module(
     name   = "_Test",
     struct = "test.ml",
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
-    deps = [
-        ":#hello",
-    ],
-    deps_opam = [
-        "ounit2",
-    ]
+    deps = [":#hello", "@opam//lib/ounit2"]
+    # deps_opam = ["ounit2"]
 )
 
 ocaml_ns_library(

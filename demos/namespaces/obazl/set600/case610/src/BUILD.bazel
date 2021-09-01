@@ -15,26 +15,25 @@ ocaml_test(
 ocaml_module(
     name   = "_Test",
     struct = "test.ml",
-    deps_opam = ["ounit2"],
     opts = [
         "-w",
         "-27",  ## Error (warning 27): unused variable test_ctxt.
     ],
-    deps = [":alpha"],
+    deps = [":alpha", "@opam//lib/ounit2"],
 )
 
 # How to support articulated module paths like Alpha.Beta.Gamma
 ocaml_ns_library(
-    name = "#alpha",
+    name = "alpha",
     submodules = [
         ":_Red",
-        ":#beta"  # nslib as submodule
+        ":beta"  # nslib as submodule
     ],
     visibility = ["//visibility:public"],
 )
 
 ocaml_ns_library(
-    name = "#beta",
+    name = "beta",
     submodules = [
         ":_Green",
         ":_Eggs",

@@ -20,8 +20,7 @@ ocaml_module(
     struct = "test.ml",
     ppx  = ":ppx.exe",
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
-    deps = [":_main"],
-    deps_opam = ["ounit2"]
+    deps = [":_main", "@opam//lib/ounit2"]
 )
 
 #################
@@ -40,8 +39,9 @@ ocaml_module(
 ppx_executable(
     name = "ppx.exe",
     main = ":_Ppxlib_driver",
-    deps = [":_Ppx_color", "_Ppx_greek"],
-    deps_opam = ["ppxlib"]
+    deps = [":_Ppx_color", "_Ppx_greek",
+            "@opam//lib/ppxlib"]
+    # deps_opam = ["ppxlib"]
 )
 
 ############
@@ -57,19 +57,22 @@ ppx_library(
 ppx_module(
     name      = "_Ppx_red",
     struct    = "ppx_red.ml",
-    deps_opam = ["ppxlib"]
+    deps      = ["@opam//lib/ppxlib"]
+    # deps_opam = ["ppxlib"]
 )
 
 ppx_module(
     name      = "_Ppx_green",
     struct    = "ppx_green.ml",
-    deps_opam = ["ppxlib"]
+    deps      = ["@opam//lib/ppxlib"]
+    # deps_opam = ["ppxlib"]
 )
 
 ppx_module(
     name      = "_Ppx_blue",
     struct    = "ppx_blue.ml",
-    deps_opam = ["ppxlib"]
+    deps      = ["@opam//lib/ppxlib"]
+    # deps_opam = ["ppxlib"]
 )
 
 ############
@@ -85,19 +88,22 @@ ppx_library(
 ppx_module(
     name      = "_Ppx_alpha",
     struct    = "ppx_alpha.ml",
-    deps_opam = ["ppxlib"]
+    deps      = ["@opam//lib/ppxlib"]
+    # deps_opam = ["ppxlib"]
 )
 
 ppx_module(
     name      = "_Ppx_beta",
     struct    = "ppx_beta.ml",
-    deps_opam = ["ppxlib"]
+    deps      = ["@opam//lib/ppxlib"]
+    # deps_opam = ["ppxlib"]
 )
 
 ppx_module(
     name      = "_Ppx_gamma",
     struct    = "ppx_gamma.ml",
-    deps_opam = ["ppxlib"]
+    deps      = ["@opam//lib/ppxlib"]
+    # deps_opam = ["ppxlib"]
 )
 
 ################################################################
@@ -105,7 +111,8 @@ ppx_module(
 ppx_module(
     name = "_Ppxlib_driver",
     struct = ":ppxlib_driver.ml",
-    deps_opam = ["ppxlib"]
+    deps      = ["@opam//lib/ppxlib"]
+    # deps_opam = ["ppxlib"]
 )
 
 ########

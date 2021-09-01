@@ -1,10 +1,9 @@
-# to run: $ bazel test rules/ocaml_interface:test
+# to run: $ bazel test rules/ocaml_signature:test
 
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
-    "ocaml_executable",
-    "ocaml_signature",
     "ocaml_module",
+    "ocaml_signature",
     "ocaml_test",
 )
 
@@ -21,29 +20,20 @@ ocaml_module(
         "-27",
     ],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
-        ":_Hello",
+        ":Hello",
         "@opam//lib/ounit2",
     ],
 )
 
-ocaml_executable(
-    name = "hello",
-    deps = [":_Main"],
-)
-
 ocaml_module(
-    name = "_Main",
-    struct = "main.ml",
-    deps = [":_Hello"],
-)
-
-ocaml_module(
-    name = "_Hello",
-    sig = ":_Hello.cmi",
+    name = "Hello",
     struct = "hello.ml",
+    sig    = ":_Hello.cmi",
+    visibility = ["//visibility:public"],
 )
 
 ocaml_signature(
     name = "_Hello.cmi",
     src = "hello.mli",
 )
+

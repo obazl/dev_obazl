@@ -1,10 +1,12 @@
+fail("OBSOLETE CASE - ns_env etc. no longer supported")
+
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
     "ocaml_module",
     "ocaml_ns_archive",
     "ocaml_test",
 )
-load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_env")
+# load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_env")
 
 # Same as class00/case14, with the addition prefixing to rename submodules.
 
@@ -14,7 +16,7 @@ load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_env")
 # References by external clients, however, must use the ns-qualified
 # path, e.g. 'Color.Red' (as test.ml does).
 
-ns_env(aliases = glob(["*.ml"]))
+# ns_env(aliases = glob(["*.ml"]))
 
 ocaml_test(
     name = "test",

@@ -1,3 +1,6 @@
+## https://github.com/ocaml-community/cppo
+## example code: https://github.com/ocaml-community/cppo/tree/master/examples
+
 # $ bazel build tools/cppo:debug
 # $ bazel build tools/cppo/...:*
 
@@ -12,9 +15,6 @@
 
 load("@obazl_rules_ocaml//ocaml:rules.bzl", "ocaml_lex")
 load(":cppo.bzl", "cppo")
-
-## example code from cppo repo:
-## https://github.com/ocaml-community/cppo/tree/master/examples
 
 cppo(
     name  = "debug",
@@ -31,11 +31,12 @@ cppo(
 
 cppo(
     name  = "lexer",
-    src   = "_lexer.ml",
+    src   = "lexer.ml",
     out   = "lexer.out",
 )
 
 ocaml_lex(
     name = "_lexer.ml",
     src = "lexer.mll",
+    out = "lexer.ml"
 )

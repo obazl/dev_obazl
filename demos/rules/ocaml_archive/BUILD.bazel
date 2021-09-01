@@ -23,8 +23,9 @@ ocaml_test(
         ":main",
         # "//rules/ocaml_archive:_Easy",
         # "//rules/ocaml_archive:_Simple"
+        "@opam//lib/ounit2"
     ],
-    deps_opam = ["ounit2"]
+    # deps_opam = ["ounit2"]
 )
 
 ocaml_executable(
@@ -61,10 +62,11 @@ ocaml_module(
             ],
     deps = [
         ":arch",
+        "@opam//lib/core"
         # ":_Easy",
         # ":_Simple",
     ],
-    deps_opam = ["core"]
+    # deps_opam = ["core"]
 )
 
 # ocaml_module(
@@ -75,7 +77,7 @@ ocaml_module(
 ocaml_archive(
     name = "arch",
     opts = ["-linkall",],
-    deps = [
+    modules = [
         ":_Easy",
         ":_Simple",
     ],

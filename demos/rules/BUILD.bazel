@@ -1,0 +1,11 @@
+test_suite(
+    name = "test",
+    tests = [
+        "//rules/ocaml_archive:test",
+        "//rules/ocaml_executable:test",
+        "//rules/ocaml_lex:test",
+        "//rules/ocaml_module:test",
+        "//rules/ocaml_signature:test",
+        "//rules/ocaml_test:test",
+    ]
+)

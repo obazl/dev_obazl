@@ -21,27 +21,29 @@ ocaml_test(
 ocaml_module(
     name   = "_Test1",
     struct = "test1.ml",
-    deps_opam = ["ounit2"],
     opts = [
         "-w", "-27", ## unused variable test_ctxt.
         "-w", "-31"  ## files x and y both define a module named Z
     ],
     deps = [
         ":main",
+        "@opam//lib/ounit2"
     ],
+    # deps_opam = ["ounit2"],
 )
 
 ocaml_module(
     name   = "_Test2",
     struct = "test2.ml",
-    deps_opam = ["ounit2"],
     opts = [
         "-w", "-27", ## unused variable test_ctxt.
         "-w", "-31"  ## files x and y both define a module named Z
     ],
     deps = [
         ":main",
+        "@opam//lib/ounit2"
     ],
+    # deps_opam = ["ounit2"],
 )
 
 ocaml_module(

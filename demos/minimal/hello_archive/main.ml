@@ -1,5 +1,4 @@
-let ()
-  = print_endline "Hello from Main!" ;
+let () = print_endline "Hello from Main!" ;
 
   print_endline "Hello again" ;
 

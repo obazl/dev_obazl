@@ -14,7 +14,7 @@ ocaml_test(
     ppx  = ":ppx.exe",
     ppx_print = "@ppx//print:text",
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
-    deps_opam = ["ounit2"]
+    deps = ["@opam//lib/ounit2"]
 )
 
 ###############
@@ -22,12 +22,13 @@ ppx_executable(
     name = "ppx.exe",
     main = ":Runner",
     deps = [
-        ":_Ppx_color"
+        ":_Ppx_color",
         # ":ppx_driver",
         # ":ppx_color_driver",
         # ":ppx_greek_driver"
+        "@opam//lib/ppxlib"
     ],
-    deps_opam = ["ppxlib"]
+    # deps_opam = ["ppxlib"]
 )
 
 ############
@@ -81,21 +82,24 @@ ppx_module(
     name      = "_Ppx_red",
     struct    = "ppx_red.ml",
     opts = ["-linkall"],
-    deps_opam = ["ppxlib"]
+    deps      = ["@opam//lib/ppxlib"]
+    # deps_opam = ["ppxlib"]
 )
 
 ppx_module(
     name      = "_Ppx_green",
     struct    = "ppx_green.ml",
     opts = ["-linkall"],
-    deps_opam = ["ppxlib"]
+    deps      = ["@opam//lib/ppxlib"]
+    # deps_opam = ["ppxlib"]
 )
 
 ppx_module(
     name      = "_Ppx_blue",
     struct    = "ppx_blue.ml",
     opts = ["-linkall"],
-    deps_opam = ["ppxlib"]
+    deps      = ["@opam//lib/ppxlib"]
+    # deps_opam = ["ppxlib"]
 )
 
 ############
@@ -130,21 +134,24 @@ ppx_module(
     name      = "_Ppx_alpha",
     opts = ["-linkall"],
     struct    = "ppx_alpha.ml",
-    deps_opam = ["ppxlib"]
+    deps      = ["@opam//lib/ppxlib"]
+    # deps_opam = ["ppxlib"]
 )
 
 ppx_module(
     name      = "_Ppx_beta",
     opts = ["-linkall"],
     struct    = "ppx_beta.ml",
-    deps_opam = ["ppxlib"]
+    deps      = ["@opam//lib/ppxlib"]
+    # deps_opam = ["ppxlib"]
 )
 
 ppx_module(
     name      = "_Ppx_gamma",
     opts = ["-linkall"],
     struct    = "ppx_gamma.ml",
-    deps_opam = ["ppxlib"]
+    deps      = ["@opam//lib/ppxlib"]
+    # deps_opam = ["ppxlib"]
 )
 
 ################################################################
@@ -152,7 +159,8 @@ ppx_module(
 ppx_module(
     name = "Runner",
     struct = ":ppxlib_runner.ml",
-    deps_opam = ["ppxlib"]
+    deps      = ["@opam//lib/ppxlib"]
+    # deps_opam = ["ppxlib"]
 )
 
 ########

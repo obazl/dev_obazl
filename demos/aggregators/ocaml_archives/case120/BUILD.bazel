@@ -21,8 +21,9 @@ ocaml_module(
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
         ":_main",
+        "@opam//lib/ounit2"
     ],
-    deps_opam = ["ounit2"]
+    # deps_opam = ["ounit2"]
 )
 
 #################
@@ -36,12 +37,12 @@ ocaml_executable(
 ocaml_module(
     name = "_main",
     struct = "main.ml",
-    deps = [":color"]
+    deps = [":_color"]
 )
 
 ##############
 ocaml_archive(
-    name = "color",
+    name = "_color",
     modules = [
         ":_Red",
         ":_Green",

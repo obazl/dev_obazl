@@ -24,8 +24,9 @@ ocaml_module(
     ],
     deps = [
         ":color",
+        "@opam//lib/ounit2"
     ],
-    deps_opam = ["ounit2"]
+    # deps_opam = ["ounit2"]
 )
 
 ocaml_archive(

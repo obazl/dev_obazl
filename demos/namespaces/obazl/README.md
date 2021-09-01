@@ -3,8 +3,8 @@
 >    **WARNING** this documentation is outdated but currently undergoing revision.
 
 * [Overview](#overview)
-* [Set 100](#set100) Basic stuff used as deps by other test cases
-* [Set 200](#set200) Aliasing only
+* [Set 100](#set100) Basic modules used as deps by other demos
+* [Set 200](#set200) Basic namespaces, where the resolver module is generated or user-provided; the latter may use OCaml `include`
 * [Set 300](#set300) Namespacing
 * [Set 400](#set400) Exogenous submodules
 * [Set 450](#set450) Exogenous ns submodules
@@ -39,112 +39,48 @@ the build by using the `aquery` command:
 These cases build some modules that are used as deps by other cases.
 
 
-* case 110: Default renaming uses the package path to form the
-  pseudo-namespace prefix used to rename modules.
+* case 110: No namespacing, just builds some modules that will be deps
+  of other demos.
 
-* case 120: Same as case110, but with a more manageable custom prefix.
+* case 130: Similar to case110, but with explicitly namespaced
+  module/file names (this will become consequential when
+  we also use aliases).
 
-* case 130: Same as case120, but we also give the ns_env itself a
-  custom name (this will become consequential when we also use
-  aliases).
+* case 132: Similar to case130
 
-* case 140: Same as case120, but with intramural deps: Red depends on
-  Green, Green on Blue. Also demonstrates that target names are
-  arbitrary. Try running a query to see the dep structure:
+* case 134: Similar to case130, case132
 
-```
-$ bazel query 'deps(namespaces/obazl/set100/case140:_Red)' --output graph --noimplicit_deps
-digraph mygraph {
-  node [shape=box];
-  "//namespaces/obazl/set100/case140:_Red"
-  "//namespaces/obazl/set100/case140:_Red" -> "//namespaces/obazl/set100/case140:_ns_env"
-  "//namespaces/obazl/set100/case140:_Red" -> "//namespaces/obazl/set100/case140:red.ml"
-  "//namespaces/obazl/set100/case140:_Red" -> "//namespaces/obazl/set100/case140:_FooGreen"
-  "//namespaces/obazl/set100/case140:_FooGreen"
-  "//namespaces/obazl/set100/case140:_FooGreen" -> "//namespaces/obazl/set100/case140:_ns_env"
-  "//namespaces/obazl/set100/case140:_FooGreen" -> "//namespaces/obazl/set100/case140:green.ml"
-  "//namespaces/obazl/set100/case140:_FooGreen" -> "//namespaces/obazl/set100/case140:_Blue"
-  "//namespaces/obazl/set100/case140:_Blue"
-  "//namespaces/obazl/set100/case140:_Blue" -> "//namespaces/obazl/set100/case140:_ns_env"
-  "//namespaces/obazl/set100/case140:_Blue" -> "//namespaces/obazl/set100/case140:blue.ml"
-  "//namespaces/obazl/set100/case140:green.ml"
-  "//namespaces/obazl/set100/case140:red.ml"
-  "//namespaces/obazl/set100/case140:_ns_env"
-  "//namespaces/obazl/set100/case140:blue.ml"
-}
-```
+## <a name="set200">Set 200 - elementary namespacing</a>
 
->    **IMPORTANT** The nodes in the depenency graph shown above are Bazel targets; they do not necessarily correspond to filesystem objects. In particular, target `//namespaces/obazl/set100/case140:_ns_env` does not generate any files, it only supplies a pseudo-namespace prefix string to clients that depend on it.
+<!-- outdated doc: -->
+<!-- Pure "aliasing" involves the use of aliasing equations (i.e. -->
+<!--  [type-level module -->
+<!--  aliases](https://caml.inria.fr/pub/docs/manual-ocaml/modulealias.html)) -->
+<!--  without module renaming. It follows that only pseudo-recursive -->
+<!--  aliasing equations can be used in this way. This allows you to use -->
+<!--  module paths to refer to your modules, e.g. `A.B`, but without the -->
+<!--  protection against name clashes afforded by renaming. -->
 
+<!-- In OBazl, you can do this by using rule `ocaml_ns_library` but not -->
+<!-- macro `ns_env` (equivalently, rule `ocaml_ns_env`). -->
 
-* case 150: Uses a custom separator string "_0_" to replace
-  filesystem separator '/', or '.' in custom prefixes).
+<!-- None of the demos in this set use renaming (ns_env). They demonstrate -->
+<!-- (among other things) that renaming and aliasing are orthogonal. -->
 
-* case 152: Same as case150, but with a custom prefix.
-
-* case 155: Same as case 20, but with a more manageable prefix.
-
-* case 160: Remapping modules without renaming files. The examples so
-  far have only used ns_env to manage file renaming. We can also use
-  `ocaml_ns_library` to make modules accessible under new names.
-
-  The module names under which module implementations (files) are made
-  accessible are determined by the values of the `submodules`
-  attribute of the `ocaml_ns_library` rule. This effectively decouples
-  module paths from filesystem names. This example maps e.g.
-  Couleur.Roux to module Red, which is not renamed.
-
-* case 170: Multiple ns evaluation environments. Shows how to use
-  ns_env variants to specify different prefixes for different groups
-  of modules. Files enrolled in the ns envs are renamed. This demo
-  does not use rule `ocaml_ns_library`.
-
-  This makes the submodules available under two sets of names: one
-  determined by the ns_env (as in case170), e.g. `Grue__Green`, and
-  one determined by the ns library path, e.g. `Color.Green`.
-
-* case 185: Even more renaming/remapping. This demo combines the
-  techniques shown in cases 160 (remapping), 170 (multiple ns envs),
-  and 180 (using an ns lib)
-
-  Like case180, this demo makes the submodules available under two
-  sets of names: one determined by the ns_env (as in case170), e.g.
-  `Grue__Green`, and one determined by the ns library path, but in
-  this case the `ocaml_ns_library` remaps, giving e.g. `Couleur.Vert`
-  instead of `Color.Green`.
-
-## <a name="set200">Set 200: Aliasing only</a>
-
-Pure "aliasing" involves the use of aliasing equations (i.e.
- [type-level module
- aliases](https://caml.inria.fr/pub/docs/manual-ocaml/modulealias.html))
- without module renaming. It follows that only pseudo-recursive
- aliasing equations can be used in this way. This allows you to use
- module paths to refer to your modules, e.g. `A.B`, but without the
- protection against name clashes afforded by renaming.
-
-In OBazl, you can do this by using rule `ocaml_ns_library` but not
-macro `ns_env` (equivalently, rule `ocaml_ns_env`).
-
-None of the demos in this set use renaming (ns_env). They demonstrate
-(among other things) that renaming and aliasing are orthogonal.
-
-> **NOTE**: if you use aliasing without renaming, the aliasing
-       equations, whether generated or provided by you, will often be
-       pseudo-recursive, that is, of form "module M = M".
+<!-- > **NOTE**: if you use aliasing without renaming, the aliasing -->
+<!--        equations, whether generated or provided by you, will often be -->
+<!--        pseudo-recursive, that is, of form "module M = M". -->
 
 * case 210: Demonstrates use of an `ocaml_ns_library` rule to generate a
-  main ns module containing pseudo-recursive aliasing equations,
-  without the use of renaming.
+  main ns module containing pseudo-recursive aliasing equations.
 
->        **NOTE**: if renaming is also used, then the generated module will
->        contain non-recursive aliasing equations of form "module M = <prefix>__M",
->        where <prefix> is the prefix string set by the ns_env. See demo sets below
->        for more details and examples.
+    In this example, the submodules contain no inter-dependencies, so
+    they may be compiled separately, e.g. `bazel build
+    namespaces/obazl/set200/case210:_Red` should succeed.
 
-* case 220: User-provided ns main module. OBazl will use the user file
-  as main ns module instead of generating one. Since this example does
-  not use renaming, nothing more is needed.
+* case 220: User-provided ns main module `color.ml`. OBazl will use
+  the user file as main ns module instead of generating one. Since
+  this example does not use renaming, nothing more is needed.
 
 >        **IMPORTANT**: User-provided 'main' must include an aliasing
 >        equation, of form "module X = Y", for each submodule X. Often

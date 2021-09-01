@@ -19,8 +19,9 @@ ocaml_module(
     opts = [
         "-w", "-27"  ## Error (warning 27): unused variable test_ctxt.
     ],
-    deps_opam = ["ounit2"],
-    deps = [":#color"],
+    deps = [":#color", "@opam//lib/ounit2"],
+    # deps_opam = ["ounit2"],
+    # deps = [":#color"],
 )
 
 ocaml_ns_library(
@@ -42,7 +43,7 @@ ocaml_module(
 ocaml_signature(
     name = "_Red.cmi",
     src  = "red.mli",
-    opts = ["-open", "Color"]
+    # opts = ["-open", "Color"]
 )
 
 ocaml_module(

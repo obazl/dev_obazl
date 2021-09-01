@@ -1,4 +1,4 @@
-# set020/case20
+# set300/case330
 
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
@@ -15,12 +15,8 @@ ocaml_test(
 ocaml_module(
     name   = "_Test",
     struct = "test.ml",
-    deps_opam = ["ounit2"],
-    opts = [
-        "-w",
-        "-27",
-    ],  ## Error (warning 27): unused variable test_ctxt.
-    deps = [":#color"],
+    opts = ["-w", "-27"], ## Error (warning 27): unused variable test_ctxt.
+    deps = [":#color", "@opam//lib/ounit2"],
 )
 
 #################
@@ -29,10 +25,10 @@ ocaml_ns_library(
     # use user-provided file as main ns module:
     # main = ":_Color",
     submodules = [
-        ":_Color",
         ":_Red",
         ":_Green",
         ":_Blue",
+        ":_Color",
     ],
     visibility = ["//visibility:public"],
 )

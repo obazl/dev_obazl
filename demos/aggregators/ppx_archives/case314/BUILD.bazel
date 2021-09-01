@@ -5,10 +5,11 @@ load(
     "ocaml_test",
     "ppx_executable",
     "ppx_archive",
-    "ppx_module"
+    "ppx_module",
+    "ppx_test"
 )
 
-ocaml_test(
+ppx_test(
     name = "test",
     main = "test.ml",
     ppx  = ":ppx.exe",
@@ -16,15 +17,18 @@ ocaml_test(
     ## NOTE: test.ml does NOT have any ppx _build_ dependencies ('deps'), only
     ## preprocessing deps, which are handled by the ppx_executable passed via
     ## the 'ppx' attribute.
-    deps_opam = ["ounit2"]
+    deps = ["@opam//lib/ounit2"]
 )
 
 ###############
 ppx_executable(
     name = "ppx.exe",
     main = ":Runner",
-    deps = [":ppx_color", "ppx_greek"],
-    deps_opam = ["ppxlib"]
+    deps = [
+        ":ppx_color", "ppx_greek",
+        "@opam//lib/ppxlib"
+    ],
+    # deps_opam = ["ppxlib"]
 )
 
 ###########
@@ -48,19 +52,22 @@ ppx_archive(
 ppx_module(
     name      = "_Ppx_red",
     struct    = "ppx_red.ml",
-    deps_opam = ["ppxlib"]
+    deps      = ["@opam//lib/ppxlib"]
+    # deps_opam = ["ppxlib"]
 )
 
 ppx_module(
     name      = "_Ppx_green",
     struct    = "ppx_green.ml",
-    deps_opam = ["ppxlib"]
+    deps      = ["@opam//lib/ppxlib"]
+    # deps_opam = ["ppxlib"]
 )
 
 ppx_module(
     name      = "_Ppx_blue",
     struct    = "ppx_blue.ml",
-    deps_opam = ["ppxlib"]
+    deps      = ["@opam//lib/ppxlib"]
+    # deps_opam = ["ppxlib"]
 )
 
 ###########
@@ -84,19 +91,22 @@ ppx_archive(
 ppx_module(
     name      = "_Ppx_alpha",
     struct    = "ppx_alpha.ml",
-    deps_opam = ["ppxlib"]
+    deps      = ["@opam//lib/ppxlib"]
+    # deps_opam = ["ppxlib"]
 )
 
 ppx_module(
     name      = "_Ppx_beta",
     struct    = "ppx_beta.ml",
-    deps_opam = ["ppxlib"]
+    deps      = ["@opam//lib/ppxlib"]
+    # deps_opam = ["ppxlib"]
 )
 
 ppx_module(
     name      = "_Ppx_gamma",
     struct    = "ppx_gamma.ml",
-    deps_opam = ["ppxlib"]
+    deps      = ["@opam//lib/ppxlib"]
+    # deps_opam = ["ppxlib"]
 )
 
 ################################################################
@@ -104,7 +114,8 @@ ppx_module(
 ppx_module(
     name = "Runner",
     struct = ":ppxlib_runner.ml",
-    deps_opam = ["ppxlib"]
+    deps      = ["@opam//lib/ppxlib"]
+    # deps_opam = ["ppxlib"]
 )
 
 ########

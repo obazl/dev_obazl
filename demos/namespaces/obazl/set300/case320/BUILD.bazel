@@ -1,4 +1,4 @@
-## set300/case320: ns lib with intramural deps
+## set300/case320: ns lib with intramural deps - Red depends on Green
 
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
@@ -17,12 +17,8 @@ ocaml_test(
 ocaml_module(
     name   = "_Test",
     struct = "test.ml",
-    deps_opam = ["ounit2"],
-    opts = [
-        "-w",
-        "-27",
-    ],  ## Error (warning 27): unused variable test_ctxt.
-    deps = [":#color"],
+    opts = ["-w", "-27"], ## Error (warning 27): unused variable test_ctxt.
+    deps = [":#color", "@opam//lib/ounit2"],
 )
 
 #################

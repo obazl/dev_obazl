@@ -14,7 +14,6 @@ ocaml_test(
 ocaml_module(
     name   = "_Test",
     struct = "test.ml",
-    deps_opam = ["ounit2"],
     opts = [
         "-w",
         "-27",
@@ -23,7 +22,9 @@ ocaml_module(
         ":_Blue",
         ":_Green",
         ":_Red",
+        "@opam//lib/ounit2"
     ],
+    # deps_opam = ["ounit2"],
 )
 
 ocaml_module(

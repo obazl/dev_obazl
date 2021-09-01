@@ -1,6 +1,5 @@
-# To build, from examples/ run: $ bazel build //hello/hello_archive:hello_archive
-# You can shorten //hello/archive:archive to hello/hello_archive
-# To run: $ bazel run hello/hello_archive
+# To build: $ bazel build //minimal/hello_archive:hello
+# To run:   $ bazel run minimal/hello_archive:hello
 
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
@@ -23,7 +22,7 @@ ocaml_module(
 
 ocaml_archive(
     name = "archive",
-    deps = [":easy", ":simple"],
+    modules = [":easy", ":simple"],
 )
 
 ocaml_module(

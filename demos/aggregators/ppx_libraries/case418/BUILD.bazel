@@ -22,15 +22,16 @@ ocaml_module(
     ## NOTE: test.ml does NOT have any ppx _build_ dependencies ('deps'), only
     ## preprocessing deps, which are handled by the ppx_executable passed via
     ## the 'ppx' attribute.
-    deps_opam = ["ounit2"]
+    deps = ["@opam//lib/ounit2"]
+    # deps_opam = ["ounit2"]
 )
 
 ###############
 ppx_executable(
     name = "ppx.exe",
     main = ":_Ppxlib_driver",
-    deps = [":_Ppx_color"],
-    deps_opam = ["ppxlib"]
+    deps = [":_Ppx_color", "@opam//lib/ppxlib"]
+    # deps_opam = ["ppxlib"]
 )
 
 ############
@@ -47,19 +48,22 @@ ppx_library(
 ppx_module(
     name      = "_Ppx_red",
     struct    = "ppx_red.ml",
-    deps_opam = ["ppxlib"]
+    deps      = ["@opam//lib/ppxlib"]
+    # deps_opam = ["ppxlib"]
 )
 
 ppx_module(
     name      = "_Ppx_green",
     struct    = "ppx_green.ml",
-    deps_opam = ["ppxlib"]
+    deps      = ["@opam//lib/ppxlib"]
+    # deps_opam = ["ppxlib"]
 )
 
 ppx_module(
     name      = "_Ppx_blue",
     struct    = "ppx_blue.ml",
-    deps_opam = ["ppxlib"]
+    deps      = ["@opam//lib/ppxlib"]
+    # deps_opam = ["ppxlib"]
 )
 
 ############
@@ -75,19 +79,22 @@ ppx_library(
 ppx_module(
     name      = "_Ppx_alpha",
     struct    = "ppx_alpha.ml",
-    deps_opam = ["ppxlib"]
+    deps      = ["@opam//lib/ppxlib"]
+    # deps_opam = ["ppxlib"]
 )
 
 ppx_module(
     name      = "_Ppx_beta",
     struct    = "ppx_beta.ml",
-    deps_opam = ["ppxlib"]
+    deps      = ["@opam//lib/ppxlib"]
+    # deps_opam = ["ppxlib"]
 )
 
 ppx_module(
     name      = "_Ppx_gamma",
     struct    = "ppx_gamma.ml",
-    deps_opam = ["ppxlib"]
+    deps      = ["@opam//lib/ppxlib"]
+    # deps_opam = ["ppxlib"]
 )
 
 ################################################################
@@ -95,7 +102,8 @@ ppx_module(
 ppx_module(
     name = "_Ppxlib_driver",
     struct = ":ppxlib_driver.ml",
-    deps_opam = ["ppxlib"]
+    deps      = ["@opam//lib/ppxlib"]
+    # deps_opam = ["ppxlib"]
 )
 
 ########

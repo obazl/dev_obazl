@@ -21,13 +21,13 @@ ocaml_module(
     struct = "main.ml",
     deps = [
         ":_Lexer",
-        "@opam//pkg:core",
+        "@opam//lib/core",
     ],
 )
 
 ocaml_module(
     name = "_Lexer",
-    struct = "_lexer.ml",
+    struct = "lexer.ml",
     deps = [
     ],
 )
@@ -35,4 +35,5 @@ ocaml_module(
 ocaml_lex(
     name = "_lexer.ml",
     src = "lexer.mll",
+    out = "lexer.ml"
 )

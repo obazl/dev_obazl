@@ -21,7 +21,9 @@ ocaml_module(
     ppx       = ":ppx.exe",
     ppx_print = "@ppx//print:text",
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
-    deps_opam = ["ounit2"]
+    deps = [
+        "@opam//lib/ounit2"
+    ]
 )
 
 ###############
@@ -29,9 +31,10 @@ ppx_executable(
     name = "ppx.exe",
     main = ":ppxlib_runner",
     deps = [
-        ":driver"
+        ":driver",
+        "@opam//lib/ounit2"
     ],
-    deps_opam = ["ppxlib"]
+    # deps_opam = ["ppxlib"]
 )
 
 ###########
@@ -55,26 +58,29 @@ ppx_archive(
 ppx_module(
     name      = "ppx_red",
     struct    = "ppx_red.ml",
-    deps_opam = ["ppxlib"]
+    deps      = ["@opam//lib/ppxlib"]
 )
 
 ppx_module(
     name      = "ppx_green",
     struct    = "ppx_green.ml",
-    deps_opam = ["ppxlib"]
+    deps      = ["@opam//lib/ppxlib"]
+    # deps_opam = ["ppxlib"]
 )
 
 ppx_module(
     name      = "ppx_blue",
     struct    = "ppx_blue.ml",
-    deps_opam = ["ppxlib"]
+    deps      = ["@opam//lib/ppxlib"]
+    # deps_opam = ["ppxlib"]
 )
 
 ###########
 ppx_module(
     name = "ppxlib_runner",
     struct = ":ppxlib_runner.ml",
-    deps_opam = ["ppxlib"]
+    # deps_opam = ["ppxlib"]
+    deps      = ["@opam//lib/ppxlib"]
 )
 
 ########

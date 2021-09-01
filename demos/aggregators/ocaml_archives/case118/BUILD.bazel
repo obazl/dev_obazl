@@ -1,5 +1,6 @@
 ## aggregators/ocaml_archives/case118: chained archives
-## DOES NOT WORK - you cannot chain archives, since an archive cannot contain another archive
+
+##  EXPECTED FAIL - you cannot chain archives, since an archive cannot contain another archive
 
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
@@ -11,12 +12,18 @@ load(
 
 ocaml_test(
     name = "test",
-    main = "test.ml",
+    main = "_Test",
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
         ":color",
+        "@opam//lib/ounit2"
     ],
-    deps_opam = ["ounit2"]
+    # deps_opam = ["ounit2"]
 )
 
 ##############
