@@ -23,21 +23,22 @@ ocaml_test(
     main = ":_Test"
 )
 
+## module name will be derived from struct file, so we'll have two
 ocaml_module(
     name   = "_Test",
-    module = "test",
     struct = select({
         ":n0": "test_N0.ml",
         ":n1": "test_N1.ml",
     }),
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
-    deps = [":group",
+    deps = [":mygroup",
             "@opam//lib/ounit2"]
 )
 
+## module name will be derived from sig srcfile ("Group" in this case)
+## struct file will be renamed (by copy) accordingly
 ocaml_module(
-    name   = "group",
-    module = "group",
+    name   = "mygroup",
     struct = select({
         ":n0": "group_N0.ml",
         ":n1": "group_N1.ml",
