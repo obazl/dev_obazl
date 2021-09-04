@@ -47,7 +47,8 @@ load("//:WORKSPACE.bzl", opam = "opam")
 
 # ocaml_configure(opam = opam, build = "4.11.1+flambda")               ## case 1
 
-ocaml_configure(switch = "4.11.1")                     ## case 1
+ocaml_configure(switch = "4.10")                     ## case 1
+#  ocaml_configure(switch = "4.11.1")                     ## case 1
 # ocaml_configure(switch = "4.11.1", verbose=True, debug=True) ## case 1
 # ocaml_configure(switch = "4.11.1", opam=opam)          ## error: incompatible
 # ocaml_configure(switch = "4.11.1", build="4.11.1")     ## error: incompatible
