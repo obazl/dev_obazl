@@ -3,7 +3,9 @@ let bazel () =
      instead the order of eval may differ *)
   (* let bwsdir = Sys.getenv "BUILD_WORKSPACE_DIRECTORY" in *)
   (* print_string ("bwsdir: " ^ bwsdir ^ "\n"); *)
-  let bwdir = Sys.getenv "BUILD_WORKING_DIRECTORY" in
+  let bwdir =
+    try Sys.getenv "BUILD_WORKING_DIRECTORY" with
+      Not_found -> "" in
   (* print_string ("bwdir: " ^ bwdir ^ "\n"); *)
   (* let cwdir = Sys.getcwd () in *)
   (* print_string ("cwdir: " ^ cwdir ^ "\n"); *)
