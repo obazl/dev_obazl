@@ -2,6 +2,7 @@ bazel-*
 dev
 logs
 tmp
+*.log
 
 **/*.cmo
 **/*.cmi
