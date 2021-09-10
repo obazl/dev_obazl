@@ -1,4 +1,4 @@
-## copy me to demos/dev (private developer's workspace)
+## copy me to demos/.private (private developer's workspace)
 
 build --color=yes
 build --subcommands=pretty_print

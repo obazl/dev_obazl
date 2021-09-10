@@ -52,7 +52,7 @@ no such package '@opam//lib/core': BUILD file not found in directory 'lib/core' 
     * MacOS:  `brew install libev`
     * Linux: use your package manager to install `libev-dev` or `libev-devel`.
 
-* Set up your [user.bazelrc](https://obazl.github.io/docs_obazl/ug/user_bazelrc.html) file (optional). Put it in `demos/.private`.
+* Set up your [user.bazelrc](https://obazl.github.io/docs_obazl/ug/user_bazelrc.html) file (optional). Put it in `demos/.private`. An example may be found in `tools/user.bazelrc`.
 
 **WARNING** After installing opam packages you need to then run `$ bazel
 clean --expunge`.
