@@ -1,48 +1,76 @@
 # quickstart
 
+**IMPORTANT** The first version of OBazl used `ocamlfind` to drive
+builds. These instructions are for the latest version (branch
+`nocamlfind`) of OBazl and related repos, which do not use
+`ocamlfind`.
+
 See [Developing OCaml software with OBazl](https://obazl.github.io/docs_obazl/ug/development.html) for more information on getting started.
 
 * platform: tested on MacOS Catalina (10.15.7) and Linux (Debian 9). Probably won't work on Windows.
 
-* install [OPAM](https://opam.ocaml.org/)
+* install [OPAM](https://opam.ocaml.org/doc/Install.html)
 
-* install a switch using the latest version (4.11.1) of OCaml: `$ opam switch create 4.11.1`.
+* install switch: `$ opam switch create 4.12.0`.
 
-  * if you want to use a different switch, you will need to edit the
-    `OpamConfig` struct in `demos/WORKSPACE.bzl`.
+    * sigh. `[ERROR] Compiler selection '4.12.0' is ambiguous.
+    matching packages: { ocaml-base-compiler.4.12.0,
+    ocaml-system.4.12.0 }`. Try this:
 
-* install ocamlfind: `$ opam install ocamlfind`
+    `opam switch create 4.12.0 ocaml-base-compiler.4.12.0`
 
-* install the packages listed in `demos/WORKSPACE.bzl`.
+    * after the install completes, you will be asked to run `eval
+      $(opam env)`. Do it!
 
->    You can ask OBazl to do this for you by setting a few environment variables:
->    `$ OBAZL_OPAM_VERIFY=1 OBAZL_OPAM_PIN=1 bazel test minimal/hello_module:test`
->    This capability is undergoing revision; it will mostly work, but you will still
->    have to install a few packages by hand, e.g. `$ opam install core` etc.
+    * verify: `opam switch`
 
-  * before you install `lwt`, you may need to install `libev` (MacOS) or `libevdev`
-    (Linux). See [lwt github](https://github.com/ocsigen/lwt) for more
-    information.
+* install OPAM dependencies
+
+    * see what you have: `opam list`
+
+    * install what you need: `opam switch import OPAM.export --switch 4.12.0`
+
+        * alternatively it may suffice to run `opam import` for the
+          items in the `root` stanza of `OPAM.export`.
+
+        * run `$ bazel clean --expunge` after installing new OPAM
+          packages. (You won't need to do this once all required OPAM
+          packages are installed.)
+
+    * if you're missing something, you'll get errors like the following:
+```
+no such package '@opam//lib/core': BUILD file not found in directory 'lib/core' of external repository @opam.
+```
+
+        That means you need to run `opam install core` (and then `bazel clean --expunge`).
+
+* you may need to install some system deps, e.g. `libev` (MacOS) or
+    `libevdev` (Linux), needed by `lwt`, which is used in demo
+    `demos/hello/lwt`. See [lwt
+    github](https://github.com/ocsigen/lwt) for more information.
 
     * MacOS:  `brew install libev`
     * Linux: use your package manager to install `libev-dev` or `libev-devel`.
 
-* Set up your [user.bazelrc](https://obazl.github.io/docs_obazl/ug/user_bazelrc.html) file (optional).
+* Set up your [user.bazelrc](https://obazl.github.io/docs_obazl/ug/user_bazelrc.html) file (optional). Put it in `demos/.private`.
 
-* `cd demos` and build/run/test some demos. See the `BUILD.bazel` files for instructions. For example:
+**WARNING** After installing opam packages you need to then run `$ bazel
+clean --expunge`.
+
+* `cd demos` and build/run/test some demos. See the `BUILD.bazel` files for instructions.
 
 ```
-    $ bazel build minimal/hello_module:_Hello
-    $ bazel test minimal/hello_module:test
-    $ bazel run minimal/hello_module:test
-    $ bazel run minimal/hello_executable
+    $ bazel test test
+    $ bazel test aggregators:test
+    $ bazel test aggregators/ocaml_archives:test
+    $ bazel test aggregators/ocaml_archives/case110:test
 ```
 
-To run all tests:  `$ bazel test //...:*`
-
-To list all executable rules (which you can run with `$ bazel run ...`):
+Some demos define executable targets that you can run with `$ bazel run`.  To list all executable rules try:
 
 ```
 $ bazel query 'kind(ocaml_executable, //...:*)' --output label_kind
 ```
 
+**IMPORTANT** Not all of the demos work. See the list of broken stuff
+in `demos/.bazelignore`
