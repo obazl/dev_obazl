@@ -10,8 +10,8 @@ test_suite(
         "//interop:test",
         "//minimal:test",
         "//namespaces:test",
-        "//ppx/mixed_mode:test",
-        "//ppx/derivers/simple_deriver:test"
+        "//ppx:test",
+        # "//ppx/derivers/simple_deriver:test"
         # "//ppx:test"
     ]
 )

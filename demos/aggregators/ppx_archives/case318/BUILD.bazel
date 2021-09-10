@@ -40,7 +40,7 @@ ppx_executable(
 ############
 ppx_archive(
     name = "_Ppx_aggregated_archives",
-    opts = ["-verbose"],
+    # opts = ["-verbose"],
     modules = [
         ":_Ppx_color",
         ":_Ppx_greek",
@@ -69,7 +69,7 @@ ppx_archive(
     name = "_Ppx_color",
     opts = [
         "-linkall",
-        "-verbose",
+        # "-verbose",
         "-open", "Ppx_gamma"
     ],
     modules = [
