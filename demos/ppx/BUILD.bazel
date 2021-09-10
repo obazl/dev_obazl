@@ -5,7 +5,7 @@ test_suite(
         "//ppx/derivers/simple_deriver:test",
         "//ppx/genrule:test",
         "//ppx/hello:test",
-        "//ppx/mixed_mode:test",
+        # "//ppx/mixed_mode:test",
         "//ppx/ppx_optcomp:test",
         "//ppx/rewriters/greeting:test",
     ]

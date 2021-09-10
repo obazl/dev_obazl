@@ -29,42 +29,42 @@ load(
 ###########
 ocaml_test(
     name = "test",
-    main = "test.ml",
-    opts = [
-        "-w",
-        "-27",
-    ],  ## Error (warning 27): unused variable test_ctxt.
-    deps_opam = [
-        "ounit2",
-        "ppx_deriving.ord",
-        "ppx_deriving.show",
-        # "@opam//pkg:ppx_deriving",
-        # ":_Hello"     # the transformed and compiled test code
+    main = "_Test"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
+    opts = ["-w","-27"],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [
+        "@opam//lib/ounit2",
+        ":_Hello",     # the transformed and compiled test code
     ],
+    ppx = ":_ppx.exe",
+    # ppx_print = "@ppx//print:text",  # uncomment to get readable output
 )
 
 #############
 ocaml_module(
     name = "_Hello",
     opts = [
-        ## the ppx injects code (int_of_sexp, Sexp) that depends on these modules.
-        ## usually these would be opened in the source file, but for demo purposes
-        ## we open them on the command line.
-        ## either way, we must also list the `sexplib` package that contains them as
-        ## a dependency, either here in 'deps' or in the `adjunct_deps`
-        ## attribute of the ppx transformer.
-
+        ## the ppx injects code (int_of_sexp, Sexp) that depends on
+        ## these modules. usually these would be opened in the source
+        ## file, but for demo purposes we open them on the command
+        ## line. either way, we must also list the `sexplib` package
+        ## that contains them as a dependency, either here in 'deps'
+        ## or in the `adjunct_deps` attribute of the ppx transformer.
         "-open", "Sexplib",
         "-open", "Sexplib.Std",
+
     ],
     ppx = ":_ppx.exe",
-    ppx_print = "@ppx//print:text",  # uncomment to get readable output
+    # ppx_print = "@ppx//print:text",  # uncomment to get readable output
     struct = "hello.ml",
-    deps_opam = [
-        # we list both of these in adjunct_deps of the ppx (below),
-        # but we could put them here instead.
-        # "sexplib",
-        # "ppx_sexp_conv.runtime-lib"
+    deps = [
+        # src file contains ref to "Sexp.to_string" so we need to
+        # depend on this lib.
+        "@opam//lib/sexplib",
     ],
 )
 
@@ -75,21 +75,32 @@ ppx_executable(
     # main = "@opam//pkg:ppxlib.runner",
     # main_opam = "ppxlib.runner",
     # opts = [],                # obazl will automatically add '-predicates ppx_driver'
-    deps      = [], ## non-opam deps
-    deps_opam = [
-        ## without this, we get "Error: Ppxlib.Deriving: 'sexp' is not a supported type deriving generator"
-        ## when we try to use this executable to transform hello.ml above.
-        "ppx_sexp_conv",
+    deps = [
+        ## without this, we get "Error: Cannot locate deriver sexp"
+        ## when we try to use this ppx executable to transform
+        ## hello.ml above, since it contains extension point
+        ## "[@@deriving sexp]".
+        "@opam//lib/ppx_sexp_conv",
+
+        ## without these, ppx transformation of test.ml fails
+        "@opam//lib/ppx_deriving/ord",
+        "@opam//lib/ppx_deriving/show",
     ],
     ## Use of adjunct deps here is optional. They could also be added
     ## to the compile rules that use this ppx to transform their
-    ## sources. Put here, they will be carried along with the
-    ## executable and be automatically used wherever it is used. This
-    ## obviates the need to manually add these deps to each rule that depends
-    ## on this one for ppx transformation.
-    deps_adjunct_opam = [
-        ## without these we get unbound module errors when we try to use this executable.
-        "sexplib",
-        "ppx_sexp_conv.runtime-lib",
+    ## sources. Put here, they will be carried along with the ppx
+    ## executable and be automatically used wherever it is used - that
+    ## is, propagated as adjunct deps on the files it transforms. this
+    ## obviates the need to manually add these deps to each rule that
+    ## depends on this one for ppx transformation.
+    deps_adjunct = [
+        ## without this, compilation of hello.ml will fail with
+        ## "Unbound module" errors (unless the source file lists them
+        ## as direct deps).
+        # "@opam//lib/ppx_sexp_conv/runtime-lib",
+        ## HOWEVER: we do not need to list it, because the transitive
+        ## closure of the deps includes some adjunct deps, including
+        ## this one, as you can see by running
+        ##     bazel query "deps(@opam//lib/ppx_sexp_conv)"
     ],
 )

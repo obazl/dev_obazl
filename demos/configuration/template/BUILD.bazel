@@ -83,9 +83,9 @@ ocaml_module(
         "-w", "-27",  ## Error (warning 27): unused variable test_ctxt.
     ],
     deps = [
-        ":_Config"
-    ],
-    deps_opam = ["ounit2"]
+        ":_Config",
+        "@opam//lib/ounit2"
+    ]
 )
 
 ocaml_executable(

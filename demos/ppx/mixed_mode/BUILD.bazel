@@ -24,8 +24,8 @@ ocaml_module(
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
         ":main",
-    ],
-    deps_opam = ["ounit2"]
+        "@opam//lib/ounit2"
+    ]
 )
 
 #############
@@ -61,8 +61,11 @@ ppx_executable(
 ppx_module(
     name      = "ppx_message",
     struct    = ":ppx_message.ml",
-    deps      = [":mixed_mode"],
-    deps_opam = ["ppxlib"]
+    opts = ["-linkall"],
+    deps      = [
+        ":mixed_mode",
+        "@opam//lib/ppxlib"
+    ]
 )
 
 ###########
@@ -70,7 +73,7 @@ ppx_module(
     name = "ppxlib_driver",
     struct = ":ppxlib_driver.ml",
     opts   = ["-linkall"],
-    deps_opam = ["ppxlib"]
+    deps = ["@opam//lib/ppxlib"]
 )
 
 ########

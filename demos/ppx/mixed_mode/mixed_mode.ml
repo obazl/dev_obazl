@@ -1,2 +1,2 @@
-let greeting = "Hello"
+let greeting = "MixedHello"
 

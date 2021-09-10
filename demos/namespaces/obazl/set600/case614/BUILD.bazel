@@ -14,12 +14,12 @@ ocaml_test(
 ocaml_module(
     name   = "_Test",
     struct = "test.ml",
-    deps_opam = ["ounit2"],
     opts = [
         "-w",
         "-27",  ## Error (warning 27): unused variable test_ctxt.
     ],
     deps = [
         "//namespaces/obazl/set600/case614/alpha:#alpha",
+        "@opam//lib/ounit2"
     ],
 )

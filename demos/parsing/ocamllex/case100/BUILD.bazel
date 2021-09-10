@@ -15,8 +15,7 @@ ocaml_executable(
     main = ":_main",
     deps = [
         ":_Lexer",
-    ],
-    deps_opam = ["core"]
+    ]
 )
 
 ocaml_module(
@@ -28,15 +27,13 @@ ocaml_module(
     ],
     deps = [
         ":_Lexer",
-    ],
-    deps_opam = ["core"]
+        "@opam//lib/core"
+    ]
 )
 
 ocaml_module(
     name = "_Lexer",
     struct = "lexer.ml",
-    deps = [
-    ],
 )
 
 ocaml_lex(

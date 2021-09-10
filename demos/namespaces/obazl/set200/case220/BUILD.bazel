@@ -10,7 +10,8 @@ load(
 
 ocaml_test(
     name = "test",
-    main = "_Test"
+    main = "_Test",
+    # deps = [":color"]
 )
 
 ocaml_module(
@@ -25,12 +26,12 @@ ocaml_module(
 ocaml_ns_archive(
     name = "color",
     # ns   = "color",
-    # main = ":_Color",
+    resolver = ":_Color",
     submodules = [
         ":_Red",
         ":_Green",
         ":_Blue",
-        ":_Color"
+        # ":_Color"
     ],
 )
 

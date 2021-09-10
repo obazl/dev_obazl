@@ -20,10 +20,6 @@ ocaml_ns_library(
 ocaml_module(
     name = "_Rouge",
     struct = "rouge.ml",
-    # deps = [
-    #     "//namespaces/new/case520/diamond"
-    #     # ":_Vert",
-    # ],
 )
 
 ocaml_module(

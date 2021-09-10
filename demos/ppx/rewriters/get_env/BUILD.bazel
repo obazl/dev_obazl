@@ -1,3 +1,12 @@
+## WARNING: `bazel test ppx/rewriters/get_env:test` fails with
+## "Environment variable OBAZL not found". This comes from the source
+## of test.ml, when the ppx exe tries to process it. I have not found
+## a way to set the env var. `--test_env` is only for test rules, and
+## `--action_env`, which should work, does not.
+
+## Suspicion: the ppx_transform action is indirect, invoked by the
+## module rule, so maybe we need to propagate the env vars somehow.
+
 # $ bazel test ppx/rewriter
 # from https://github.com/ocaml-ppx/ppxlib/tree/master/examples/simple-extension-rewriter
 
@@ -33,15 +42,21 @@ config_setting(
 ###########
 ocaml_test(
     name = "test",
-    main = "test.ml",
+    main = "_Test"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
     opts = [
         "-w",
         "-27",
     ],  ## Error (warning 27): unused variable test_ctxt.
+    ppx    = ":ppx.exe",
     deps = [
         ":main",
-    ],
-    deps_opam = ["ounit2"]
+        "@opam//lib/ounit2"
+    ]
 )
 
 #############
@@ -79,14 +94,14 @@ ppx_executable(
 ppx_module(
     name      = "ppx_get_env",
     struct    = "ppx_get_env.ml",
-    deps_opam = ["ppxlib"]
+    deps = ["@opam//lib/ppxlib"]
 )
 
 ###########
 ppx_module(
     name = "Driver",
     struct = ":ppxlib_driver.ml",
-    deps_opam = ["ppxlib"]
+    deps = ["@opam//lib/ppxlib"]
 )
 
 ########

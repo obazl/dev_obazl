@@ -1,7 +1,7 @@
-let () = print_endline "Hello from Main!" ;
+let () = print_endline "Hello from Main!"
 
-  print_endline "Hello again" ;
+let msg () = "msg from Main"
 
-  Easy.msg();
-
-  Simple.msg()
+let () = print_endline ("Main printing msgs from deps:");
+         print_endline(Simple.msg());
+         print_endline Easy.msg;

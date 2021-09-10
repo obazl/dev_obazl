@@ -1,1 +1,1 @@
-let () = print_endline [%get_env "HOME"]
+let () = print_endline [%get_env "PATH"]

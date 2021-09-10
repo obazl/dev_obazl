@@ -1,4 +1,6 @@
-## set600/case610
+## currently broken
+
+## set700/case730
 
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
@@ -14,12 +16,12 @@ ocaml_test(
 ocaml_module(
     name   = "_Test",
     struct = "test.ml",
-    deps_opam = ["ounit2"],
     opts = [
         "-w",
         "-27",  ## Error (warning 27): unused variable test_ctxt.
     ],
     deps = [
         "//namespaces/obazl/set700/case730/alpha:#alpha",
+        "@opam//lib/ounit2"
     ],
 )

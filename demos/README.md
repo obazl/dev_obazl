@@ -7,11 +7,12 @@
 
 ### manifest
 
-> **WARNING** parts of this manifest may be a little outdated; it is currently being
-       updated. In the meantime see the README files and BUILD.bazel
-       files in the demo subdirectories.
+> **WARNING** parts of this manifest may be a little outdated; it is currently being updated. In the meantime see the README files and BUILD.bazel files in the demo subdirectories.
 
 * [aggregators](aggregators/readme.md) - archives and libraries.
+
+* [cli](cli/README.md) - a few simple command-line programs
+  demonstrating different ways of handing CLI options.
 
 * [conditional](conditional) Conditional compilation - selection of build targets based on config parameters
 
@@ -32,18 +33,25 @@
   * [hello_module](minimal/hello_module) - a simple use of `ocaml_module`
 
 * [namespaces](namespaces) - using namespaces
+  * [assisted](namespaces/assisted) - I forget the point of this. let me know if you figure it out.
   * [direct](namespaces/direct) - hand-rolled namespaces using makefiles instead of Bazel.
     * [direct/hash](namespaces/direct/hash) - a perverse example showing how to map modules to files named with the MD5 hash of the source files.
   * [hello](namespaces/hello) - demo of a simple namespace module with four submodules.
-  * [obazl demos](namespaces/obazl) - 30+ simple demos illustrating all aspects of namespacing with OBazl
+  * [new](namespaces/new) - the name is left over from a switch to a new design
+  * [obazl](namespaces/obazl) - 30+ simple demos illustrating all aspects of namespacing with OBazl
+
+* [parsing](parsing) - ocamllex etc.
 
 * [ppx](ppx) - PPX support demos
   * [adjunct_deps](ppx/adjunct_deps) - shows how to use PPX adjunct deps (a/k/a "runtime" deps)
-  * [deriver](ppx/deriver) - minimal example of a Ppxlib deriver implementation (TODO)
+  * [derivers](ppx/derivers) - minimal example of a Ppxlib deriver implementation (TODO)
+  * [deriving](ppx/deriving) - minimal example of a Ppxlib deriver implementation (TODO)
+  * [driver](ppx/driver) - simple `genrule` implementation of shared Ppxlib.Driver.standalone runner, used by other demos
+  * [genrule](ppx/genrule) - uses `gnenrule` to run a ppx transform the hard way
   * [hello](ppx/hello) - simple example using `ppx_sexp_value`
+  * [mixed_mode](ppx/mixed_mode) - demonstrates use of a module both as a ppx and a non-ppx dependency
   * [ppx_optcomp](ppx/ppx_optcomp) - demonstrates runtime dependency using `[%%import ]` extension
-  * [rewriter](ppx/rewriter) - simple example of a Ppxlib rewriter implementation (TODO)
-  * [runner](ppx/runner) - simple `genrule` implementation of shared Ppxlib.Driver.standalone runner
+  * [rewriters](ppx/rewriters) - simple examples of Ppxlib rewriter implementation (TODO)
 
 * [rules](rules) - demos of `ocaml_*` rules
   * [ocaml_archive](rules/ocaml_archive)

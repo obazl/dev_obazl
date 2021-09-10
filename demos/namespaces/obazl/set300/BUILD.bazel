@@ -19,6 +19,8 @@ test_suite(
         "//namespaces/obazl/set300/case330:test",
         # "//namespaces/obazl/set300/case331:test",
 
+        "//namespaces/obazl/set300/case336:test",
+
         "//namespaces/obazl/set300/case340:test",
         # "//namespaces/obazl/set300/case341:test",
 

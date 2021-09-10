@@ -1,4 +1,4 @@
-## set400/case415: depending on multiple exogenous submodules
+## set400/case416: depending on multiple exogenous submodules
 
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
@@ -15,9 +15,8 @@ ocaml_test(
 ocaml_module(
     name   = "_Test",
     struct = "test.ml",
-    deps_opam = ["ounit2"],
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
-    deps = [":#color"],
+    deps = [":#color", "@opam//lib/ounit2"],
 )
 
 # Use modules from three different packages as submodules.

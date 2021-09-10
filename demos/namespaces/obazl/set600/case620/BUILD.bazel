@@ -17,13 +17,12 @@ ocaml_test(
 ocaml_module(
     name   = "_Test",
     struct = "test.ml",
-    deps_opam = ["ounit2"],
     opts = [
         "-w",
         "-27",  ## Error (warning 27): unused variable test_ctxt.
         "-I", "bazel-out/darwin-fastbuild-ST-49f66a5c6204/bin/external/ocaml/ns"
     ],
-    deps = [":#color"],
+    deps = [":#color", "@opam//lib/ounit2"],
 )
 
 ocaml_ns_library(

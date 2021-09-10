@@ -1,3 +1,5 @@
+## obsolete, needs to be updated
+
 load( "@obazl_rules_ocaml//ocaml:rules.bzl", "ocaml_test" )
 
 ocaml_test(
@@ -10,5 +12,5 @@ ocaml_test(
         "//namespaces/obazl/set700/case740/color",
         # "//namespaces/obazl/set700/case740/color:kolor",
     ],
-    deps_opam = ["ounit2"]
+    deps = ["@opam//lib/ounit2"]
 )

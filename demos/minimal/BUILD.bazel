@@ -2,6 +2,7 @@
 test_suite(
     name = "test",
     tests = [
+        "//minimal/hello_archive:test",
         "//minimal/hello_module:test",
         "//minimal/rgb1:test",
         "//minimal/rgb2:test",

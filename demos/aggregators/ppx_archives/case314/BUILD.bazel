@@ -1,7 +1,8 @@
-## aggregators/archives/case120: two simple (independent) archives
+## aggregators/ppx_archives/case314: two simple (independent) archives
 
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_module",
     "ocaml_test",
     "ppx_executable",
     "ppx_archive",
@@ -9,9 +10,15 @@ load(
     "ppx_test"
 )
 
-ppx_test(
+# FIXME: use ppx_test? do we need separate test rules?
+ocaml_test(
     name = "test",
-    main = "test.ml",
+    main = "_Test"
+)
+
+ppx_module(
+    name = "_Test",
+    struct = "test.ml",
     ppx  = ":ppx.exe",
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
     ## NOTE: test.ml does NOT have any ppx _build_ dependencies ('deps'), only

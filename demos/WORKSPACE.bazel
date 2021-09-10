@@ -31,16 +31,16 @@ git_repository(
 )
 
 load("@obazl_tools_opam//opam:bootstrap.bzl",
-     opam_configure = "configure",
-     opam_install = "install")
+     # opam_configure = "configure",
+     opam_install = "install" ## FIXME: rename 'install'?
+)
 # load("//:WORKSPACE.bzl", "opam")
 # opam_configure(opam = opam)
 
 opam_install()
 
-
 load("@obazl_rules_ocaml//ocaml:bootstrap.bzl", "ocaml_configure")
-load("//:WORKSPACE.bzl", opam = "opam")
+
 
 # ocaml_configure(verbose=True, debug=True)              ## case 0
 # ocaml_configure()                                      ## case 0

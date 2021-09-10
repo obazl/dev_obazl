@@ -1,4 +1,6 @@
-## set300/case345
+## BROKEN: needs updating
+
+## set300/case341
 
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
@@ -11,13 +13,12 @@ load(
 
 ocaml_test(
     name = "test",
-    deps_opam = ["ounit2"],
     main = "test.ml",
     opts = [
         "-w",
         "-27",
     ],  ## Error (warning 27): unused variable test_ctxt.
-    deps = [":color"],
+    deps = [":color", "@opam//lib/ounit2"],
 )
 
 ocaml_ns_archive(

@@ -1,3 +1,5 @@
+## currently broken
+
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
     "ocaml_module",
@@ -13,14 +15,14 @@ ocaml_test(
 ocaml_module(
     name   = "_Test",
     struct = "test.ml",
-    deps_opam = ["ounit2"],
     opts = [
         "-w",
         "-27",
     ],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
         ":#color",
-        ":#couleur"
+        ":#couleur",
+        "@opam//lib/ounit2"
     ],
 )
 
