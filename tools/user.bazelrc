@@ -3,7 +3,7 @@
 build --color=yes
 build --subcommands=pretty_print
 build --verbose_failures
-build --sandbox_debug
+# build --sandbox_debug
 
 # build --show_timestamps
 # build --jobs 600
