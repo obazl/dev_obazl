@@ -39,7 +39,7 @@ ocaml_module(
     name = "_Test",
     struct = "test.ml",
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
-    deps = ["_Main", "@opam//lib/ounit2"]
+    deps = ["_Main", "@ounit2//:ounit2"]
     # deps_opam = ["ounit2"]
 )
 
@@ -51,9 +51,10 @@ ocaml_executable(
 ocaml_module(
     name = "_Main",
     struct = "main.ml",
-    deps = select({
-        ":dynamic": ["//interop/ffi/case110/cclibs:alpha_dynamic"],
-        ":static" : ["//interop/ffi/case110/cclibs:alpha_static"],
-        "//conditions:default": ["//interop/ffi/case110/cclibs:alpha"]
-    })
+    deps   = ["//interop/ffi/case110/cclibs:alpha"]
+    # deps = select({
+    #     ":dynamic": ["//interop/ffi/case110/cclibs:alpha_dynamic"],
+    #     ":static" : ["//interop/ffi/case110/cclibs:alpha_static"],
+    #     "//conditions:default": ["//interop/ffi/case110/cclibs:alpha"]
+    # })
 )

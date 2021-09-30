@@ -12,10 +12,7 @@ load(
 
 ocaml_test(
     name = "test",
-    deps = [
-        "_Test1",
-        # "_Test2"
-    ]
+    main = "_Test1"
 )
 
 ocaml_module(
@@ -27,7 +24,7 @@ ocaml_module(
     ],
     deps = [
         ":main",
-        "@opam//lib/ounit2"
+        "@ounit2//:ounit2"
     ],
     # deps_opam = ["ounit2"],
 )
@@ -41,7 +38,7 @@ ocaml_module(
     ],
     deps = [
         ":main",
-        "@opam//lib/ounit2"
+        "@ounit2//:ounit2"
     ],
     # deps_opam = ["ounit2"],
 )
@@ -50,7 +47,7 @@ ocaml_module(
     name = "main",
     struct = "main.ml",
     deps   = [
-        "//namespaces/new/case522/en:#color",
-        "//namespaces/new/case522/fr:#couleur"
+        "//namespaces/new/case522/en:color",
+        "//namespaces/new/case522/fr:couleur"
     ]
 )

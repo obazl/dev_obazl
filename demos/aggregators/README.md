@@ -1,6 +1,6 @@
 # Aggregators
 
-* [Archives](#archives)
+* [Archives](archives)
 * [Libraries](#libraries)
 * [NS Archives](#nsarchives)
 * [NS Libraries](#nslibraries)

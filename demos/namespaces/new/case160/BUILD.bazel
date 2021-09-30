@@ -21,19 +21,19 @@ ocaml_module(
         "-w", "-27"  ## Error (warning 27): unused variable test_ctxt.
     ],
     deps = [
-        ":#color",
-        "@opam//lib/ounit2"
+        ":color",
+        "@ounit2//:ounit2"
     ],
     # deps_opam = ["ounit2"],
 )
 
 ocaml_ns_library(
-    name = "#color",
+    name = "color",
     submodules = [
         ":_Red",
         ":_Green",
         ":_Blue",
-        "//namespaces/new/case160/greek:#greek"
+        "//namespaces/new/case160/greek:greek"
     ],
 )
 

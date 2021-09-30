@@ -31,7 +31,7 @@ ocaml_module(
     ],
     deps = [
         ":main",
-        "@opam//lib/ounit2"
+        "@ounit2//:ounit2"
     ],
     # deps_opam = ["ounit2"],
 )
@@ -45,7 +45,7 @@ ocaml_module(
     ],
     deps = [
         ":main",
-        "@opam//lib/ounit2"
+        "@ounit2//:ounit2"
     ],
     # deps_opam = ["ounit2"],
 )
@@ -54,7 +54,7 @@ ocaml_module(
     name = "main",
     struct = "main.ml",
     deps   = [
-        "//namespaces/new/case520/en:#color",
-        "//namespaces/new/case520/fr:#couleur"
+        "//namespaces/new/case520/en:color",
+        "//namespaces/new/case520/fr:couleur"
     ]
 )

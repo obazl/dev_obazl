@@ -6,7 +6,7 @@ load(
     "ocaml_module",
     "ocaml_test",
     "ppx_executable",
-    "ppx_module",
+    "ocaml_module",
 )
 
 load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
@@ -68,7 +68,7 @@ ppx_executable(
 )
 
 ###########
-ppx_module(
+ocaml_module(
     name      = "ppx_message",
     struct    = ":ppx_message.ml",
     deps      = [":mixed_mode"],
@@ -81,7 +81,7 @@ ocaml_module(
 )
 
 ###########
-ppx_module(
+ocaml_module(
     name = "Driver",
     struct = ":ppxlib_driver.ml",
     deps_opam = ["ppxlib"]

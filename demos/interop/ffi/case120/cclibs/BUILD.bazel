@@ -4,8 +4,7 @@ cc_library(
     hdrs = ["alpha.h"],
     linkstatic = True,
     deps = [
-        "@ocaml//csdk:hdrs",
-        "@ocaml//csdk/ctypes"
+        "@ocaml//ffi",
     ],
     visibility = ["//interop/ffi/case120:__pkg__"],
 )

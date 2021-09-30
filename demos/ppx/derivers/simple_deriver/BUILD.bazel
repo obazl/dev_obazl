@@ -8,9 +8,7 @@ load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
     "ocaml_module",
     "ocaml_test",
-    "ppx_executable",
-    "ppx_module",
-)
+    "ppx_executable")
 
 ###########
 ocaml_test(
@@ -24,7 +22,7 @@ ocaml_module(
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
     ppx  = ":ppx.exe",
     # ppx_print = "@ppx//print:text",
-    deps = ["@opam//lib/ounit2"]
+    deps = ["@ounit2//:ounit2"]
 )
 
 ###############
@@ -35,17 +33,17 @@ ppx_executable(
 )
 
 ###########
-ppx_module(
+ocaml_module(
     name      = "ppx_deriving_accessors",
     struct    = ":ppx_deriving_accessors.ml",
-    deps      = ["@opam//lib/ppxlib"]
+    deps      = ["@ppxlib//:ppxlib"]
 )
 
 ###########
-ppx_module(
+ocaml_module(
     name = "ppxlib_driver",
     struct = ":ppxlib_driver.ml",
-    deps   = ["@opam//lib/ppxlib"]
+    deps   = ["@ppxlib//:ppxlib"]
 )
 
 ########

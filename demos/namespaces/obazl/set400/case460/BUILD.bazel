@@ -26,7 +26,7 @@ ocaml_module(
     struct = "test.ml",
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
         # "-open", "Demos_Namespaces_Obazl_Set030_Case01__00_ns_env"
-    deps = [":#x", "@opam//lib/ounit2"],
+    deps = [":x", "@ounit2//:ounit2"],
 )
 
 ocaml_module(
@@ -38,12 +38,12 @@ ocaml_module(
 
 
 ocaml_ns_library(
-    name = "#x",
+    name = "x",
     # resolver = "color_main.ml",
     submodules = [
         ":_Color_main",
         ## this is a namespace library:
-        "//namespaces/obazl/set300/case310:#color", # : "Color",
+        "//namespaces/obazl/set300/case310:color", # : "Color",
         # # "//namespaces/obazl/set020ns/case01:_Red": "Red",
         # "//namespaces/obazl/set020/case02:_Green": "Green",
         # # "//namespaces/obazl/set020ns/case01:_Blue": "Blue",

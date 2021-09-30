@@ -11,10 +11,10 @@ ocaml_ppx_pipeline(
             "-linkpkg",
              "-predicates", "ppx_driver", ## <== DON'T FORGET THIS
             "-verbose"],
-    deps = ["@opam//pkg:base",
-            "@opam//pkg:ppxlib",
-            "@opam//pkg:ppxlib.metaquot",
-            "@opam//pkg:ppxlib.runner",
+    deps = ["@ocaml//pkg:base",
+            "@ocaml//pkg:ppxlib",
+            "@ocaml//pkg:ppxlib.metaquot",
+            "@ocaml//pkg:ppxlib.runner",
     ],
 )
 
@@ -40,8 +40,8 @@ ocaml_ppx_pipeline(
             "@obazl_rules_ocaml//ppxlib:driver_standalone_shim"
     ],
     opts = ["-linkpkg"],
-    deps = ["@opam//pkg:base",
-            "@opam//pkg:ppxlib"],
+    deps = ["@ocaml//pkg:base",
+            "@ocaml//pkg:ppxlib"],
 )
 
 ## Use the compiled preprocessor to preprocess test sources.
@@ -64,8 +64,8 @@ genrule(
 ocaml_binary(
     name = "test",
     srcs = [":preproc_test"],
-    deps = ["@opam//pkg:base",
-            "@opam//pkg:ppxlib",
+    deps = ["@ocaml//pkg:base",
+            "@ocaml//pkg:ppxlib",
             ":preproc_test"
     ],
     copts = [

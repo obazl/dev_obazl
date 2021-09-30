@@ -4,9 +4,8 @@ load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
     "ocaml_module",
     "ocaml_test",
-    "ppx_executable",
-    "ppx_module",
-)
+    "ppx_executable")
+
 
 load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
 
@@ -41,7 +40,7 @@ ocaml_module(
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
         ":_Hello",
-        "@opam//lib/ounit2"
+        "@ounit2//:ounit2"
     ]
 )
 
@@ -56,8 +55,8 @@ ocaml_module(
     ppx = ":ppx_optcomp.exe",
     # ppx_data = ARG,
     ppx_data = [
-        ":genconfig",
-        # ":config.mlh"
+        # ":genconfig",
+        ":config.mlh"
     ],  # this is our runtime dep
     ppx_print = "@ppx//print:text",
     struct = "hello.ml",
@@ -84,14 +83,14 @@ genrule(
 ppx_executable(
     name = "ppx_optcomp.exe",
     main = ":Driver",
-    deps = ["@opam//lib/ppx_optcomp"]
+    deps = ["@ppx_optcomp//:ppx_optcomp"]
 )
 
 ###########
-ppx_module(
+ocaml_module(
     name = "Driver",
     struct = ":ppxlib_driver.ml",
-    deps = ["@opam//lib/ppxlib"]
+    deps = ["@ppxlib//:ppxlib"]
 )
 
 ########

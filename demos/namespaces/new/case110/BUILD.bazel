@@ -6,13 +6,12 @@ load(
     "ocaml_ns_library",
     "ocaml_test",
     "ppx_executable",
-    "ppx_module",
 )
 
 ocaml_test(
     name = "test",
     main = "_Test",
-    # deps = ["#color"]
+    # deps = ["color"]
 )
 
 ocaml_module(
@@ -21,13 +20,13 @@ ocaml_module(
     opts = [
         "-w", "-27"  ## Error (warning 27): unused variable test_ctxt.
     ],
-    deps = [":#color", "@opam//lib/ounit2"],
+    deps = [":color", "@ounit2//:ounit2"],
     # deps_opam = ["ounit2"],
-    # deps = [":#color"],
+    # deps = [":color"],
 )
 
 ocaml_ns_library(
-    name = "#color",
+    name = "color",
     submodules = [
         ":_Red",
         ":_Green",
@@ -69,17 +68,17 @@ ppx_executable(
 )
 
 ###########
-ppx_module(
+ocaml_module(
     name      = "ppx_hex_of_dec",
     struct    = ":ppx_hex_of_dec.ml",
-    deps = ["@opam//lib/ppxlib"]
+    deps = ["@ppxlib//:ppxlib"]
 )
 
 ###########
-ppx_module(
+ocaml_module(
     name = "Ppxlib_runner",
     struct = ":ppxlib_runner.ml",
-    deps = ["@opam//lib/ppxlib"]
+    deps = ["@ppxlib//:ppxlib"]
 )
 
 ########

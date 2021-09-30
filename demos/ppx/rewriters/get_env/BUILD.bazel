@@ -15,7 +15,7 @@ load(
     "ocaml_module",
     "ocaml_test",
     "ppx_executable",
-    "ppx_module",
+    "ocaml_module",
 )
 
 load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
@@ -55,7 +55,7 @@ ocaml_module(
     ppx    = ":ppx.exe",
     deps = [
         ":main",
-        "@opam//lib/ounit2"
+        "@ounit2//:ounit2"
     ]
 )
 
@@ -91,17 +91,17 @@ ppx_executable(
 )
 
 ###########
-ppx_module(
+ocaml_module(
     name      = "ppx_get_env",
     struct    = "ppx_get_env.ml",
-    deps = ["@opam//lib/ppxlib"]
+    deps = ["@ppxlib//:ppxlib"]
 )
 
 ###########
-ppx_module(
+ocaml_module(
     name = "Driver",
     struct = ":ppxlib_driver.ml",
-    deps = ["@opam//lib/ppxlib"]
+    deps = ["@ppxlib//:ppxlib"]
 )
 
 ########

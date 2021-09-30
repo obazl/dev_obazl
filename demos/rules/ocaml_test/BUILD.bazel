@@ -24,7 +24,7 @@ ocaml_test(
     main = "test_alcotest.ml",
     deps = [
         "//rules/ocaml_module:Hello",
-        "@opam//lib/alcotest",
+        "@ocaml//lib/alcotest",
     ],
 )
 
@@ -36,7 +36,7 @@ ocaml_test(
         "-27",
     ],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
-        "@opam//lib/ounit2",
+        "@ounit2//:ounit2",
         ## Notice we're using a module from a different package:
         "//rules/ocaml_module:Hello",
         # ":_Hello"
@@ -55,7 +55,7 @@ ocaml_test(
     main = "runner.ml",  ## contains Ppx_inline_test_lib.Runtime.exit (); obazl puts 'main' last
     deps = [
         ":_Test_ppx_inline",  # the transformed and compiled test code
-        "@opam//lib/ppx_inline_test/runner/lib",
+        "@ocaml//lib/ppx_inline_test/runner/lib",
     ],
 )
 
@@ -69,8 +69,8 @@ ocaml_module(
     ppx_print = "@ppx//print:text",
     struct = "test_ppx_inline.ml",
     deps = [
-        "@opam//lib/core",
-        # "@opam//lib/ppx_inline_test.runtime-lib",  ## not needed - listed as adjunct on the ppx executable
+        "@ocaml//lib/core",
+        # "@ocaml//lib/ppx_inline_test.runtime-lib",  ## not needed - listed as adjunct on the ppx executable
         # "//rules/ocaml_module:Hello"
         ":_Hello",
     ],
@@ -85,8 +85,8 @@ ocaml_module(
     ],
     struct = "hello.ml",
     deps = [
-        "@opam//lib/core",
-        # "@opam//lib/ppx_inline_test.runtime-lib",  ## not needed - listed as adjunct on the ppx executable
+        "@ocaml//lib/core",
+        # "@ocaml//lib/ppx_inline_test.runtime-lib",  ## not needed - listed as adjunct on the ppx executable
         # "//rules/ocaml_module:Hello"
     ],
 )
@@ -100,8 +100,8 @@ ocaml_module(
 #         "hello",
 #     ],
 #     deps = [
-#         "@opam//lib/core",
-#         "@opam//lib/ppx_inline_test.runtime-lib",
+#         "@ocaml//lib/core",
+#         "@ocaml//lib/ppx_inline_test.runtime-lib",
 #     ]
 # )
 
@@ -111,11 +111,11 @@ ppx_executable(
     main = ":Driver",
     opts = [],
     deps = [
-        "@opam//lib/ppx_inline_test",
-        # "@opam//lib/ppxlib",
+        "@ocaml//lib/ppx_inline_test",
+        # "@ppxlib//:ppxlib",
     ],
-    deps_adjunct = [
-        "@opam//lib/ppx_inline_test.runtime-lib",
+    ppx_codeps = [
+        "@ocaml//lib/ppx_inline_test.runtime-lib",
     ]
 )
 
@@ -124,7 +124,7 @@ ppx_module(
     name = "Driver",
     struct = ":ppxlib_driver.ml",
     visibility = ["//visibility:public"],
-    deps = ["@opam//lib/ppxlib"],
+    deps = ["@ppxlib//:ppxlib"],
 )
 
 ########

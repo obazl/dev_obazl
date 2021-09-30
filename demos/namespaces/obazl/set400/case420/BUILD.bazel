@@ -16,11 +16,11 @@ ocaml_module(
     name   = "_Test",
     struct = "test.ml",
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
-    deps = [":#color", "@opam//lib/ounit2"],
+    deps = [":color", "@ounit2//:ounit2"],
 )
 
 ocaml_ns_library(
-    name = "#color",
+    name = "color",
     submodules = [
         ## these are plain ol' modules, not submodules in an ns library.
         "//namespaces/obazl/set100/case130:_Demo__Red",

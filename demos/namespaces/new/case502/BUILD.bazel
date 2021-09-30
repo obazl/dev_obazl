@@ -18,8 +18,8 @@ ocaml_module(
         "-w", "-27"  ## Error (warning 27): unused variable test_ctxt.
     ],
     deps = [
-        "//namespaces/new/case502/color:#color",
-        "@opam//lib/ounit2"
+        "//namespaces/new/case502/color:color",
+        "@ounit2//:ounit2"
     ],
     # deps_opam = ["ounit2"],
 )

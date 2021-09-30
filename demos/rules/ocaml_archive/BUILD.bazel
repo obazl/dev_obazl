@@ -23,7 +23,7 @@ ocaml_test(
         ":main",
         # "//rules/ocaml_archive:_Easy",
         # "//rules/ocaml_archive:_Simple"
-        "@opam//lib/ounit2"
+        "@ounit2//:ounit2"
     ],
     # deps_opam = ["ounit2"]
 )
@@ -62,7 +62,7 @@ ocaml_module(
             ],
     deps = [
         ":arch",
-        "@opam//lib/core"
+        "@ocaml//lib/core"
         # ":_Easy",
         # ":_Simple",
     ],

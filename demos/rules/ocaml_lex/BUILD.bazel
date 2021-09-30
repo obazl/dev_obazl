@@ -21,7 +21,7 @@ ocaml_module(
     struct = "main.ml",
     deps = [
         ":_Lexer",
-        "@opam//lib/core",
+        "@ocaml//lib/core",
     ],
 )
 

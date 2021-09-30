@@ -19,25 +19,25 @@ ocaml_module(
     name   = "_Test",
     struct = "test.ml",
     opts = ["-w", "-27"], ## Error (warning 27): unused variable test_ctxt.
-    deps = [":#a", "@opam//lib/ounit2"],
+    deps = [":a", "@ounit2//:ounit2"],
 )
 
 # How to support articulated module paths like A.B.Color
 ocaml_ns_library(
-    name = "#a",
+    name = "a",
     # include = "a_footer.ml",
     submodules = [
         # ":foo", ## 'regular' submodule
-        ":#b",  ## ns submodule
+        ":b",  ## ns submodule
     ],
 )
 
 ocaml_ns_library(
-    name = "#b",
+    name = "b",
     # includes = [":beta"],
     submodules = [
         ":_Bar", # : "Bar",  ## 'regular' submodule
-        ":#color" #: "Color",  ## ns submodule
+        ":color" #: "Color",  ## ns submodule
     ],
 )
 
@@ -45,7 +45,7 @@ ocaml_ns_library(
 ## But since it has private visibility by default, clients outside of this package
 ## cannot depend on it directly.
 ocaml_ns_library(
-    name = "#color",
+    name = "color",
     # includes = [":color_include"],
     submodules = [
         ":_Red", #: "Red",

@@ -28,7 +28,7 @@ config_setting(name = "static", flag_values = {":link": "static"})
 #     main = "test.ml",
 #     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
 #     deps = [
-#         "@opam//pkg:ounit2",
+#         "@ocaml//pkg:ounit2",
 #         "_Main"
 #     ]
 # )

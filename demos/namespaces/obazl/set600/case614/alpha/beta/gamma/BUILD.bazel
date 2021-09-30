@@ -9,7 +9,7 @@ load(
 
 #################
 ocaml_ns_library(
-    name = "#gamma",
+    name = "gamma",
     submodules = [
         ":_Red",
         ":_Green",

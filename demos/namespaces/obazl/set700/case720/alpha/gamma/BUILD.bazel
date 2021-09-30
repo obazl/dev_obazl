@@ -20,11 +20,11 @@ ocaml_module(
         "-w",
         "-27",  ## Error (warning 27): unused variable test_ctxt.
     ],
-    deps = [":#gamma", "@opam//lib/ounit2"],
+    deps = [":gamma", "@ounit2//:ounit2"],
 )
 
 ocaml_ns_library(
-    name = "#gamma",
+    name = "gamma",
     submodules = [
         ":_Red",
         ":_Green",

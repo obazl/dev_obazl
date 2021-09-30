@@ -21,7 +21,7 @@ ocaml_module(
         "-27",  ## Error (warning 27): unused variable test_ctxt.
     ],
     deps = [
-        "//namespaces/obazl/set700/case730/alpha:#alpha",
-        "@opam//lib/ounit2"
+        "//namespaces/obazl/set700/case730/alpha:alpha",
+        "@ounit2//:ounit2"
     ],
 )

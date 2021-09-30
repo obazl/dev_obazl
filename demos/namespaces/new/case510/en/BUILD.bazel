@@ -8,7 +8,7 @@ load(
 )
 
 ocaml_ns_library(
-    name = "#color",
+    name = "color",
     submodules = [
         ":_Red",
         ":_Green",

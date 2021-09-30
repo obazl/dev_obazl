@@ -3,7 +3,7 @@
 # You can build each target:
 # $ bazel build ppx/adjunct_deps
 # $ bazel build ppx/adjunct_deps:_Hello
-# $ bazel build ppx/adjunct_deps:_ppx.exe
+# $ bazel build ppx/adjunct_deps:ppx
 # $ bazel build ppx/adjunct_deps:_Driver
 # $ bazel build ppx/adjunct_deps:gendriver
 
@@ -23,7 +23,6 @@ load(
     "ocaml_module",
     "ocaml_test",
     "ppx_executable",
-    "ppx_module",
 )
 
 ###########
@@ -37,10 +36,12 @@ ocaml_module(
     struct = "test.ml",
     opts = ["-w","-27"],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
-        "@opam//lib/ounit2",
+        "@ounit2//:ounit2",
         ":_Hello",     # the transformed and compiled test code
+        # "@ppx_sexp_conv//runtime-lib",
+        # "@ppx_deriving//runtime",
     ],
-    ppx = ":_ppx.exe",
+    ppx = ":ppx",
     # ppx_print = "@ppx//print:text",  # uncomment to get readable output
 )
 
@@ -58,21 +59,22 @@ ocaml_module(
         "-open", "Sexplib.Std",
 
     ],
-    ppx = ":_ppx.exe",
-    # ppx_print = "@ppx//print:text",  # uncomment to get readable output
+    ppx = ":ppx",
+    ppx_print = "@ppx//print:text",  # uncomment to get readable output
     struct = "hello.ml",
     deps = [
         # src file contains ref to "Sexp.to_string" so we need to
         # depend on this lib.
-        "@opam//lib/sexplib",
+        "@sexplib//:sexplib",
+        # "@ppx_sexp_conv//runtime-lib",
     ],
 )
 
 ###############
 ppx_executable(
-    name = "_ppx.exe",
+    name = "ppx",
     main = "//ppx/driver",      # obazl will place this last in the list of deps
-    # main = "@opam//pkg:ppxlib.runner",
+    # main = "@ocaml//pkg:ppxlib.runner",
     # main_opam = "ppxlib.runner",
     # opts = [],                # obazl will automatically add '-predicates ppx_driver'
     deps = [
@@ -80,11 +82,11 @@ ppx_executable(
         ## when we try to use this ppx executable to transform
         ## hello.ml above, since it contains extension point
         ## "[@@deriving sexp]".
-        "@opam//lib/ppx_sexp_conv",
+        "@ppx_sexp_conv//:ppx_sexp_conv",
 
         ## without these, ppx transformation of test.ml fails
-        "@opam//lib/ppx_deriving/ord",
-        "@opam//lib/ppx_deriving/show",
+        "@ppx_deriving//ord",
+        "@ppx_deriving//show",
     ],
     ## Use of adjunct deps here is optional. They could also be added
     ## to the compile rules that use this ppx to transform their
@@ -93,14 +95,16 @@ ppx_executable(
     ## is, propagated as adjunct deps on the files it transforms. this
     ## obviates the need to manually add these deps to each rule that
     ## depends on this one for ppx transformation.
-    deps_adjunct = [
+    ppx_codeps = [
         ## without this, compilation of hello.ml will fail with
         ## "Unbound module" errors (unless the source file lists them
         ## as direct deps).
-        # "@opam//lib/ppx_sexp_conv/runtime-lib",
+        # "@ppx_sexp_conv//runtime-lib",
+        # "@ppx_deriving//runtime",
+
         ## HOWEVER: we do not need to list it, because the transitive
         ## closure of the deps includes some adjunct deps, including
         ## this one, as you can see by running
-        ##     bazel query "deps(@opam//lib/ppx_sexp_conv)"
+        ##     bazel query "deps(@ocaml//lib/ppx_sexp_conv)"
     ],
 )

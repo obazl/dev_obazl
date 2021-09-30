@@ -8,7 +8,7 @@ load(
 )
 
 ocaml_ns_library(
-    name = "#gem",
+    name = "gem",
     submodules = [
         ":_Alpha",
         ":_Beta",

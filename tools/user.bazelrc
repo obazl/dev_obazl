@@ -1,7 +1,7 @@
 ## copy me to demos/.private (private developer's workspace)
 
 build --color=yes
-build --subcommands=pretty_print
+# build --subcommands=pretty_print
 build --verbose_failures
 # build --sandbox_debug
 
@@ -10,7 +10,7 @@ build --verbose_failures
 # build --keep_going
 # query --keep_going
 
-# these two get rid of ld warnings about object file being "built for newer macOS version than being linked"
+# these two get rid of ld warnings about object file being "built for newer macOS version than being linked". pick your minimum version:
 # build:macos --macos_minimum_os='10.15'
 # build --config=macos
 

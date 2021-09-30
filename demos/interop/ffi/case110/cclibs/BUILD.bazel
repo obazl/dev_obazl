@@ -1,3 +1,5 @@
+# https://ocaml.org/manual/intfc.html
+
 load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
     "ocaml_module",
@@ -5,13 +7,9 @@ load(
 )
 
 ocaml_module(
-    name = "alpha", # _static",
+    name = "alpha",
     struct = "alpha.ml",
-    cc_deps = {
-        ":libalpha": "static",
-        # ":libalpha": "default",
-        # ":libalpha": "dynamic",
-    },
+    deps = [":libalpha"],
     visibility = ["//interop/ffi/case110:__pkg__"],
 )
 
@@ -22,9 +20,13 @@ cc_library(
         "alpha.c",
         "alpha.h",
     ],
+    linkstatic = select({
+        "//interop/ffi/case110:dynamic": False,
+        "//interop/ffi/case110:static" : True,
+        "//conditions:default": True
+    }),
     deps = [
-        "@ocaml//csdk:hdrs",
-        "@ocaml//csdk/ctypes"
+        "@ocaml//ffi",
     ],
     visibility = ["//interop/ffi/case110:__pkg__"],
 )

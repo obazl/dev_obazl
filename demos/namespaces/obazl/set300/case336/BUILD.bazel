@@ -23,12 +23,12 @@ ocaml_module(
     opts = [
         "-w", "-27",  ## Error (warning 27): unused variable test_ctxt.
     ],
-    deps = [":#alpha", "@opam//lib/ounit2"],
+    deps = [":alpha", "@ounit2//:ounit2"],
 )
 
 #################
 ocaml_ns_library(
-    name = "#alpha",
+    name = "alpha",
     submodules = [
         ":_Red",
         ":_Green",
@@ -47,7 +47,7 @@ ocaml_module(
     ## as a dep, but not as a submodule.
     deps   = [
         ":_Red",
-        "//namespaces/obazl/set300/case336/beta:#beta"
+        "//namespaces/obazl/set300/case336/beta:beta"
     ]
 )
 

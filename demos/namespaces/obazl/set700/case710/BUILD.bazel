@@ -20,14 +20,14 @@ ocaml_module(
         "-27",
     ],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
-        ":#color",
-        ":#couleur",
-        "@opam//lib/ounit2"
+        ":color",
+        ":couleur",
+        "@ounit2//:ounit2"
     ],
 )
 
 ocaml_ns_library(
-    name = "#color",
+    name = "color",
     submodules = [
         # OBazl will put these in depencency order. E.g. Red depends on
         # Blue, Green and Subred, and Green depends on Blue, so the order on the
@@ -72,7 +72,7 @@ ocaml_module(
 ## Build a different nslib that uses the same submodules.
 
 ocaml_ns_library(
-    name = "#couleur",
+    name = "couleur",
     submodules = [
         ## user-defined main module maps different names to same modules
         ":_Couleur"

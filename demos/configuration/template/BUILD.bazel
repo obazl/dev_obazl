@@ -12,10 +12,7 @@ load(
     "@obazl_rules_ocaml//ocaml:rules.bzl",
     "ocaml_executable",
     "ocaml_module",
-    "ocaml_test",
-    "ppx_executable",
-    "ppx_module"
-)
+    "ocaml_test")
 
 load(":BUILD.bzl", "demo_config")
 
@@ -84,7 +81,7 @@ ocaml_module(
     ],
     deps = [
         ":_Config",
-        "@opam//lib/ounit2"
+        "@ounit2//:ounit2"
     ]
 )
 

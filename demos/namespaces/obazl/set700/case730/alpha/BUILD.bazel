@@ -19,14 +19,14 @@ ocaml_module(
         "-w", "-27",  ## Error (warning 27): unused variable test_ctxt.
         "-w", "-31",  ## Error (warning 31): files X and Y both define a module named Z
     ],
-    deps = [":#alpha", "@opam//lib/ounit2"],
+    deps = [":alpha", "@ounit2//:ounit2"],
 )
 
 ocaml_ns_library(
-    name = "#alpha",
+    name = "alpha",
     submodules = [
-        "//namespaces/obazl/set700/case730/alpha/beta:#beta",
-        "//namespaces/obazl/set700/case730/alpha/gamma:#gamma"
+        "//namespaces/obazl/set700/case730/alpha/beta:beta",
+        "//namespaces/obazl/set700/case730/alpha/gamma:gamma"
     ],
     visibility = ["//visibility:public"]
 )

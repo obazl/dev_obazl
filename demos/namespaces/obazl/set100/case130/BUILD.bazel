@@ -22,7 +22,7 @@ ocaml_module(
         ":_Demo__Blue",
         ":_Demo__Green",
         ":_Demo__Red",
-        "@opam//lib/ounit2"
+        "@ounit2//:ounit2"
     ],
     # deps_opam = ["ounit2"],
 )

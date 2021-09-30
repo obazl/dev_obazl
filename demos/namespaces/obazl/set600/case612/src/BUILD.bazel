@@ -20,19 +20,19 @@ ocaml_module(
         "-27",  ## Error (warning 27): unused variable test_ctxt.
     ],
     deps = [
-        ":#alpha",
-        "@opam//lib/ounit2"
+        ":alpha",
+        "@ounit2//:ounit2"
     ],
 )
 
 #################
 ocaml_ns_library(
-    name = "#alpha",
+    name = "alpha",
     submodules = [
         ":_Ared",
         ":_Agreen",
         ":_Ablue",
-        ":#beta"  # nslib as submodule
+        ":beta"  # nslib as submodule
     ],
     visibility = ["//visibility:public"],
 )
@@ -54,12 +54,12 @@ ocaml_module(
 
 #################
 ocaml_ns_library(
-    name = "#beta",
+    name = "beta",
     submodules = [
         ":_Bred",
         ":_Bgreen",
         ":_Bblue",
-        ":#gamma"   # nslib as submodule
+        ":gamma"   # nslib as submodule
     ],
 )
 
@@ -80,7 +80,7 @@ ocaml_module(
 
 #################
 ocaml_ns_library(
-    name = "#gamma",
+    name = "gamma",
     submodules = [
         ":_Cred",
         ":_Cgreen",

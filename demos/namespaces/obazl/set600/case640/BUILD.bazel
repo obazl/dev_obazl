@@ -14,17 +14,17 @@ ocaml_module(
     name   = "_Test",
     struct = "test.ml",
     opts = ["-w", "-27"], ## Error (warning 27): unused variable test_ctxt.
-    deps = [":#color", "@opam//lib/ounit2"],
+    deps = [":color", "@ounit2//:ounit2"],
 )
 
 ocaml_ns_library(
-    name = "#color",
+    name = "color",
     submodules = [
         ## one exogenous nslib submodule:
-        "//namespaces/obazl/set600/case620/rgb:#rgb",
+        "//namespaces/obazl/set600/case620/rgb:rgb",
 
         ## one nslib submodule in a local subpackage:
-        "//namespaces/obazl/set600/case640/cmy:#cmy",
+        "//namespaces/obazl/set600/case640/cmy:cmy",
 
         ## three exogenous non-nslib submodules:
         "//namespaces/obazl/set200/case210:_Red",

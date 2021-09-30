@@ -8,7 +8,7 @@ load(
 )
 
 ocaml_ns_library(
-    name = "#couleur",
+    name = "couleur",
     submodules = [
         ":_Rouge",
         ":_Vert",
@@ -30,7 +30,7 @@ ocaml_module(
     name = "_Vert",
     struct = "vert.ml",
     deps = [
-        "//namespaces/new/case522/diamond:#gem"
+        "//namespaces/new/case522/diamond:gem"
     ],
 )
 

@@ -1,4 +1,6 @@
 #include <stdio.h>
+
+#define CAML_NAME_SPACE
 #include <caml/alloc.h>
 #include <caml/mlvalues.h>
 #include "alpha.h"

@@ -22,18 +22,18 @@ ocaml_module(
     name   = "_Test",
     struct = "test.ml",
     opts = ["-w", "-27"], ## Error (warning 27): unused variable test_ctxt.
-    deps = [":#alpha", "@opam//lib/ounit2"],
+    deps = [":alpha", "@ounit2//:ounit2"],
 )
 
 #################
 ocaml_ns_library(
-    name = "#alpha",
+    name = "alpha",
     submodules = [
         ":_Alpha", ## user-provided main module
         ":_Red",
         ":_Green",
         ":_Blue",
-        "//namespaces/obazl/set300/case334/beta:#beta"
+        "//namespaces/obazl/set300/case334/beta:beta"
     ],
     visibility = ["//visibility:public"],
 )
