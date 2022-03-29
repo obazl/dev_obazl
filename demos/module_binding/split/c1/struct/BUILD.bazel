@@ -21,16 +21,16 @@ ocaml_module(
     name = "A",
     struct = "a.ml",
     ## depend on build target for sig:
-    sig    = "//module_binding/split/sig:A",
+    sig    = "//module_binding/split/c1/sig:A",
 
     ## a direct dependency on the sigfile will also work:
-    # sig    = "//module_binding/split/sig:a.mli",
+    # sig    = "//module_binding/split/c1/sig:a.mli",
 
     # the a.mli file is there just for demo purposes, to prove that it
     # is not inadvertently being compiled. It contains an error, so if
     # it were to be compiled the build would fail.
     # sig = "a.mli", ## will fail
 
-    visibility = ["//module_binding/split:__pkg__"]
+    visibility = ["//module_binding/split/c1:__pkg__"]
 )
 
