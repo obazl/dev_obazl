@@ -1,9 +1,8 @@
 # quickstart
 
 **IMPORTANT** The first version of OBazl used `ocamlfind` to drive
-builds. These instructions are for the latest version (branch
-`nocamlfind`) of OBazl and related repos, which do not use
-`ocamlfind`.
+builds. These instructions are for the version 2 of OBazl and related
+repos, which do not use `ocamlfind`.
 
 See [Developing OCaml software with OBazl](https://obazl.github.io/docs_obazl/ug/development.html) for more information on getting started.
 

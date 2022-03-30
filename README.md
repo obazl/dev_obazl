@@ -1,5 +1,10 @@
 # dev_obazl
 
+**WARNING: The _dev_obazl_ repository is currently being updated to
+reflect the upcoming version 2 release of OBazl.** It may take a day
+or two to get everything in order; in the meantime some of the
+information may be unreliable.
+
 Current version is on branch `nocamlfind`.
 
 Demos, tools, and tests for
