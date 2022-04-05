@@ -1,0 +1,66 @@
+# WARNING: uses '@' rulename prefix to force module name.
+# This enables us to use the same structfile for different modules.
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_signature",
+    "ocaml_test",
+)
+
+test_suite(
+    name = "test",
+    tests = [":test1", ":test2"]
+)
+
+ocaml_test(
+    name = "test1",
+    main = "Test1"
+)
+
+ocaml_module(
+    name   = "Test1",
+    struct = "test1.ml",
+    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [
+        ":@Hello1",
+        "@ounit2//:ounit2"
+    ],
+)
+
+ocaml_test(
+    name = "test2",
+    main = "Test2"
+)
+
+ocaml_module(
+    name   = "Test2",
+    struct = "test2.ml",
+    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [
+        ":Hello2",
+        "@ounit2//:ounit2"
+    ],
+)
+
+################################
+ocaml_signature(
+    name = "Hello_cmi",
+    src  = "hello.mli",
+)
+
+# depend directly on sigfile hello.mli
+ocaml_module(
+    name = "@Hello1",
+    sig    = "hello.mli",
+    ## only file deps for struct attrib:
+    struct = "//module_binding/splits/b1/struct:hello.ml",
+)
+
+# depend on compiled sig Hello.cmi
+ocaml_module(
+    name = "Hello2",
+    sig    = ":Hello_cmi",
+    ## only file deps for struct attrib:
+    struct = "//module_binding/splits/b1/struct:hello.ml",
+)
