@@ -1,32 +1,18 @@
-# Demostrates build of "freestanding" .ml file, no .mli file
-
-# To build the module: $ bazel build minimal/hello_module:_Hello
-# To run the test:     $ bazel test minimal/hello_module:test
-
 load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_module",
     "ocaml_test",
 )
 
-ocaml_test(
-    name = "test",
-    main = "_Test"
-)
+ocaml_test(name = "test", main = "Test")
 
 ocaml_module(
-    name   = "_Test",
+    name   = "Test",
     struct = "test.ml",
-    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
-        ":_Hello",
+        ":Hello",
         "@ounit2//:ounit2"
     ],
-    # deps_opam = ["ounit2"]
 )
 
-ocaml_module(
-    name = "_Hello",
-    struct = "hello.ml",
-    # opts   = ["-no-thread"]
-)
+ocaml_module(name = "Hello", struct = "hello.ml")

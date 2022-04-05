@@ -4,8 +4,9 @@ test_suite(
     tests = [
         "//module_binding/improper:test",
         "//module_binding/proper:test",
-        "//module_binding/split:test",
-        "//module_binding/fixedsig:test",
-        "//module_binding/fixedstruct:test",
+        "//module_binding/splits:test",
+        "//module_binding/selectstruct:test",
+        "//module_binding/selectsig:test",
+        "//module_binding/selectboth:test",
     ]
 )
