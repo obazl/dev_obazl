@@ -1,7 +1,7 @@
 # https://ocaml.org/manual/intfc.html
 
 load(
-    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "@rules_ocaml//build:rules.bzl",
     "ocaml_module",
     # "ocaml_test"
 )
@@ -25,8 +25,7 @@ cc_library(
         "//interop/ffi/case110:static" : True,
         "//conditions:default": True
     }),
-    deps = [
-        "@ocaml//ffi",
-    ],
+    copts = ["-Iexternal/ocaml/c"],
+    deps = ["@ocaml//c"],
     visibility = ["//interop/ffi/case110:__pkg__"],
 )

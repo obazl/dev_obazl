@@ -3,7 +3,7 @@
 load("@bazel_skylib//rules:common_settings.bzl", "string_flag") #, "string_setting")
 
 load(
-    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "@rules_ocaml//build:rules.bzl",
     "ocaml_executable",
     "ocaml_module",
     "ocaml_test"
@@ -57,13 +57,13 @@ cc_library(
     ],
     copts = [
         "-Iinterop/ffi/case120/cclibs",
-        "-Iexternal/ocaml/_lib/ocaml",
+        "-Iexternal/ocaml/c",
     ],
     linkstatic = True,
     linkopts   = ["-lalpha"],
     deps = [
         "//interop/ffi/case120/cclibs:alpha",
-        "@ocaml//ffi",
+        "@ocaml//c",
     ],
 )
 
