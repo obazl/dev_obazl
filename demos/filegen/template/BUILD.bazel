@@ -17,7 +17,7 @@
 # $ cat bazel-bin/filegen/template/config.ml
 
 load(
-    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "@rules_ocaml//build:rules.bzl",
     "ocaml_executable",
     "ocaml_module",
     "ocaml_test",
