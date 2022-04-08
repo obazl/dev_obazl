@@ -1,7 +1,7 @@
 ## aggregators/archives/case120: two simple (independent) archives
 
 load(
-    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "@rules_ocaml//build:rules.bzl",
     "ocaml_library",
     "ocaml_module",
     "ocaml_test",
@@ -36,7 +36,7 @@ ppx_executable(
 ############
 ocaml_library(
     name = "_Ppx_color",
-    modules = [
+    manifest = [
         ":_Ppx_red",
         ":_Ppx_green",
         ":_Ppx_blue",
@@ -67,7 +67,7 @@ ocaml_module(
 ############
 ocaml_library(
     name = "_Ppx_greek",
-    modules = [
+    manifest = [
         ":_Ppx_alpha",
         ":_Ppx_beta",
         ":_Ppx_gamma",

@@ -2,7 +2,7 @@
 ## executable uses 'main'
 
 load(
-    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "@rules_ocaml//build:rules.bzl",
     "ocaml_archive",
     "ocaml_executable",
     "ocaml_module",
@@ -32,7 +32,7 @@ ocaml_module(
 ocaml_archive(
     name = "color",
     # opts = ["-linkall"],
-    modules = [
+    manifest = [
         ":_Red",
         ":_Green",
         ":_Blue",

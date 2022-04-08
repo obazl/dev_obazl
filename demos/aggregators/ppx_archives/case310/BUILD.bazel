@@ -1,13 +1,11 @@
-## aggregators/ppx_libraries/case420
+## aggregators/ppx_libraries/case110
 
 load(
     "@rules_ocaml//build:rules.bzl",
-    "ocaml_executable",
-    "ocaml_library",
+    "ocaml_archive",
     "ocaml_module",
     "ocaml_test",
     "ppx_executable",
-    # "ppx_test",
 )
 
 ocaml_test(
@@ -16,36 +14,37 @@ ocaml_test(
 )
 
 ocaml_module(
-    name   = "_Test",
+    name = "_Test",
     struct = "test.ml",
-    ppx = ":ppx.exe",
+    ppx       = ":ppx.exe",
+    ppx_print = "@rules_ocaml//ppx/print:text",
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
-    deps = [":_main", "@ounit2//:ounit2"]
-    # deps_opam = ["ounit2"]
-)
-
-#################
-ocaml_executable(
-    name = "hello",
-    main = ":_main",
-)
-
-ocaml_module(
-    name   = "_main",
-    struct = "main.ml",
-    ppx    = ":ppx.exe", ## main.ml includes extension points
+    deps = [
+        "@ounit2//:ounit2"
+    ]
 )
 
 ###############
-ppx_executable(   ## make this ppx_test, with predefined driver? e.g. ppxlib_test? macro!
+ppx_executable(
     name = "ppx.exe",
-    main = ":_Ppxlib_driver",
-    deps = [":ppx_color", "@ppxlib//:ppxlib"]
+    main = ":ppxlib_runner",
+    deps = [
+        ":driver",
+        "@ounit2//:ounit2"
+    ],
     # deps_opam = ["ppxlib"]
 )
 
+###########
+ocaml_module(
+    name      = "driver",
+    struct    = "driver.ml",
+    deps      = [":ppx_color"],
+    opts      = ["-w", "-33"]   ## unused open
+)
+
 ############
-ocaml_library(
+ocaml_archive(
     name = "ppx_color",
     manifest = [
         ":ppx_red",
@@ -58,7 +57,6 @@ ocaml_module(
     name      = "ppx_red",
     struct    = "ppx_red.ml",
     deps      = ["@ppxlib//:ppxlib"]
-    # deps_opam = ["ppxlib"]
 )
 
 ocaml_module(
@@ -77,16 +75,16 @@ ocaml_module(
 
 ###########
 ocaml_module(
-    name = "_Ppxlib_driver",
-    struct = ":ppxlib_driver.ml",
-    deps      = ["@ppxlib//:ppxlib"]
+    name = "ppxlib_runner",
+    struct = ":ppxlib_runner.ml",
     # deps_opam = ["ppxlib"]
+    deps      = ["@ppxlib//:ppxlib"]
 )
 
 ########
 genrule(
-    name = "gendriver",
-    outs = ["ppxlib_driver.ml"],
+    name = "genrunner",
+    outs = ["ppxlib_runner.ml"],
     cmd = "\n".join([
         "echo \"(* GENERATED FILE - DO NOT EDIT *)\" > \"$@\"",
         "echo \"let () = Ppxlib.Driver.standalone ()\" >> \"$@\"",

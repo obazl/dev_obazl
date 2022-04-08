@@ -3,7 +3,7 @@
 ##  EXPECTED FAIL - you cannot chain archives, since an archive cannot contain another archive
 
 load(
-    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "@rules_ocaml//build:rules.bzl",
     "ocaml_archive",
     "ocaml_executable",
     "ocaml_module",
@@ -29,7 +29,7 @@ ocaml_module(
 ##############
 ocaml_archive(
     name = "color",
-    modules = [
+    manifest = [
         ":_Red",
         ":_Green",
         ":_Blue",
@@ -55,7 +55,7 @@ ocaml_module(
 ##############
 ocaml_archive(
     name = "greek",
-    modules = [
+    manifest = [
         ":_Alpha",
         ":_Beta",
         ":_Gamma"

@@ -4,7 +4,7 @@ test_suite(
     tests = [
         "//aggregators/ocaml_archives:test",
         "//aggregators/ocaml_libraries:test",
-        # "//aggregators/ppx_archives:test",
+        "//aggregators/ppx_archives:test",
         "//aggregators/ppx_libraries:test",
     ]
 )

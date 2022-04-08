@@ -1,21 +1,21 @@
-## aggregators/ppx_libraries/case110
+## aggregators/ppx_libraries/case410
 
 load(
-    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "@rules_ocaml//build:rules.bzl",
     "ocaml_library",
     "ocaml_module",
     "ocaml_test",
     "ppx_executable",
-    "ppx_test",
+    # "ppx_test",
 )
 
 ocaml_test(
     name = "test",
-    main = "_Test"
+    main = "Test"
 )
 
 ocaml_module(
-    name   = "_Test",
+    name   = "Test",
     struct = "test.ml",
     ppx = ":ppx.exe",
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
@@ -27,13 +27,12 @@ ppx_executable(   ## make this ppx_test, with predefined driver? e.g. ppxlib_tes
     name = "ppx.exe",
     main = ":_Ppxlib_driver",
     deps = [":ppx_color", "@ppxlib//:ppxlib"]
-    # deps_opam = ["ppxlib"]
 )
 
 ############
 ocaml_library(
     name = "ppx_color",
-    modules = [
+    manifest = [
         ":ppx_red",
         ":ppx_green",
         ":ppx_blue",
@@ -44,21 +43,19 @@ ocaml_module(
     name      = "ppx_red",
     struct    = "ppx_red.ml",
     deps      = ["@ppxlib//:ppxlib"]
-    # deps_opam = ["ppxlib"]
 )
 
 ocaml_module(
     name      = "ppx_green",
     struct    = "ppx_green.ml",
     deps      = ["@ppxlib//:ppxlib"]
-    # deps_opam = ["ppxlib"]
 )
+# builds library of three ppx modules
 
 ocaml_module(
     name      = "ppx_blue",
     struct    = "ppx_blue.ml",
     deps      = ["@ppxlib//:ppxlib"]
-    # deps_opam = ["ppxlib"]
 )
 
 ###########
@@ -66,7 +63,6 @@ ocaml_module(
     name = "_Ppxlib_driver",
     struct = ":ppxlib_driver.ml",
     deps      = ["@ppxlib//:ppxlib"]
-    # deps_opam = ["ppxlib"]
 )
 
 ########
