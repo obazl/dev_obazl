@@ -8,5 +8,6 @@ test_suite(
         "//module_binding/selectstruct:test",
         "//module_binding/selectsig:test",
         "//module_binding/selectboth:test",
+        "//module_binding/namespaced:test",
     ]
 )

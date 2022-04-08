@@ -1,5 +1,6 @@
-# WARNING: uses '@' rulename prefix to force module name.
-# This enables us to use the same structfile for different modules.
+# Demos use of same structfile for different sigs; module names
+# derived from sigfiles.
+# the other way to do this is to use namespaces
 
 load(
     "@rules_ocaml//build:rules.bzl",
@@ -23,7 +24,7 @@ ocaml_module(
     struct = "test1.ml",
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
-        ":@Hello1",
+        ":hello1",
         "@ounit2//:ounit2"
     ],
 )
@@ -51,7 +52,8 @@ ocaml_signature(
 
 # depend directly on sigfile hello.mli
 ocaml_module(
-    name = "@Hello1",
+    name = "hello1",
+    forcename = True, ## module name will be Hello1
     sig    = "hello.mli",
     ## only file deps for struct attrib:
     struct = "//module_binding/splits/b1/struct:hello.ml",
@@ -60,7 +62,8 @@ ocaml_module(
 # depend on compiled sig Hello.cmi
 ocaml_module(
     name = "Hello2",
-    sig    = ":Hello_cmi",
+    # forcename = True, # forcename only if sig is src file
+    sig    = ":Hello_cmi", # module name will be derived from sigfile
     ## only file deps for struct attrib:
     struct = "//module_binding/splits/b1/struct:hello.ml",
 )

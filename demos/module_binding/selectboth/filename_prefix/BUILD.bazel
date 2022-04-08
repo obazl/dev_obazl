@@ -25,22 +25,24 @@ ocaml_module(
     }),
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
-        ":Hello",
+        ":_Hello",
         "@ounit2//:ounit2"
     ],
 )
 
 ocaml_signature(
-    name = "@Hello",
+    name = "Hello",
+    forcename = True,
     src  = select({
         ":lang_en": "hello_en.mli",
         ":lang_fr": "hello_fr.mli",
     }, no_match_error = "unsupported sig"),
 )
 
+## module name will be derived rom sig name
 ocaml_module(
-    name   = "Hello",
-    sig    = ":@Hello",
+    name   = "_Hello",
+    sig    = ":Hello",
     # sig    = select({
     #     ":lang_en": "hello_en.mli",
     #     ":lang_fr": "hello_fr.mli",

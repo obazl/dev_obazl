@@ -68,7 +68,7 @@ ocaml_module(
 ################
 config_setting(
     name = "linux_en",
-    constraint_values = ["@platforms//os:lintiux"],
+    constraint_values = ["@platforms//os:linux"],
     flag_values = {"//bzl:lang": "en"}
 )
 config_setting(
