@@ -1,3 +1,5 @@
+## OBSOLETE - mixed mode not supported
+
 ## ppx/mixed_mode - dependency graph contains a target (mixed_mode.ml)
 ## that must be built in both native and bytecode modes.
 
@@ -5,11 +7,11 @@
 # $ bazel run ppx/mixed_mode:test
 
 load(
-    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "@rules_ocaml//build:rules.bzl",
     "ocaml_module",
     "ocaml_test",
-    "ppx_executable",
     "ocaml_module",
+    "ppx_executable",
 )
 
 ###########

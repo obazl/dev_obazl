@@ -1,34 +1,34 @@
-# $ bazel test ppx/adjunct_deps
+# $ bazel test ppx/ppx_codeps
 
 # You can build each target:
-# $ bazel build ppx/adjunct_deps
-# $ bazel build ppx/adjunct_deps:_Hello
-# $ bazel build ppx/adjunct_deps:ppx
-# $ bazel build ppx/adjunct_deps:_Driver
-# $ bazel build ppx/adjunct_deps:gendriver
+# $ bazel build ppx/ppx_codeps
+# $ bazel build ppx/ppx_codeps:_Hello
+# $ bazel build ppx/ppx_codeps:ppx
+# $ bazel build ppx/ppx_codeps:_Driver
+# $ bazel build ppx/ppx_codeps:gendriver
 
 # To inspect the result of ppx processing:
-# The easiest thing to do is run `bazel aquery ${TARGET}`, e.g. `bazel aquery ppx/adjunct_deps:_Hello`
+# The easiest thing to do is run `bazel aquery ${TARGET}`, e.g. `bazel aquery ppx/ppx_codeps:_Hello`
 # first, run `source tools/aliases`. this defines an alias `bl` you can use to browse the log.
 # uncomment the `ppx_print` line below to set output format to text
-# then run `bazel clean`, then `bazel build ppx/adjunct_deps/hello:_Hello --subcommands
+# then run `bazel clean`, then `bazel build ppx/ppx_codeps/hello:_Hello --subcommands
 # then run `bl` to inspect the command log. search for PpxTransformAction;
 # you will see the command, something like:
-# bazel-out/darwin-fastbuild/bin/ppx/adjunct_deps/hello/_hello.sh -dump-ast -o ../bazel-out/darwin-fastbuild/bin/ppx/adjunct_deps/hello/_obazl_/hello.ml -impl ppx/adjunct_deps/hello/hello.ml
+# bazel-out/darwin-fastbuild/bin/ppx/ppx_codeps/hello/_hello.sh -dump-ast -o ../bazel-out/darwin-fastbuild/bin/ppx/ppx_codeps/hello/_obazl_/hello.ml -impl ppx/ppx_codeps/hello/hello.ml
 # the transformed output is the `-o` parameter (without the leading '../').
 # see the full ppx command, add '-verbose' to the `opts` attribute of the `ocaml_module` rule.
 
 load(
-    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "@rules_ocaml//build:rules.bzl",
     "ocaml_module",
     "ocaml_test",
-    "ppx_executable",
-)
+    "ppx_executable")
 
 ###########
 ocaml_test(
     name = "test",
-    main = "_Test"
+    main = "_Test",
+    timeout = "short"
 )
 
 ocaml_module(
@@ -54,13 +54,13 @@ ocaml_module(
         ## file, but for demo purposes we open them on the command
         ## line. either way, we must also list the `sexplib` package
         ## that contains them as a dependency, either here in 'deps'
-        ## or in the `adjunct_deps` attribute of the ppx transformer.
+        ## or in the `ppx_codeps` attribute of the ppx transformer.
         "-open", "Sexplib",
         "-open", "Sexplib.Std",
 
     ],
     ppx = ":ppx",
-    ppx_print = "@ppx//print:text",  # uncomment to get readable output
+    # ppx_print = "@ppx//print:text",  # uncomment to get readable output
     struct = "hello.ml",
     deps = [
         # src file contains ref to "Sexp.to_string" so we need to
@@ -88,11 +88,11 @@ ppx_executable(
         "@ppx_deriving//ord",
         "@ppx_deriving//show",
     ],
-    ## Use of adjunct deps here is optional. They could also be added
+    ## Use of ppx_codeps here is optional. They could also be added
     ## to the compile rules that use this ppx to transform their
     ## sources. Put here, they will be carried along with the ppx
     ## executable and be automatically used wherever it is used - that
-    ## is, propagated as adjunct deps on the files it transforms. this
+    ## is, propagated as ppx_codeps on the files it transforms. this
     ## obviates the need to manually add these deps to each rule that
     ## depends on this one for ppx transformation.
     ppx_codeps = [
@@ -103,7 +103,7 @@ ppx_executable(
         # "@ppx_deriving//runtime",
 
         ## HOWEVER: we do not need to list it, because the transitive
-        ## closure of the deps includes some adjunct deps, including
+        ## closure of the deps includes some ppx_codeps, including
         ## this one, as you can see by running
         ##     bazel query "deps(@ocaml//lib/ppx_sexp_conv)"
     ],

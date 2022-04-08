@@ -5,7 +5,7 @@
 # $ bazel run ppx/mixed_mode:test
 
 load(
-    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "@rules_ocaml//build:rules.bzl",
     "ocaml_module",
     "ocaml_test",
     "ppx_executable")
@@ -13,7 +13,8 @@ load(
 ###########
 ocaml_test(
     name = "test",
-    main = ":_Test"
+    main = ":_Test",
+    timeout = "short"
 )
 
 ocaml_module(

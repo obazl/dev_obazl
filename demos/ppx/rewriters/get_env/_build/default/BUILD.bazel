@@ -2,7 +2,7 @@
 # from https://github.com/ocaml-ppx/ppxlib/tree/master/examples/simple-extension-rewriter
 
 load(
-    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "@rules_ocaml//build:rules.bzl",
     "ocaml_module",
     "ocaml_test",
     "ppx_executable",

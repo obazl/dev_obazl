@@ -1,11 +1,10 @@
 # $ bazel test ppx/ppx_optcomp
 
-load(
-    "@obazl_rules_ocaml//ocaml:rules.bzl",
+load("@rules_ocaml//build:rules.bzl",
     "ocaml_module",
     "ocaml_test",
+    "ocaml_executable",
     "ppx_executable")
-
 
 load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
 
@@ -31,7 +30,8 @@ config_setting(
 ###########
 ocaml_test(
     name = "test",
-    main = "_Test"
+    main = "_Test",
+    timeout = "short"
 )
 
 ocaml_module(
@@ -52,13 +52,13 @@ ARG = select({
 
 ocaml_module(
     name = "_Hello",
-    ppx = ":ppx_optcomp.exe",
+    ppx = ":ppx.exe",
     # ppx_data = ARG,
     ppx_data = [
         # ":genconfig",
         ":config.mlh"
     ],  # this is our runtime dep
-    ppx_print = "@ppx//print:text",
+    ppx_print = "@rules_ocaml//ppx/print:text", # or :binary
     struct = "hello.ml",
 )
 
@@ -80,10 +80,14 @@ genrule(
 )
 
 ###############
+# ocaml_executable(
+    # tags = ["ppx"],
 ppx_executable(
-    name = "ppx_optcomp.exe",
+    name = "ppx.exe",
     main = ":Driver",
-    deps = ["@ppx_optcomp//:ppx_optcomp"]
+    deps = [
+        "@ppx_optcomp//:ppx_optcomp"
+    ]
 )
 
 ###########

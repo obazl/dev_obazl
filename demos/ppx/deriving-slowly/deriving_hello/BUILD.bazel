@@ -1,3 +1,7 @@
+## WARNING: does not compile with 4.13.0
+
+# https://github.com/rgrinberg/deriving-slowly/blob/master/deriving-hello/src/deriving_hello.ml
+
 load("@obazl_rules_ocaml//ocaml:build.bzl",
      "ocaml_binary",
      "ocaml_library",

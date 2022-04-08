@@ -1,4 +1,5 @@
-# $ bazel test ppx/hello
+# $ bazel test ppx/hello:test
+
 # You can build each target:
 # $ bazel build ppx/hello
 # $ bazel build ppx/hello:_Hello
@@ -17,16 +18,16 @@
 # see the full ppx command, add '-verbose' to the `opts` attribute of the `ocaml_module` rule.
 
 load(
-    "@obazl_rules_ocaml//ocaml:rules.bzl",
+    "@rules_ocaml//build:rules.bzl",
     "ocaml_module",
     "ocaml_test",
-    "ppx_executable",
-)
+    "ppx_executable")
 
 ###########
 ocaml_test(
     name = "test",
     main = "_Test",
+    timeout = "short"
 )
 
 ###########
@@ -56,21 +57,15 @@ ocaml_module(
 ###############
 ppx_executable(
     name = "ppx.exe",
-    main = ":_runner",  ## hand-rolled, see below
-    # opts = [], # obazl will automatically add '-predicates ppx_driver'
+    main = ":Ppx_runner",  ## hand-rolled, see below
     deps = [
-        "@ppx_sexp_value//:ppx_sexp_value",  # contains handler for `[%sexp ]` extension
+        "@ppx_sexp_value//:ppx_sexp_value", #contains handler for `[%sexp ]`
     ],
-    ## obsolete:
-    ## For 'main' we have two options: use a runner from an OPAM pkg, or roll our own;
-    ## either way, obazl will place 'main' last in the list of deps.
-    # main = "@ocaml//pkg:ppxlib.runner_as_ppx",  ## contains only 'Pppxlib.Driver.standalone ()'
-    # main = "@ocaml//pkg:ppxlib.runner",  ## contains only 'Pppxlib.Driver.standalone ()'
 )
 
 ###########
 ocaml_module(
-    name = "_runner",
+    name = "Ppx_runner",
     struct = ":ppx_runner.ml",
     visibility = ["//visibility:public"],
     deps = ["@ppxlib//:ppxlib"],
