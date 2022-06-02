@@ -1,1 +1,20 @@
-# do not remove
+test_suite(
+    name = "test",
+    tests = [
+
+        "//aggregators:test",
+        "//algebra/group:test",
+        "//configuration:test",
+        "//filegen:test",
+        "//interop:test",
+        "//minimal:test",
+        "//module_binding:test",
+        # "//namespaces:test",
+        "//signatures:test",
+
+        # "//ppx:test",
+        # "//ppx/derivers/simple_deriver:test"
+        # "//ppx:test"
+    ]
+)
+

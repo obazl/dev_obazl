@@ -1,1 +1,0 @@
-val bmsg : string

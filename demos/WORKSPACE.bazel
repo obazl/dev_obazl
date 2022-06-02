@@ -11,25 +11,20 @@ http_archive(
     ],
     sha256 = "c6966ec828da198c5d9adbaa94c05e3a1c7f21bd012a0b29ba8ddbccb2c93b0d",
 )
+
+################################################################
+git_repository(
+    name = "rules_ocaml",
+    remote = "https://github.com/obazl/rules_ocaml",
+    branch = "obazl3",
+)
+
+# load("@rules_ocaml//:WORKSPACE.bzl", "ocaml_configure")
+# ocaml_configure()
+
+## must be run after ocaml_configure
 load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
 bazel_skylib_workspace()
-
-# http_archive(
-#     name = "opam_re2c",
-#     urls = [
-#         "https://github.com/skvadrik/re2c/archive/2.0.3.zip"
-#     ],
-#     strip_prefix = "re2c-2.0.3",
-#     # sha256 = "269c266c1fc12d1e73682ed1a05296588e8482d188e6d56408a29de447ce87d7",
-#     workspace_file_content = "workspace( name = \"opam-re2c\" )",
-#     build_file = "//remote/re2c:BUILD.bazel",
-#     # build_file_content = "\n".join([
-#     #     "filegroup(name = \"all\",",
-#     #     "srcs = glob([\"**\"]),",
-#     #     "visibility = [\"//visibility:public\"])",
-#     # ]),
-# )
-
 
 git_repository(
     name = "obazl_tools_obazl",
@@ -39,107 +34,26 @@ git_repository(
 
 git_repository(
     name = "opam",
-    remote = "https://github.com/obazl/rules_opam", # FIXME
+    remote = "https://github.com/obazl/tools_opam", # FIXME
     branch = "obazl2",
 )
 load("@opam//:WORKSPACE.bzl", "opam_fetch_repos")
 opam_fetch_repos()
-# for re2c in tools_opam update tool:
-load("@rules_foreign_cc//foreign_cc:repositories.bzl", "rules_foreign_cc_dependencies")
-rules_foreign_cc_dependencies()
 
-#      # opam_configure = "configure",
-#      opam_install = "install" ## FIXME: rename 'install'?
-# )
-# # load("//:WORKSPACE.bzl", "opam")
-# # opam_configure(opam = opam)
+     # "opam_configure")
+# opam_configure()
 
-# opam_install()
+## @opam commands need rules_foreign_cc:
+load("@rules_foreign_cc//foreign_cc:repositories.bzl",
+     "rules_foreign_cc_dependencies")
 
-
-git_repository(
-    name = "obazl_rules_ocaml",
-    remote = "https://github.com/obazl/rules_ocaml",
-    branch = "obazl2",
+rules_foreign_cc_dependencies(
+    # register_preinstalled_tools = False
+    # register_built_tools=False
 )
 
-load("@obazl_rules_ocaml//ocaml:bootstrap.bzl", "ocaml_configure")
+load("//:COSWITCH.bzl", register_coswitch = "register")
+register_coswitch()
 
-
-# ocaml_configure(verbose=True, debug=True)              ## case 0
-# ocaml_configure()                                      ## case 0
-
-# ocaml_configure(opam = opam, build = "4.11.1+flambda")               ## case 1
-
-ocaml_configure(switch = "4.10",
-                # debug = True,
-                bootstrap_debug=True) ## case 1
-
-#  ocaml_configure(switch = "4.11.1")                     ## case 1
-# ocaml_configure(switch = "4.11.1", verbose=True, debug=True) ## case 1
-# ocaml_configure(switch = "4.11.1", opam=opam)          ## error: incompatible
-# ocaml_configure(switch = "4.11.1", build="4.11.1")     ## error: incompatible
-# ocaml_configure(switch = "noswitch")                   ## error: not found
-
-## opam arg incompatible with env var OPAMSWITCH
-# ocaml_configure(opam = opam, verbose=True, debug=True) ## case 2
-
-## build config v1.0.0-dev has verify=True; this makes it VERY slow
-# ocaml_configure(opam = opam, build="v1.0.0-dev", verbose=True, debug=True)    ## case 2:
-# ocaml_configure(opam = opam, build="v1.0.0-beta.1", verbose=True, debug=True)    ## case 2:
-
-# ocaml_configure(opam = opam, switch="4.11.1")          ## error: incompatible
-# ocaml_configure(opam = opam, build="v1.0.0-dev", switch="4.11.1") ## error: incompatible
-# ocaml_configure(opam = opam, build="v1.0.0-dev", verbose=True, debug=True)                           ## case 2
-
-
-# ocaml_configure(build = "v1.0.0-dev")                   ## error
-# ocaml_configure(opam=opam, build = "v1.0.0-dev", switch="4.11.1")  ## error
-# verify, install, pin, hermetic only make sense with opam
-# ocaml_configure(verify = True)                          ## error
-# ocaml_configure(install = True)                         ## error
-# ocaml_configure(pin = True)                             ## error
-# ocaml_configure(hermetic = True)                        ## error
-# ocaml_configure(verify = True, install = True)          ## error
-
-# ocaml_configure(build = "v1.0.0-dev")                 ## error
-
-
-# ocaml_configure(opam = opam, switch = "mina-0.1.0")  ## case A.1
-
-
-# local_repository(
-#     name = "obazl_rules_ocaml",
-#     path = ".."
-# )
-
-# load("@obazl_rules_ocaml//ocaml:deps.bzl",
-#      "ocaml_configure_tooling",
-#      # "ocaml_repositories",
-#      # "ocaml_home_sdk",
-#      "ocaml_register_toolchains")
-
-# ocaml_configure_tooling()
-
-# ocaml_register_toolchains(installation="host")
-
-# new_local_repository(
-#     name = "ocaml",
-#     path = "/Users/gar/.opam/4.10/bin",
-#     # build_file = "@//.opam/ocaml:BUILD.bazel"
-#     build_files = {
-#         ##  build_file: path
-#         "@//.opam/ocaml:BUILD.bazel": "/Users/gar/.opam/4.10/bin",
-#         "@rules_ocaml//ocaml/_templates/BUILD.ocaml.archive": "/Users/gar/.opam/4.10/archive"
-#     }
-# )
-
-# new_local_repository(
-#     name = "ocaml.compiler-libs",
-#     path = "/Users/gar/.opam/4.10/lib/ocaml/compiler-libsXXXX",
-#     # build_file = "ocaml/_templates/BUILD.ocaml.compiler-libs.bytecomp"
-#     build_file = "@obazl_rules_ocaml//ocaml/_templates/BUILD.ocaml.compiler-libs.bytecomp"
-# )
-
-load("//.opam:opam_repos.bzl", "fetch")
-fetch()
+load("@coswitch//:BOOTSTRAP.bzl", "bootstrap")
+bootstrap()

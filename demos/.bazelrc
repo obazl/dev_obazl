@@ -1,9 +1,9 @@
 common --color=yes
 
-# pass --config=dbg to enable these:
+# pass --config=dbg to enable this:
 common:dbg --subcommands=pretty_print
 common:dbg --verbose_failures
-## common:dbg --sandbox_debug
+common:dbg --sandbox_debug
 
 # test --test_verbose_timeout_warnings
 

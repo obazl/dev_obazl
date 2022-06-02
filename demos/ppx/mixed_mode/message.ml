@@ -1,3 +1,0 @@
-(* message *)
-
-let msg = "Hello"

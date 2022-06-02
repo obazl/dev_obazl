@@ -1,1 +1,0 @@
-val red : string

@@ -1,9 +1,0 @@
-
-test_suite(
-    name = "test",
-    tests = [
-        "//namespaces/obazl/set200/case210:test",
-        "//namespaces/obazl/set200/case220:test",
-        "//namespaces/obazl/set200/case240:test",
-    ]
-)

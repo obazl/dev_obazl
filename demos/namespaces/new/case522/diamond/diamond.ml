@@ -1,1 +1,0 @@
-let carats = 24

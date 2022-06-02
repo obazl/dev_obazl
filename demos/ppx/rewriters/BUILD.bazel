@@ -1,7 +1,0 @@
-test_suite(
-    name = "test",
-    tests = [
-        # "//ppx/rewriters/get_env:test",
-        "//ppx/rewriters/greeting:test",
-    ]
-)

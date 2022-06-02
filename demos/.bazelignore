@@ -15,7 +15,7 @@ namespaces/obazl/set700/case730
 namespaces/obazl/set700/case740
 namespaces/ns-archive
 namespaces/assisted/hierarchical
-ppx/deriving
+# ppx/deriving
 ppx/rewriters/get_env
 
 obsolete
