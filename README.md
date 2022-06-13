@@ -1,5 +1,7 @@
 # dev_obazl
 
+:warning **DEPRECATED**. Replaced by [demos_obazl](https://github.com/obazl/demos_obazl).
+
 Demos, tools, and tests for
 [obazl_rules_ocaml](https://github.com/obazl/rules_opam) and
 [obazl_rules_opam](https://github.com/obazl/rules_opam).
